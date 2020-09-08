@@ -1,0 +1,322 @@
+{
+    "swing": {
+        "fourFourTime": [
+            {
+                "numberOfMeasures": 1,
+                "allowsComping": true,
+                "parts": {
+                    "rideCym": [
+                        {
+                            "start": "0:0",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "0:2",
+                            "velocity": 0.25,
+                            "velocityOffset":  0.1,
+                            "probability": 0.05
+                        },
+                        {
+                            "start": "1:0",
+                            "velocity": 0.9,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "1:2",
+                            "velocity": 0.25,
+                            "velocityOffset":  0.1,
+                            "probability": 0.95
+                        },
+                        {
+                            "start": "2:0",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "2:2",
+                            "velocity": 0.25,
+                            "velocityOffset":  0.1,
+                            "probability": 0.05
+                        },
+                        {
+                            "start": "3:0",
+                            "velocity": 0.9,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "3:2",
+                            "velocity": 0.25,
+                            "velocityOffset":  0.1,
+                            "probability": 0.95
+                        }
+                    ],
+                    "hatChick": [
+                        {
+                            "start": "1:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "3:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        }
+                    ]
+                }
+            }
+        ],
+        "hihatOnAll4": [
+            {
+                "numberOfMeasures": 1,
+                "allowsComping": false,
+                "parts": {
+                    "hatChick": [
+                        {
+                            "start": "0:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "1:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "2:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "3:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        }
+                    ]
+                }
+            }
+        ],
+        "twoFeel": [
+            {
+                "numberOfMeasures": 1,
+                "allowsComping": true,
+                "parts": {
+                    "rideCym": [
+                        {
+                            "start": "0:0",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "0:2",
+                            "velocity": 0.25,
+                            "velocityOffset":  0.1,
+                            "probability": 0.00
+                        },
+                        {
+                            "start": "1:0",
+                            "velocity": 0.9,
+                            "velocityOffset":  0.15,
+                            "probability": 0
+                        },
+                        {
+                            "start": "1:2",
+                            "velocity": 0.25,
+                            "velocityOffset":  0.1,
+                            "probability": 0.95
+                        },
+                        {
+                            "start": "2:0",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "2:2",
+                            "velocity": 0.25,
+                            "velocityOffset":  0.1,
+                            "probability": 0.05
+                        },
+                        {
+                            "start": "3:0",
+                            "velocity": 0.9,
+                            "velocityOffset":  0.15,
+                            "probability": 0.1
+                        },
+                        {
+                            "start": "3:2",
+                            "velocity": 0.25,
+                            "velocityOffset":  0.1,
+                            "probability": 0.95
+                        }
+                    ],
+                    "hatChick": [
+                        {
+                            "start": "1:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "3:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "latin": {
+        "bossa": [
+            {
+                "numberOfMeasures": 2,
+                "style": "bossa",
+                "comping": false,
+                "parts": {
+                    "rideCym": [
+                        {
+                            "start": "0:0",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "0:2",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "1:0",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "1:2",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "2:0",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "2:2",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "3:0",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "3:2",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "4:0",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "4:2",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "5:0",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "5:2",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "6:0",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "6:2",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "7:0",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        },
+                        {
+                            "start": "7:2",
+                            "velocity": 0.8,
+                            "velocityOffset":  0.15,
+                            "probability": 1
+                        }
+                    ],
+                    "hatChick": [
+                        {
+                            "start": "1:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "3:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        }
+                    ],
+                    "crossStick": [
+                        {
+                            "start": "0:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "1:2",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "3:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "5:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "6:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

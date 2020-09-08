@@ -1,0 +1,16 @@
+{
+    "maj7#11": "lydian",
+    "maj7#5": "lydian augmented",
+    "maj7": "major",
+    "min7b5": "locrian",
+    "minMaj7": "melodic minor",
+    "min7": "dorian",
+    "7b9": "half-whole diminished",
+    "7#9": "half-whole diminished",
+    "7alt": "altered",
+    "7#11": "lydian dominant",
+    "7#5": "whole tone",
+    "7": "mixolydian",
+    "dim7": "half-whole diminished",
+    "sus4": "phrygian"
+}

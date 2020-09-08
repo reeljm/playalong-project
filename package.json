@@ -1,0 +1,32 @@
+{
+  "name": "playalong-project",
+  "version": "1.0.0",
+  "description": "Dynamic playalong generator written in TypeScript",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "start": "rm -rf dist && npx webpack && npm run build && electron ./dist/main.js"
+  },
+  "repository": "",
+  "keywords": [
+    "Electron",
+    "typescript",
+    "jazz",
+    "music"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^9.0.4",
+    "file-loader": "^6.1.0",
+    "ts-loader": "^8.0.3",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.7",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "tone": "^14.7.39",
+    "webpack": "^4.44.1"
+  }
+}
