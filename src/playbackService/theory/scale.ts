@@ -17,18 +17,6 @@ export class Scale {
         this.type = type;
     }
 
-    public getNotesByScaleDegree(...scaleDegrees: number[]): string[] {
-        return [];
-    }
-
-    public contains(note: string): boolean {
-        return false;
-    }
-
-    public getScaleDegreeOfNote(note: string): number {
-        return -1;
-    }
-
     public static getScale(root: string, scaleType: string): Scale {
         const pitches: string[] = scaleNamesToPitches[`${root}_${scaleType}`];
         return new Scale(pitches, root, scaleType);

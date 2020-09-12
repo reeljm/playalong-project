@@ -2,6 +2,8 @@ import { Measure } from '../../measure/measure';
 import { UprightBass } from './uprightBass';
 import { TheoryService } from '../../theory/theory.service';
 import { Note } from '../../theory/note';
+import { BasslineRequestParams } from './basslineRequestParams';
+import { BasslineResponseParams } from './basslineResponseParams';
 
 export class BasslineGenerator {
 
@@ -17,35 +19,35 @@ export class BasslineGenerator {
             this.currentOctave = BasslineGenerator.DEFAULT_STARTING_OCTAVE;
         }
         if (!this.direction) {
-            this.direction = "down";
+            this.direction = "up";
         }
 
         const eventParamArray = [];
 
-        for (let i = 0; i < 4; i++) {
-            const params: any = {
-                chordTone: true,
-                lastNoteScheduled: this.lastNoteScheduled,
-                chord: currentMeasure.chords[0],
-                desiredDirection: this.direction
-            };
+        for (let i = 0; i < currentMeasure.numberOfBeats; i++) {
+            const params: BasslineRequestParams = this.newBasslineRequestParams();
+            params.lowestNote = UprightBass.LOWEST_NOTE;
+            params.highestNote = UprightBass.HIGHEST_NOTE;
+            params.chord = currentMeasure.chords[0];
+            params.desiredDirection = this.direction;
+            params.lastNoteScheduled = this.lastNoteScheduled;
 
             if (!this.lastNoteScheduled) {
                 // since we are just staring out, schedule the root:
-                params.desiredDegreeOfChord = 0;
+                params.desiredDegreeOfChord = 1;
                 params.desiredOctave = BasslineGenerator.DEFAULT_STARTING_OCTAVE;
             }
             else {
-                if (i % 0) {
-                    // schedule a chord tone. This is our default, so do nothing:
-
+                if (i % 2 === 0) {
+                    // This is beat 1 or 3. Schedule a chord tone:
+                    params.requireChordTone = true;
                 } else {
-                    // schedule a non-chord tone:
-                    params.chordTone = false;
+                    // This is beat 2 or 4. Schedule a non chord tone:
+                    params.requireChordTone = false;
                 }
             }
 
-            const noteToSchedule: Note = this.theory.getNextNote(params);
+            const response: BasslineResponseParams = this.theory.getNextBasslineNote(params);
 
             eventParamArray.push({
                 startTime: `${currentMeasure.measureNumber}:${i}:0`,
@@ -53,11 +55,21 @@ export class BasslineGenerator {
                 duration: "4n",
                 velocityOffset: 0.05,
                 probability: 1,
-                note: noteToSchedule.toPlayableString()
+                note: response.noteScheduled.toPlayableString()
             });
-            this.lastNoteScheduled = noteToSchedule;
+
+            // Save info about this schedule cycle:
+            this.lastNoteScheduled = response.noteScheduled;
+            if (this.direction === "up" && response.directionChange) {
+                this.direction = "down"
+            } else if (this.direction === "down" && response.directionChange) {
+                this.direction = "up"
+            }
         }
         return eventParamArray;
+    }
+    newBasslineRequestParams(): BasslineRequestParams {
+        return new BasslineRequestParams();
     }
 
 }

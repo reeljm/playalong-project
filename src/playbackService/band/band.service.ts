@@ -56,25 +56,25 @@ export class BandService {
 
         let currentMeasure = 0;
         const measures: Measure[] = [];
-        measures.push(new Measure(1, self.style, [{root: 'D', type: 'min7'}]));
-        measures.push(new Measure(2, self.style, [{root: 'G', type: '7'}]));
-        measures.push(new Measure(3, self.style, [{root: 'C', type: 'maj7'}]));
-        measures.push(new Measure(4, self.style, [{root: 'C', type: 'maj7'}]));
+        measures.push(new Measure(1, self.style, [{root: 'D', type: 'min7'}], 4));
+        measures.push(new Measure(2, self.style, [{root: 'G', type: '7'}], 4));
+        measures.push(new Measure(3, self.style, [{root: 'C', type: 'maj7'}], 4));
+        measures.push(new Measure(4, self.style, [{root: 'F', type: 'maj7'}], 4));
 
-        measures.push(new Measure(5, self.style, [{root: 'D', type: 'min7'}]));
-        measures.push(new Measure(6, self.style, [{root: 'G', type: '7'}]));
-        measures.push(new Measure(7, self.style, [{root: 'C', type: 'maj7'}]));
-        measures.push(new Measure(8, self.style, [{root: 'C', type: 'maj7'}]));
+        measures.push(new Measure(5, self.style, [{root: 'D', type: 'min7'}], 4));
+        measures.push(new Measure(6, self.style, [{root: 'G', type: '7'}], 4));
+        measures.push(new Measure(7, self.style, [{root: 'C', type: 'maj7'}], 4));
+        measures.push(new Measure(8, self.style, [{root: 'A', type: 'min7'}], 4));
 
-        measures.push(new Measure(9, self.style, [{root: 'D', type: 'min7'}]));
-        measures.push(new Measure(10, self.style, [{root: 'G', type: '7'}]));
-        measures.push(new Measure(11, self.style, [{root: 'C', type: 'maj7'}]));
-        measures.push(new Measure(12, self.style, [{root: 'C', type: 'maj7'}]));
+        measures.push(new Measure(9, self.style, [{root: 'D', type: 'min7'}], 4));
+        measures.push(new Measure(10, self.style, [{root: 'G', type: '7'}], 4));
+        measures.push(new Measure(11, self.style, [{root: 'C', type: 'maj7'}], 4));
+        measures.push(new Measure(12, self.style, [{root: 'C', type: 'maj7'}], 4));
 
-        measures.push(new Measure(13, self.style, [{root: 'D', type: 'min7'}]));
-        measures.push(new Measure(14, self.style, [{root: 'G', type: '7'}]));
-        measures.push(new Measure(15, self.style, [{root: 'C', type: 'maj7'}]));
-        measures.push(new Measure(16, self.style, [{root: 'C', type: 'maj7'}]));
+        measures.push(new Measure(13, self.style, [{root: 'D', type: 'min7'}], 4));
+        measures.push(new Measure(14, self.style, [{root: 'G', type: '7'}], 4));
+        measures.push(new Measure(15, self.style, [{root: 'C', type: 'maj7'}], 4));
+        measures.push(new Measure(16, self.style, [{root: 'C', type: 'maj7'}], 4));
 
         new Loop(() => {
             if (measures.length <= currentMeasure) {

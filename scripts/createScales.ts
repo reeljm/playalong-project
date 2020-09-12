@@ -7,7 +7,7 @@
         mixolydian: [2,2,1,2,2,1,2]
     };
 
-    const notes = ["A","A#","B","C","C#","D","D#","E","F","F#","G","G#"];
+    const notes = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
 
     const output: any = { };
 

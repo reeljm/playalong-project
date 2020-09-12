@@ -1,8 +1,7 @@
-const pitches = ["A","A#","B","C","C#","D","D#","E","F","F#","G","G#"];
-const lowestOctave: number = 1
-const highestOctave: number = 10
-
 export class Note {
+    private static pitches = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+    private static lowestOctave: number = 1
+    private static highestOctave: number = 10
 
     pitch: string;
     octave: number;
@@ -14,27 +13,28 @@ export class Note {
 
     public static getNote(pitch: string, octave: number): Note {
         pitch = pitch.toUpperCase();
-        if (!pitches.includes(pitch)) {
+        if (!Note.pitches.includes(pitch)) {
             return null;
         }
-        if (octave > lowestOctave && octave < highestOctave - 1) {
-            return new Note(pitch, octave);
-        }
+
+        // make sure the note is within the valid note range
+        const arr = [Note.lowestOctave, octave, Note.highestOctave].sort((n1,n2) => n1 - n2);
+        return new Note(pitch, arr[1]);
     }
 
     public toPlayableString() {
         return `${this.pitch}${this.octave}`;
     }
 
-    // public compareNotes(note1: Note, note2: Note): number {
-    //     if (note1.pitch == note2.pitch && note1.octave == note2.octave) {
-    //         return 0;
-    //     } else if (note1.octave > note2.octave ||
-    //         (note1.octave == note2.octave &&
-    //             TheoryService.pitchArray.indexOf(note1.pitch) > TheoryService.pitchArray.indexOf(note2.pitch))) {
-    //         return 1
-    //     } else {
-    //         return -1;
-    //     }
-    // }
+    public compareTo(otherNote: Note): number {
+        if (this.pitch === otherNote.pitch && this.octave === otherNote.octave) {
+            return 0;
+        } else if (this.octave > otherNote.octave ||
+            (this.octave === otherNote.octave &&
+                Note.pitches.indexOf(this.pitch) > Note.pitches.indexOf(otherNote.pitch))) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
 }

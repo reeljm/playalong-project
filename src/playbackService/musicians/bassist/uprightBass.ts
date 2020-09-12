@@ -1,9 +1,10 @@
 import { Sampler } from 'tone';
 import { Instrument } from '../instrument';
+import { Note } from '../../theory/note';
 
 export class UprightBass extends Instrument {
-    static LOWEST_NOTE = { pitch: 'E', octave: 4, interval: 0 };
-    static HIGHEST_NOTE = { pitch: 'G#', octave: 6, interval: 0 };
+    static LOWEST_NOTE = Note.getNote("E", 4);
+    static HIGHEST_NOTE = Note.getNote("G#", 6);
 
     sampler: Sampler;
 
