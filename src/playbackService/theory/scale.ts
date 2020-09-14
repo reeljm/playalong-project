@@ -18,7 +18,11 @@ export class Scale {
     }
 
     public static getScale(root: string, scaleType: string): Scale {
-        const pitches: string[] = scaleNamesToPitches[`${root}_${scaleType}`];
+        const scaleName = `${root}_${scaleType}`;
+        const pitches: string[] = scaleNamesToPitches[scaleName];
+        if (!pitches) {
+            throw Error(`Scale ${scaleName} does not exist.`);
+        }
         return new Scale(pitches, root, scaleType);
     }
 }

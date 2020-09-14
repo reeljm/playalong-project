@@ -1,4 +1,4 @@
-import { Measure } from '../measure/measure';
+import { Measure } from '../song/measure';
 
 export interface Musician {
 

@@ -1,16 +1,17 @@
 {
     "maj7#11": "lydian",
-    "maj7#5": "lydian augmented",
+    "maj7#5": "lydianAugmented",
     "maj7": "major",
     "min7b5": "locrian",
-    "minMaj7": "melodic minor",
+    "minMaj7": "melodicMinor",
     "min7": "dorian",
-    "7b9": "half-whole diminished",
-    "7#9": "half-whole diminished",
+    "7b9": "wholeHalfDiminished",
+    "7#9": "halfWholeDiminished",
     "7alt": "altered",
-    "7#11": "lydian dominant",
-    "7#5": "whole tone",
+    "7#11": "lydianDominant",
+    "7#5": "wholeTone",
     "7": "mixolydian",
-    "dim7": "half-whole diminished",
-    "sus4": "phrygian"
+    "dim7": "halfWholeDiminished",
+    "sus4": "phrygian",
+    "relative min7": "naturalMinor"
 }

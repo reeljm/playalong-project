@@ -1,5 +1,5 @@
 import { Musician } from '../musician';
-import { Measure } from '../../measure/measure';
+import { Measure } from '../../song/measure';
 import { UprightBass } from './uprightBass';
 import { EventBuilder } from '../../eventBuilder/eventBuilder';
 import { BasslineGenerator } from './basslineGenerator';

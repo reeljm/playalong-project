@@ -1,4 +1,4 @@
-import { Measure } from '../../measure/measure';
+import { Measure } from '../../song/measure';
 import { UprightBass } from './uprightBass';
 import { TheoryService } from '../../theory/theory.service';
 import { Note } from '../../theory/note';
@@ -7,7 +7,8 @@ import { BasslineResponseParams } from './basslineResponseParams';
 
 export class BasslineGenerator {
 
-    private static DEFAULT_STARTING_OCTAVE = 5;
+    private static DEFAULT_STARTING_OCTAVE = 6;
+    private static DEFAULT_STARTING_DIRECTION = "down"
     private lastNoteScheduled: Note = null;
     private currentOctave: number;
     private direction: string;
@@ -19,7 +20,7 @@ export class BasslineGenerator {
             this.currentOctave = BasslineGenerator.DEFAULT_STARTING_OCTAVE;
         }
         if (!this.direction) {
-            this.direction = "up";
+            this.direction = BasslineGenerator.DEFAULT_STARTING_DIRECTION;
         }
 
         const eventParamArray = [];
@@ -29,6 +30,7 @@ export class BasslineGenerator {
             params.lowestNote = UprightBass.LOWEST_NOTE;
             params.highestNote = UprightBass.HIGHEST_NOTE;
             params.chord = currentMeasure.chords[0];
+            params.nextChord = currentMeasure.nextMeasure ? currentMeasure.nextMeasure.chords[0] : null;
             params.desiredDirection = this.direction;
             params.lastNoteScheduled = this.lastNoteScheduled;
 
@@ -38,14 +40,16 @@ export class BasslineGenerator {
                 params.desiredOctave = BasslineGenerator.DEFAULT_STARTING_OCTAVE;
             }
             else {
-                if (i % 2 === 0) {
-                    // This is beat 1 or 3. Schedule a chord tone:
+                if (i % currentMeasure.numberOfBeats === 0) {
+                    // this is a downbeat, schedule a chord tone:
                     params.requireChordTone = true;
                 } else {
-                    // This is beat 2 or 4. Schedule a non chord tone:
+                    // we dont need a chord tone:
                     params.requireChordTone = false;
                 }
             }
+
+            params.numberOfBeatsUntilNextChord = currentMeasure.numberOfBeats - i;
 
             const response: BasslineResponseParams = this.theory.getNextBasslineNote(params);
 

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Dynamic playalong generator written in TypeScript",
   "scripts": {
+    "createScales": "npx ts-node scripts/createScales.ts",
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "tslint -c tslint.json -p tsconfig.json",
@@ -21,6 +22,7 @@
     "electron": "^9.0.4",
     "file-loader": "^6.1.0",
     "ts-loader": "^8.0.3",
+    "ts-node": "^9.0.0",
     "tslint": "^6.1.2",
     "typescript": "^3.9.7",
     "webpack-cli": "^3.3.12"

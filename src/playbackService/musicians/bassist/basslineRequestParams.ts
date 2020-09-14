@@ -10,4 +10,6 @@ export class BasslineRequestParams {
     lastNoteScheduled?: Note;
     desiredDegreeOfChord?: number;
     desiredOctave?: number;
+    nextChord: Chord;
+    numberOfBeatsUntilNextChord: number;
 }
