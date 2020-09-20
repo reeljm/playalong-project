@@ -4,8 +4,6 @@ import { Note } from './note';
 import { BasslineRequestParams } from '../musicians/bassist/basslineRequestParams';
 import { BasslineResponseParams } from '../musicians/bassist/basslineResponseParams';
 import { MusicUtility } from './pitchArray';
-import { write } from 'fs';
-import { Abs } from 'tone';
 
 export class TheoryService {
 
@@ -64,11 +62,12 @@ export class TheoryService {
             nextNote = chordToneNotesAndDistances[0].note;
 
             // this is the last beat of the current chord. recalculate a more graceful resolution to next chord:
-            if (params.numberOfBeatsUntilNextChord === 1) {
+            if (params.isLastBeatOfCurrentChord || params.nextBeatIsStrongBeat) {
                 const nextChordRoot: string = this.parseEnharmonicPitch(params.nextChord.root);
                 const nextChordScaleType: string = this.chordsToScales[params.nextChord.type];
                 const nextScale: Scale = this.getScale(nextChordRoot, nextChordScaleType);
-
+                
+                // pick which note we want to target:
                 const rootOfNextChord: Note = this.getNoteInClosestOctave(nextScale.pitches[0], lastNote);
                 const fifthOfNextChord: Note = this.getNoteInClosestOctave(nextScale.pitches[4], lastNote);
 
@@ -77,16 +76,18 @@ export class TheoryService {
 
                 let targetNote: Note = null;
                 let distanceFromLastNoteToTargetNote: number = 0;
-                console.log("next root:", rootOfNextChord.toPlayableString(), "distance:",distanceToNextRoot);
-                console.log("next 5th:", fifthOfNextChord.toPlayableString(), "distance:",distanceToNext5th);
-                if (Math.abs(distanceToNextRoot) <= Math.abs(distanceToNext5th)) {
+                if (params.beatsAlreadySpentOnCurrentChord < 2) {
+                    // the current chord only lasts for 1 or 2 beats. we need to target the next root
+                    console.log("last beat of a 2 beat chord change");
+                    targetNote = rootOfNextChord;
+                    distanceFromLastNoteToTargetNote = distanceToNextRoot;
+                }
+                else if (Math.abs(distanceToNextRoot) <= Math.abs(distanceToNext5th)) {
                     // next root is equally close/closer than the next 5th:
-                    console.log("next root!");
                     targetNote = rootOfNextChord;
                     distanceFromLastNoteToTargetNote = distanceToNextRoot;
                 } else {
                     // next 5th is closer than the next root:
-                    console.log("next 5th!");
                     targetNote = fifthOfNextChord;
                     distanceFromLastNoteToTargetNote = distanceToNext5th;
                 }
@@ -111,7 +112,6 @@ export class TheoryService {
                     nextNote = this.transpose(potentialNextNote, 1);
                     nextDirection = "down";
                 } else if (distanceFromLastNoteToTargetNote === 0) {
-                    console.log("SAME NOTE!!!");
                     if (params.desiredDirection === "up") {
                         nextNote = this.transpose(potentialNextNote, 1);
                         nextDirection = "down";
@@ -121,9 +121,33 @@ export class TheoryService {
                         nextDirection = "up";
                     }
                 } else {
-                    // we have a step larger than a whole step, there is a scale degree we can use:
-                    if (distanceFromLastNoteToTargetNote > 0) {
-                        
+                    // we have a distance larger than a whole step, pick the closest scale degree:
+
+                    // check if the target note is in our currrent scale:
+                    if (scale.pitches.includes(targetNote.pitch)) {
+                        let indexCurrentScale = scale.pitches.indexOf(targetNote.pitch);
+                        if (indexCurrentScale > 0) {
+                            if (distanceFromLastNoteToTargetNote > 0) {
+                                indexCurrentScale = indexCurrentScale - 1;
+                                nextDirection = "up";
+                                console.log(nextDirection);
+                            } else {
+                                indexCurrentScale = indexCurrentScale + 1;
+                                nextDirection = "down";
+                                console.log(nextDirection);
+                            }
+                            nextNote = this.getNoteInClosestOctave(scale.pitches[indexCurrentScale], targetNote);
+                        } else {
+                            if (distanceFromLastNoteToTargetNote > 0) {
+                                nextNote = this.transpose(targetNote, -1);
+                                console.log(nextDirection);
+                                nextDirection = "up";
+                            } else {
+                                nextNote = this.transpose(targetNote, + 1);
+                                console.log(nextDirection);
+                                nextDirection = "down";
+                            }
+                        }
                     }
                 }
 

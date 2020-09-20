@@ -1,10 +1,14 @@
 export class Chord {
 
-    type: string;
     root: string;
+    type: string;
 
-    constructor(chordType: string, chordRoot: string) {
-        this.type = chordType;
+    constructor(chordRoot: string, chordType: string) {
         this.root = chordRoot;
+        this.type = chordType;
+    }
+
+    public equals(chord: Chord): boolean {
+        return this.type === chord.type && this.root === chord.root;
     }
 }

@@ -8,13 +8,14 @@ import { Chord } from '../../../../src/playbackService/theory/chord';
 
 export class BasslineGenerator {
 
-    private static DEFAULT_STARTING_OCTAVE = 6;
-    private static DEFAULT_STARTING_DIRECTION = "down"
+    private static DEFAULT_STARTING_OCTAVE = 5;
+    private static DEFAULT_STARTING_DIRECTION = "up"
     private previousNoteScheduled: Note = null;
     private previousChord: Chord = null;
     private currentOctave: number;
     private direction: string;
     private presheduledNotes: Note[] = [];
+    private beatsAlreadySpentOnCurrentChord: number = 0;
 
     constructor(private theory: TheoryService) { }
 
@@ -28,10 +29,18 @@ export class BasslineGenerator {
 
         const eventParamArray = [];
 
-        for (let i = 0; i < currentMeasure.numberOfBeats; i++) {
+        for (let currentBeat = 0; currentBeat < currentMeasure.numberOfBeats; currentBeat++) {
+            if (!currentMeasure.nextMeasure && currentBeat != 0) {
+                break;
+            }
             let noteToSchedule: Note = null;
-
-            const currentChord = currentMeasure.chords[0];
+            const currentChord: Chord = currentMeasure.chords[currentBeat];
+            let nextChord: Chord = null;
+            if (currentBeat === currentMeasure.numberOfBeats - 1) {
+                nextChord = currentMeasure.nextMeasure ? currentMeasure.nextMeasure.chords[0] : null;
+            } else {
+                nextChord = currentMeasure.chords[currentBeat + 1];
+            }
 
             if (this.presheduledNotes.length > 0) {
                 noteToSchedule = this.presheduledNotes[0];
@@ -43,16 +52,18 @@ export class BasslineGenerator {
                 params.previousNoteScheduled = this.previousNoteScheduled;
                 params.previousChord = this.previousChord;
                 params.currentChord = currentChord;
-                params.nextChord = currentMeasure.nextMeasure ? currentMeasure.nextMeasure.chords[0] : null;
+                params.nextChord = nextChord;
                 params.desiredDirection = this.direction;
+                params.beatsAlreadySpentOnCurrentChord = this.beatsAlreadySpentOnCurrentChord;
+                params.nextBeatIsStrongBeat = currentBeat === currentMeasure.numberOfBeats - 1;
 
-                if (!this.previousNoteScheduled) {
-                    // since we are just staring out, schedule the root:
+                if (!this.previousNoteScheduled || !nextChord) {
+                    // if we are starting or ending, schedule the root:
                     params.desiredDegreeOfChord = 1;
                     params.desiredOctave = BasslineGenerator.DEFAULT_STARTING_OCTAVE;
                 }
                 else {
-                    if (i % currentMeasure.numberOfBeats === 0) {
+                    if (currentBeat % currentMeasure.numberOfBeats === 0) {
                         // this is a downbeat, schedule a chord tone:
                         params.requireChordTone = true;
                     } else {
@@ -60,7 +71,8 @@ export class BasslineGenerator {
                         params.requireChordTone = false;
                     }
                 }
-                params.numberOfBeatsUntilNextChord = currentMeasure.numberOfBeats - i;
+
+                params.isLastBeatOfCurrentChord = !currentChord.equals(nextChord);
                 const response: BasslineResponseParams = this.theory.getNextBasslineNote(params);
                 noteToSchedule = response.notesScheduled[0];
                 response.notesScheduled.shift();
@@ -68,6 +80,15 @@ export class BasslineGenerator {
 
                 // Save info about this schedule cycle:
                 this.previousNoteScheduled = noteToSchedule;
+                if (this.previousChord && this.previousChord.equals(currentChord)) {
+                    this.beatsAlreadySpentOnCurrentChord++;
+                } else {
+                    if (this.previousChord) {
+                        console.log("chord from previous beat:", this.previousChord.root, this.previousChord.type);
+                        console.log("current chord beat:", currentChord.root, currentChord.type);
+                    }
+                    this.beatsAlreadySpentOnCurrentChord = 0;
+                }
                 this.previousChord = currentChord;
                 if (this.direction === "up" && response.directionChange) {
                     this.direction = "down"
@@ -76,8 +97,7 @@ export class BasslineGenerator {
                 }
             }
 
-            
-            if (i === 0) {
+            if (currentBeat === 0) {
             console.log("---------------------");
                 if (currentMeasure.measureNumber % 16 === 1) {
                     console.log("===========top=============");
@@ -85,9 +105,8 @@ export class BasslineGenerator {
             }
             console.log(noteToSchedule.toPlayableString());
 
-
             eventParamArray.push({
-                startTime: `${currentMeasure.measureNumber}:${i}:0`,
+                startTime: `${currentMeasure.measureNumber}:${currentBeat}:0`,
                 velocity: 0.8,
                 duration: "4n",
                 velocityOffset: 0.05,

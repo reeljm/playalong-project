@@ -12,5 +12,7 @@ export class BasslineRequestParams {
     desiredOctave?: number;
     nextChord: Chord;
     previousChord?: Chord;
-    numberOfBeatsUntilNextChord: number;
+    isLastBeatOfCurrentChord: boolean;
+    beatsAlreadySpentOnCurrentChord: number;
+    nextBeatIsStrongBeat: boolean;
 }
