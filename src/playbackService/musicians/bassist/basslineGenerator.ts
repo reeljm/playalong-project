@@ -30,7 +30,7 @@ export class BasslineGenerator {
         const eventParamArray = [];
 
         for (let currentBeat = 0; currentBeat < currentMeasure.numberOfBeats; currentBeat++) {
-            if (!currentMeasure.nextMeasure && currentBeat != 0) {
+            if (!currentMeasure.nextMeasure && currentBeat !== 0) {
                 break;
             }
             let noteToSchedule: Note = null;
@@ -83,10 +83,6 @@ export class BasslineGenerator {
                 if (this.previousChord && this.previousChord.equals(currentChord)) {
                     this.beatsAlreadySpentOnCurrentChord++;
                 } else {
-                    if (this.previousChord) {
-                        console.log("chord from previous beat:", this.previousChord.root, this.previousChord.type);
-                        console.log("current chord beat:", currentChord.root, currentChord.type);
-                    }
                     this.beatsAlreadySpentOnCurrentChord = 0;
                 }
                 this.previousChord = currentChord;
@@ -97,12 +93,6 @@ export class BasslineGenerator {
                 }
             }
 
-            if (currentBeat === 0) {
-            console.log("---------------------");
-                if (currentMeasure.measureNumber % 16 === 1) {
-                    console.log("===========top=============");
-                }
-            }
             console.log(noteToSchedule.toPlayableString());
 
             eventParamArray.push({

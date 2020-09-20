@@ -35,7 +35,6 @@ export class TheoryService {
             }
 
             // go through these notes in the octave below, the current octave, and the octave above to see which note is closest:
-            let scaleDegree = null;
             let chordToneNotesAndDistances: any[] = [];
             for (let octave = currentOctave - 1; octave <= currentOctave + 1; octave++) {
                 possibleIntervals.forEach(interval => {
@@ -66,7 +65,7 @@ export class TheoryService {
                 const nextChordRoot: string = this.parseEnharmonicPitch(params.nextChord.root);
                 const nextChordScaleType: string = this.chordsToScales[params.nextChord.type];
                 const nextScale: Scale = this.getScale(nextChordRoot, nextChordScaleType);
-                
+
                 // pick which note we want to target:
                 const rootOfNextChord: Note = this.getNoteInClosestOctave(nextScale.pitches[0], lastNote);
                 const fifthOfNextChord: Note = this.getNoteInClosestOctave(nextScale.pitches[4], lastNote);
@@ -78,7 +77,6 @@ export class TheoryService {
                 let distanceFromLastNoteToTargetNote: number = 0;
                 if (params.beatsAlreadySpentOnCurrentChord < 2) {
                     // the current chord only lasts for 1 or 2 beats. we need to target the next root
-                    console.log("last beat of a 2 beat chord change");
                     targetNote = rootOfNextChord;
                     distanceFromLastNoteToTargetNote = distanceToNextRoot;
                 }
@@ -93,31 +91,30 @@ export class TheoryService {
                 }
 
                 // set the next note to initially be the note we are targeting:
-                let potentialNextNote = targetNote;
                 let nextDirection = params.desiredDirection;
                 if (distanceFromLastNoteToTargetNote === 2) {
                     // whole step above next target, schedule half step below:
-                    nextNote = this.transpose(potentialNextNote, -1);
+                    nextNote = this.transpose(targetNote, -1);
                     nextDirection = "up";
                 } else if (distanceFromLastNoteToTargetNote === -2) {
                     // whole step below next target, schedule half step above:
-                    nextNote = this.transpose(potentialNextNote, 1);
+                    nextNote = this.transpose(targetNote, 1);
                     nextDirection = "down";
                 } else if (distanceFromLastNoteToTargetNote === 1) {
                     // halfstep step above next target, schedule half step below:
-                    nextNote = this.transpose(potentialNextNote, -1);
+                    nextNote = this.transpose(targetNote, -1);
                     nextDirection = "up";
                 } else if (distanceFromLastNoteToTargetNote === -1) {
                     // halfstep step below next target, schedule half step above:
-                    nextNote = this.transpose(potentialNextNote, 1);
+                    nextNote = this.transpose(targetNote, 1);
                     nextDirection = "down";
                 } else if (distanceFromLastNoteToTargetNote === 0) {
                     if (params.desiredDirection === "up") {
-                        nextNote = this.transpose(potentialNextNote, 1);
+                        nextNote = this.transpose(targetNote, 1);
                         nextDirection = "down";
                     }
                     else if (params.desiredDirection === "down") {
-                        nextNote = this.transpose(potentialNextNote, -1);
+                        nextNote = this.transpose(targetNote, -1);
                         nextDirection = "up";
                     }
                 } else {
@@ -130,21 +127,17 @@ export class TheoryService {
                             if (distanceFromLastNoteToTargetNote > 0) {
                                 indexCurrentScale = indexCurrentScale - 1;
                                 nextDirection = "up";
-                                console.log(nextDirection);
                             } else {
                                 indexCurrentScale = indexCurrentScale + 1;
                                 nextDirection = "down";
-                                console.log(nextDirection);
                             }
                             nextNote = this.getNoteInClosestOctave(scale.pitches[indexCurrentScale], targetNote);
                         } else {
                             if (distanceFromLastNoteToTargetNote > 0) {
                                 nextNote = this.transpose(targetNote, -1);
-                                console.log(nextDirection);
                                 nextDirection = "up";
                             } else {
                                 nextNote = this.transpose(targetNote, + 1);
-                                console.log(nextDirection);
                                 nextDirection = "down";
                             }
                         }
@@ -179,7 +172,7 @@ export class TheoryService {
         let pitchIndex = MusicUtility.pitchArray.indexOf(note.pitch);
         let currentOctave = note.octave;
         const numberOfTones = MusicUtility.pitchArray.length;
-        while (semitones != 0) {
+        while (semitones !== 0) {
             if (semitones < 0) {
                 pitchIndex = pitchIndex - 1;
                 semitones++;
@@ -187,7 +180,7 @@ export class TheoryService {
                 pitchIndex = pitchIndex + 1;
                 semitones--;
             }
-            
+
             if (pitchIndex < 0) {
                 pitchIndex = numberOfTones - 1;
                 currentOctave--;
@@ -200,9 +193,9 @@ export class TheoryService {
     }
 
     private getNoteInClosestOctave(pitch: string, note: Note): Note {
-        let lowerOctaveNote: Note = this.getNote(pitch, note.octave-1);
-        let currentOctaveNote: Note = this.getNote(pitch, note.octave);
-        let higherOctaveNote: Note = this.getNote(pitch, note.octave+1);
+        const lowerOctaveNote: Note = this.getNote(pitch, note.octave-1);
+        const currentOctaveNote: Note = this.getNote(pitch, note.octave);
+        const higherOctaveNote: Note = this.getNote(pitch, note.octave+1);
 
         const lowerOctaveDist = Math.abs(lowerOctaveNote.distanceTo(note));
         const currentOctaveDist = Math.abs(currentOctaveNote.distanceTo(note));
