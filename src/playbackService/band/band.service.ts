@@ -29,6 +29,7 @@ export class BandService {
 
     public play() {
         Transport.swing = 0.5;
+        Transport.bpm.value = 150;
         if (!this.initialized) {
             this.initialize()
                 .then(() => Transport.start())

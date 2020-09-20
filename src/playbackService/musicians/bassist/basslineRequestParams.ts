@@ -3,13 +3,14 @@ import { Chord } from "../../theory/chord";
 
 export class BasslineRequestParams {
     requireChordTone: boolean = true;
-    chord: Chord;
+    currentChord: Chord;
     desiredDirection: string;
     highestNote: Note;
     lowestNote: Note;
-    lastNoteScheduled?: Note;
+    previousNoteScheduled?: Note;
     desiredDegreeOfChord?: number;
     desiredOctave?: number;
     nextChord: Chord;
+    previousChord?: Chord;
     numberOfBeatsUntilNextChord: number;
 }

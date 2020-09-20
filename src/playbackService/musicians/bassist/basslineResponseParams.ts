@@ -1,6 +1,6 @@
 import { Note } from "../../theory/note";
 
 export class BasslineResponseParams {
-    noteScheduled: Note;
+    notesScheduled: Note[];
     directionChange: boolean
 }
