@@ -57,7 +57,7 @@ export class BandService {
         const self = this;
 
         const song: Song = new Song();
-        const numChoruses: number = 2;
+        const numChoruses: number = 1;
         const chorusLength: number = 32;
 
         let i = 0;

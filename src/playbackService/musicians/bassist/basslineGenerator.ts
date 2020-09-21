@@ -9,8 +9,8 @@ import { Scale } from '../../../../src/playbackService/theory/scale';
 
 export class BasslineGenerator {
 
-    private static DEFAULT_STARTING_OCTAVE: number = 3;
-    private static DEFAULT_STARTING_DIRECTION: string = "down"
+    private static DEFAULT_STARTING_OCTAVE: number = 2;
+    private static DEFAULT_STARTING_DIRECTION: string = "up"
     private previousNoteScheduled: Note = null;
     private previousChord: Chord = null;
     private currentOctave: number;
@@ -32,8 +32,21 @@ export class BasslineGenerator {
         const eventParamArray = [];
 
         for (let currentBeat = 0; currentBeat < currentMeasure.numberOfBeats; currentBeat++) {
-            if (!currentMeasure.nextMeasure && currentBeat !== 0) {
-                break;
+            let noteDuration: string = "4n";
+            if (!currentMeasure.nextMeasure) {
+                // the tune is over:
+                if (currentBeat === 0) {
+                    noteDuration = "4m";
+                } else {
+                    break;
+                }
+            }
+            if (currentBeat === 1) {
+                // randomly choose to change direction:
+                const dirSwitch = Math.random() >= 0.9;
+                if (dirSwitch) {
+                    this.direction = this.direction === "up" ? "down" : "up";
+                }
             }
             let noteToSchedule: Note = null;
             const currentChord: Chord = currentMeasure.chords[currentBeat];
@@ -103,7 +116,7 @@ export class BasslineGenerator {
             eventParamArray.push({
                 startTime: `${currentMeasure.measureNumber}:${currentBeat}:0`,
                 velocity: 0.8,
-                duration: "4n",
+                duration: noteDuration,
                 velocityOffset: 0.01,
                 probability: 1,
                 note: noteToSchedule.toPlayableString()
@@ -174,7 +187,7 @@ export class BasslineGenerator {
                 let targetNote: Note = null;
                 let distanceFromLastNoteToTargetNote: number = 0;
                 if (this.beatsAlreadySpentOnCurrentChord < 2) {
-                    // the current chord only lasts for 1 or 2 beats. we need to target the next root
+                    // the current chord only lasts for 1 or 2 beats. we need to target the next root:
                     targetNote = rootOfNextChord;
                     distanceFromLastNoteToTargetNote = distanceToNextRoot;
                 }
