@@ -8,14 +8,15 @@ import { Chord } from '../../../../src/playbackService/theory/chord';
 
 export class BasslineGenerator {
 
-    private static DEFAULT_STARTING_OCTAVE = 3;
-    private static DEFAULT_STARTING_DIRECTION = "down"
+    private static DEFAULT_STARTING_OCTAVE: number = 3;
+    private static DEFAULT_STARTING_DIRECTION: string = "down"
     private previousNoteScheduled: Note = null;
     private previousChord: Chord = null;
     private currentOctave: number;
     private direction: string;
     private presheduledNotes: Note[] = [];
     private beatsAlreadySpentOnCurrentChord: number = 0;
+    private static DIFFICULT_CHORD_TYPES: string[] = ["min7b5", "dim7", "7b9"];
 
     constructor(private theory: TheoryService) { }
 
@@ -63,12 +64,12 @@ export class BasslineGenerator {
                     params.desiredOctave = BasslineGenerator.DEFAULT_STARTING_OCTAVE;
                 }
                 else {
-                    if (currentBeat % currentMeasure.numberOfBeats === 0) {
-                        // this is a downbeat, schedule a chord tone:
-                        params.requireChordTone = true;
+                    if (currentBeat % currentMeasure.numberOfBeats === 0 || BasslineGenerator.DIFFICULT_CHORD_TYPES.includes(currentChord.type)) {
+                        // this is a downbeat, schedule tje root:
+                        params.requireRoot = true;
                     } else {
-                        // we don't need a chord tone:
-                        params.requireChordTone = false;
+                        // we don't need to schedule the root:
+                        params.requireRoot = false;
                     }
                 }
 
@@ -99,7 +100,7 @@ export class BasslineGenerator {
                 startTime: `${currentMeasure.measureNumber}:${currentBeat}:0`,
                 velocity: 0.8,
                 duration: "4n",
-                velocityOffset: 0.05,
+                velocityOffset: 0.01,
                 probability: 1,
                 note: noteToSchedule.toPlayableString()
             });

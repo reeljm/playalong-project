@@ -28,7 +28,7 @@ export class TheoryService {
             const lastNote = params.previousNoteScheduled;
 
             let possibleIntervals: number[] = null
-            if (params.requireChordTone) {
+            if (params.requireRoot) {
                 possibleIntervals = [0,4];
             } else {
                 possibleIntervals = Array.from(Array(scale.pitches.length).keys());
