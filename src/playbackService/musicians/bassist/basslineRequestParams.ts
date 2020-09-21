@@ -8,7 +8,7 @@ export class BasslineRequestParams {
     highestNote: Note;
     lowestNote: Note;
     previousNoteScheduled?: Note;
-    desiredDegreeOfChord?: number;
+    desiredScaleDegree?: number;
     desiredOctave?: number;
     nextChord: Chord;
     previousChord?: Chord;

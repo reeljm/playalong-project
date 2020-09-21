@@ -57,23 +57,23 @@ export class BasslineGenerator {
                 params.beatsAlreadySpentOnCurrentChord = this.beatsAlreadySpentOnCurrentChord;
                 params.nextBeatIsStrongBeat = currentBeat === currentMeasure.numberOfBeats - 1;
                 params.isLastBeatOfCurrentChord = !currentChord.equals(nextChord);
+                params.requireRoot = false;
 
                 const isDifficultChord = BasslineGenerator.DIFFICULT_CHORD_TYPES.includes(currentChord.type);
 
                 // see if this is a special case:
                 if (!this.previousNoteScheduled || !nextChord) {
                     // if we are starting or ending, schedule the root:
-                    params.desiredDegreeOfChord = 1;
+                    params.desiredScaleDegree = 0;
                     params.desiredOctave = BasslineGenerator.DEFAULT_STARTING_OCTAVE;
-                }
-                else {
-                    if (currentBeat % currentMeasure.numberOfBeats === 0 || isDifficultChord) {
-                        // this is a downbeat, schedule tje root:
-                        params.requireRoot = true;
-                    } else {
-                        // we don't need to schedule the root:
-                        params.requireRoot = false;
-                    }
+                } else if (currentBeat % currentMeasure.numberOfBeats === 0) {
+                    // this is a downbeat, schedule the root:
+                    params.requireRoot = true;
+                } else if (isDifficultChord) {
+                    const scaleDegrees: number[] = [0, 2, 4];
+                    const randomDegree = scaleDegrees[Math.floor(Math.random() * scaleDegrees.length)];
+                    params.desiredScaleDegree = randomDegree;
+                    params.desiredOctave = this.currentOctave;
                 }
 
                 // request the next note:
@@ -118,9 +118,9 @@ export class BasslineGenerator {
         let directionChange = false;
 
         let nextNote: Note = null;
-        if (params.desiredDegreeOfChord != null) {
+        if (params.desiredScaleDegree != null) {
             // if we know what scale degree we want to play, just pick it out from the scale:
-            const indexInScale = params.desiredDegreeOfChord - 1;
+            const indexInScale = params.desiredScaleDegree;
             nextNote = this.theory.getNote(scale.pitches[indexInScale], params.desiredOctave);
         } else {
             // use lastNoteScheduled, chordTone, scale, and desiredDirection to get the next note:
