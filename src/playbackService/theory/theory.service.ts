@@ -1,8 +1,6 @@
 import rawChordsToScales from '../staticFiles/chordsToScales.json';
 import { Scale } from './scale';
 import { Note } from './note';
-import { BasslineRequestParams } from '../musicians/bassist/basslineRequestParams';
-import { BasslineResponseParams } from '../musicians/bassist/basslineResponseParams';
 import { MusicUtility } from './pitchArray';
 import { Chord } from './chord';
 
@@ -53,10 +51,6 @@ export class TheoryService {
         else if (min === higherOctaveDist) {
             return higherOctaveNote;
         }
-    }
-
-    public newBasslineResponseParams(): BasslineResponseParams {
-        return new BasslineResponseParams();
     }
 
     public getNote(pitch: string, octave: number): Note {

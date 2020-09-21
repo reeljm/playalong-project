@@ -49,8 +49,6 @@ export class BasslineGenerator {
                 this.presheduledNotes.shift();
             } else {
                 const params: BasslineRequestParams = this.newBasslineRequestParams();
-                params.lowestNote = UprightBass.LOWEST_NOTE;
-                params.highestNote = UprightBass.HIGHEST_NOTE;
                 params.previousNoteScheduled = this.previousNoteScheduled;
                 params.previousChord = this.previousChord;
                 params.currentChord = currentChord;
@@ -110,7 +108,6 @@ export class BasslineGenerator {
                 probability: 1,
                 note: noteToSchedule.toPlayableString()
             });
-
         }
         return eventParamArray;
     }
@@ -176,7 +173,7 @@ export class BasslineGenerator {
 
                 let targetNote: Note = null;
                 let distanceFromLastNoteToTargetNote: number = 0;
-                if (params.beatsAlreadySpentOnCurrentChord < 2) {
+                if (this.beatsAlreadySpentOnCurrentChord < 2) {
                     // the current chord only lasts for 1 or 2 beats. we need to target the next root
                     targetNote = rootOfNextChord;
                     distanceFromLastNoteToTargetNote = distanceToNextRoot;
@@ -253,12 +250,12 @@ export class BasslineGenerator {
         }
 
         // make sure the note is within the instrument's range:
-        while (nextNote.compareTo(params.highestNote) === 1) {
+        while (nextNote.compareTo(UprightBass.HIGHEST_NOTE) === 1) {
             nextNote = Note.getNote(nextNote.pitch, nextNote.octave - 1);
             directionChange = true;
         }
 
-        while (nextNote.compareTo(params.lowestNote) === -1) {
+        while (nextNote.compareTo(UprightBass.LOWEST_NOTE) === -1) {
             nextNote = Note.getNote(nextNote.pitch, nextNote.octave + 1);
             directionChange = true;
         }
