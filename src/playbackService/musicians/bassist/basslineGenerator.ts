@@ -8,8 +8,8 @@ import { Chord } from '../../../../src/playbackService/theory/chord';
 
 export class BasslineGenerator {
 
-    private static DEFAULT_STARTING_OCTAVE = 5;
-    private static DEFAULT_STARTING_DIRECTION = "up"
+    private static DEFAULT_STARTING_OCTAVE = 3;
+    private static DEFAULT_STARTING_DIRECTION = "down"
     private previousNoteScheduled: Note = null;
     private previousChord: Chord = null;
     private currentOctave: number;
