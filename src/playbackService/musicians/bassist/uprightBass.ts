@@ -5,6 +5,8 @@ import { Note } from '../../theory/note';
 export class UprightBass extends Instrument {
     static LOWEST_NOTE = Note.getNote("E", 4);
     static HIGHEST_NOTE = Note.getNote("G#", 6);
+    // static LOWEST_NOTE = { pitch: 'E', octave: 4, interval: 0 };
+    // static HIGHEST_NOTE = { pitch: 'Gs', octave: 6, interval: 0 };
 
     sampler: Sampler;
 
@@ -13,35 +15,38 @@ export class UprightBass extends Instrument {
         return new Promise((resolve, reject) => {
             try {
                 const fileConfig = {
-                    'E4.mp3':   './src/playbackService/staticFiles/samples/upright-bass/E4.mp3',  // 1
-                    'F4.mp3':   './src/playbackService/staticFiles/samples/upright-bass/F4.mp3',
-                    'F#4.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Fs4.mp3',
-                    'G4.mp3':   './src/playbackService/staticFiles/samples/upright-bass/G4.mp3',
-                    'G#4.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Gs4.mp3',
-                    'A4.mp3':   './src/playbackService/staticFiles/samples/upright-bass/A4.mp3',
-                    'A#4.mp3':  './src/playbackService/staticFiles/samples/upright-bass/As4.mp3',
-                    'B4.mp3':   './src/playbackService/staticFiles/samples/upright-bass/B4.mp3',
-                    'C5.mp3':   './src/playbackService/staticFiles/samples/upright-bass/C5.mp3',
-                    'C#5.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Cs5.mp3',
-                    'D5.mp3':   './src/playbackService/staticFiles/samples/upright-bass/D5.mp3',
-                    'D#5.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Ds5.mp3', // 1
-                    'E5.mp3':   './src/playbackService/staticFiles/samples/upright-bass/E5.mp3',  // 2
-                    'F5.mp3':   './src/playbackService/staticFiles/samples/upright-bass/F5.mp3',
-                    'F#5.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Fs5.mp3',
-                    'G5.mp3':   './src/playbackService/staticFiles/samples/upright-bass/G5.mp3',
-                    'G#5.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Gs5.mp3',
-                    'A5.mp3':   './src/playbackService/staticFiles/samples/upright-bass/A5.mp3',
-                    'A#5.mp3':  './src/playbackService/staticFiles/samples/upright-bass/As5.mp3',
-                    'B5.mp3':   './src/playbackService/staticFiles/samples/upright-bass/B5.mp3',
-                    'C6.mp3':   './src/playbackService/staticFiles/samples/upright-bass/C6.mp3',
-                    'C#6.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Cs6.mp3',
-                    'D6.mp3':   './src/playbackService/staticFiles/samples/upright-bass/D6.mp3',
-                    'D#6.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Ds6.mp3', // 2
-                    'E6.mp3':   './src/playbackService/staticFiles/samples/upright-bass/E6.mp3',  // 3
-                    'F6.mp3':   './src/playbackService/staticFiles/samples/upright-bass/F6.mp3',
-                    'F#6.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Fs6.mp3',
-                    'G6.mp3':   './src/playbackService/staticFiles/samples/upright-bass/G6.mp3',
-                    'G#6.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Gs6.mp3',
+                    'E_1.mp3':   './src/playbackService/staticFiles/samples/upright-bass/E_1.mp3',  // 1
+                    'F_1.mp3':   './src/playbackService/staticFiles/samples/upright-bass/F_1.mp3',
+                    'Fs_1.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Fs_1.mp3',
+                    'G_1.mp3':   './src/playbackService/staticFiles/samples/upright-bass/G_1.mp3',
+                    'Gs_1.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Gs_1.mp3',
+                    'A_1.mp3':   './src/playbackService/staticFiles/samples/upright-bass/A_1.mp3',
+                    'As_1.mp3':  './src/playbackService/staticFiles/samples/upright-bass/As_1.mp3',
+                    'B_1.mp3':   './src/playbackService/staticFiles/samples/upright-bass/B_1.mp3',
+                    'C_2.mp3':   './src/playbackService/staticFiles/samples/upright-bass/C_2.mp3',
+                    'Cs_2.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Cs_2.mp3',
+                    'D_2.mp3':   './src/playbackService/staticFiles/samples/upright-bass/D_2.mp3',
+                    'Ds_2.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Ds_2.mp3',
+                    'E_2.mp3':   './src/playbackService/staticFiles/samples/upright-bass/E_2.mp3',
+                    'F_2.mp3':   './src/playbackService/staticFiles/samples/upright-bass/F_2.mp3',
+                    'Fs_2.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Fs_2.mp3',
+                    'G_2.mp3':   './src/playbackService/staticFiles/samples/upright-bass/G_2.mp3',
+                    'Gs_2.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Gs_2.mp3',
+                    'A_2.mp3':   './src/playbackService/staticFiles/samples/upright-bass/A_2.mp3',
+                    'As_2.mp3':  './src/playbackService/staticFiles/samples/upright-bass/As_2.mp3',
+                    'B_2.mp3':   './src/playbackService/staticFiles/samples/upright-bass/B_2.mp3',
+                    'C_3.mp3':   './src/playbackService/staticFiles/samples/upright-bass/C_3.mp3',
+                    'Cs_3.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Cs_3.mp3',
+                    'D_3.mp3':   './src/playbackService/staticFiles/samples/upright-bass/D_3.mp3',
+                    'Ds_3.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Ds_3.mp3',
+                    'E_3.mp3':   './src/playbackService/staticFiles/samples/upright-bass/E_3.mp3',
+                    'F_3.mp3':   './src/playbackService/staticFiles/samples/upright-bass/F_3.mp3',
+                    'Fs_3.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Fs_3.mp3',
+                    'G_3.mp3':   './src/playbackService/staticFiles/samples/upright-bass/G_3.mp3',
+                    'Gs_3.mp3':  './src/playbackService/staticFiles/samples/upright-bass/Gs_3.mp3',
+                    'A_3.mp3':  './src/playbackService/staticFiles/samples/upright-bass/A_3.mp3',
+                    'As_3.mp3':  './src/playbackService/staticFiles/samples/upright-bass/As_3.mp3',
+                    'B_3.mp3':  './src/playbackService/staticFiles/samples/upright-bass/B_3.mp3'
                  };
                 self.sampler = new Sampler(fileConfig, () => {
                     resolve();
