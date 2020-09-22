@@ -117,7 +117,7 @@ export class BasslineGenerator {
                 startTime: `${currentMeasure.measureNumber}:${currentBeat}:0`,
                 velocity: 0.8,
                 duration: noteDuration,
-                velocityOffset: 0.01,
+                velocityOffset: 0,
                 probability: 1,
                 note: noteToSchedule.toPlayableString()
             });
@@ -182,7 +182,7 @@ export class BasslineGenerator {
                 const fifthOfNextChord: Note = this.theory.getNoteInClosestOctave(nextScale.pitches[4], lastNote);
 
                 const distanceToNextRoot: number = lastNote.distanceTo(rootOfNextChord);
-                const distanceToNext5th: number = lastNote.distanceTo(fifthOfNextChord);
+                const distanceToNextFifth: number = lastNote.distanceTo(fifthOfNextChord);
 
                 let targetNote: Note = null;
                 let distanceFromLastNoteToTargetNote: number = 0;
@@ -190,35 +190,42 @@ export class BasslineGenerator {
                     // the current chord only lasts for 1 or 2 beats. we need to target the next root:
                     targetNote = rootOfNextChord;
                     distanceFromLastNoteToTargetNote = distanceToNextRoot;
-                }
-                else if (Math.abs(distanceToNextRoot) <= Math.abs(distanceToNext5th)) {
+                } else if (this.distanceIsMajorOrMinor3rdInDesiredDirection(distanceToNextRoot, params.desiredDirection)) {
+                    targetNote = rootOfNextChord;
+                    distanceFromLastNoteToTargetNote = distanceToNextRoot;
+                    console.log("Picking root", distanceToNextRoot, params.desiredDirection);
+                } else if (this.distanceIsMajorOrMinor3rdInDesiredDirection(distanceToNextFifth, params.desiredDirection)) {
+                    targetNote = fifthOfNextChord;
+                    distanceFromLastNoteToTargetNote = distanceToNextFifth;
+                    console.log("Picking 5th", distanceToNextRoot, params.desiredDirection);
+                } else if (Math.abs(distanceToNextRoot) <= Math.abs(distanceToNextFifth)) {
                     // next root is equally close/closer than the next 5th:
                     targetNote = rootOfNextChord;
                     distanceFromLastNoteToTargetNote = distanceToNextRoot;
                 } else {
                     // next 5th is closer than the next root:
                     targetNote = fifthOfNextChord;
-                    distanceFromLastNoteToTargetNote = distanceToNext5th;
+                    distanceFromLastNoteToTargetNote = distanceToNextFifth;
                 }
 
                 // set the next note to initially be the note we are targeting:
                 let nextDirection = params.desiredDirection;
                 if (distanceFromLastNoteToTargetNote === 2) {
-                    // whole step above next target, schedule half step below:
+                    // whole step below next target, schedule half step above:
                     nextNote = this.theory.transpose(targetNote, -1);
                     nextDirection = "up";
                 } else if (distanceFromLastNoteToTargetNote === -2) {
-                    // whole step below next target, schedule half step above:
+                    // whole step above next target, schedule half step below:
                     nextNote = this.theory.transpose(targetNote, 1);
                     nextDirection = "down";
                 } else if (distanceFromLastNoteToTargetNote === 1) {
-                    // halfstep step above next target, schedule half step below:
-                    nextNote = this.theory.transpose(targetNote, -1);
-                    nextDirection = "up";
-                } else if (distanceFromLastNoteToTargetNote === -1) {
                     // halfstep step below next target, schedule half step above:
                     nextNote = this.theory.transpose(targetNote, 1);
                     nextDirection = "down";
+                } else if (distanceFromLastNoteToTargetNote === -1) {
+                    // halfstep step above next target, schedule half step below:
+                    nextNote = this.theory.transpose(targetNote, -1);
+                    nextDirection = "up";
                 } else if (distanceFromLastNoteToTargetNote === 0) {
                     if (params.desiredDirection === "up") {
                         nextNote = this.theory.transpose(targetNote, 1);
@@ -277,6 +284,14 @@ export class BasslineGenerator {
         response.notesScheduled = [nextNote];
         response.directionChange = directionChange;
         return response;
+    }
+    private distanceIsMajorOrMinor3rdInDesiredDirection(noteDistance: number, desiredDirection: string): boolean {
+        if (desiredDirection === "up" && (noteDistance === 3 || noteDistance === 4)) {
+            return true;
+        } else if (desiredDirection === "down" && (noteDistance === -3 || noteDistance === -4)) {
+            return true;
+        }
+        return false;
     }
 
     private newBasslineResponseParams(): BasslineResponseParams {
