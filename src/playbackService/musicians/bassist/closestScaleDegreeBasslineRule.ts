@@ -31,7 +31,7 @@ export class ClosestScaleDegreeBasslineRule implements BasslineRule {
         for (let octave = currentOctave - 1; octave <= currentOctave + 1; octave++) {
             possibleIntervals.forEach(interval => {
                 const note: Note = this.theory.getNote(scale.pitches[interval], octave);
-                const dist: number = lastNote.distanceTo(note);
+                const dist: number = this.theory.distanceTo(lastNote, note);
                 const noteAndDist = {note: note, dist: dist};
                 chordToneNotesAndDistances.push(noteAndDist);
             });
@@ -53,12 +53,12 @@ export class ClosestScaleDegreeBasslineRule implements BasslineRule {
         nextNote = chordToneNotesAndDistances[0].note;
 
         // make sure the note is within the instrument's range:
-        while (nextNote.compareTo(UprightBass.HIGHEST_NOTE) === 1) {
+        while (this.theory.distanceTo(nextNote, UprightBass.HIGHEST_NOTE) < 0) {
             nextNote = Note.getNote(nextNote.pitch, nextNote.octave - 1);
             directionChange = true;
         }
 
-        while (nextNote.compareTo(UprightBass.LOWEST_NOTE) === -1) {
+        while (this.theory.distanceTo(nextNote, UprightBass.LOWEST_NOTE) > 0) {
             nextNote = Note.getNote(nextNote.pitch, nextNote.octave + 1);
             directionChange = true;
         }

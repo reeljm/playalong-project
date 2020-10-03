@@ -25,8 +25,8 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
             const rootOfNextChord: Note = this.theory.getNoteInClosestOctave(nextScale.pitches[0], lastNote);
             const fifthOfNextChord: Note = this.theory.getNoteInClosestOctave(nextScale.pitches[4], lastNote);
 
-            const distanceToNextRoot: number = lastNote.distanceTo(rootOfNextChord);
-            const distanceToNextFifth: number = lastNote.distanceTo(fifthOfNextChord);
+            const distanceToNextRoot: number = this.theory.distanceTo(lastNote, rootOfNextChord);
+            const distanceToNextFifth: number = this.theory.distanceTo(lastNote, fifthOfNextChord);
 
             let targetNote: Note = null;
             let distanceFromLastNoteToTargetNote: number = 0;
@@ -110,12 +110,12 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
             }
 
             // make sure the note is within the instrument's range:
-            while (nextNote.compareTo(UprightBass.HIGHEST_NOTE) === 1) {
+            while (this.theory.distanceTo(nextNote, UprightBass.HIGHEST_NOTE) < 0) {
                 nextNote = Note.getNote(nextNote.pitch, nextNote.octave - 1);
                 directionChange = true;
             }
 
-            while (nextNote.compareTo(UprightBass.LOWEST_NOTE) === -1) {
+            while (this.theory.distanceTo(nextNote, UprightBass.LOWEST_NOTE) > 0) {
                 nextNote = Note.getNote(nextNote.pitch, nextNote.octave + 1);
                 directionChange = true;
             }

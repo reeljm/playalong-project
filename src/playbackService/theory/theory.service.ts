@@ -37,9 +37,9 @@ export class TheoryService {
         const currentOctaveNote: Note = this.getNote(pitch, note.octave);
         const higherOctaveNote: Note = this.getNote(pitch, note.octave+1);
 
-        const lowerOctaveDist = Math.abs(lowerOctaveNote.distanceTo(note));
-        const currentOctaveDist = Math.abs(currentOctaveNote.distanceTo(note));
-        const higherOctaveDist = Math.abs(higherOctaveNote.distanceTo(note));
+        const lowerOctaveDist = Math.abs(this.distanceTo(lowerOctaveNote, note));
+        const currentOctaveDist = Math.abs(this.distanceTo(currentOctaveNote, note));
+        const higherOctaveDist = Math.abs(this.distanceTo(higherOctaveNote, note));
 
         const min = Math.min(lowerOctaveDist, currentOctaveDist, higherOctaveDist);
         if (min === lowerOctaveDist) {
@@ -65,6 +65,18 @@ export class TheoryService {
         const root: string = this.parseEnharmonicPitch(chord.root);
         const scaleType: string = this.chordsToScales[chord.type];
         return this.getScale(root, scaleType);
+    }
+
+    public distanceTo(note1: Note, note2: Note): number {
+        const curPitch: string = note1.pitch;
+        const otherPitch: string = note2.pitch;
+        const curOct: number = note1.octave;
+        const otherOct: number = note2.octave;
+
+        const curPitchIndex: number = MusicUtility.pitchArray.indexOf(curPitch);
+        const otherPitchIndex: number = MusicUtility.pitchArray.indexOf(otherPitch);
+
+        return otherPitchIndex - curPitchIndex + 12 * (otherOct - curOct);
     }
 
     public parseEnharmonicPitch(pitch: string): string {

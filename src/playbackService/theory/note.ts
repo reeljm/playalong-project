@@ -28,7 +28,6 @@ export class Note {
         return `${this.pitch}${this.octave}`;
     }
 
-
     public compareTo(otherNote: Note): number {
         if (this.pitch === otherNote.pitch && this.octave === otherNote.octave) {
             return 0;
@@ -40,17 +39,4 @@ export class Note {
             return -1;
         }
     }
-
-    public distanceTo(otherNote: Note): number {
-        const curPitch: string = this.pitch;
-        const otherPitch: string = otherNote.pitch;
-        const curOct: number = this.octave;
-        const otherOct: number = otherNote.octave;
-
-        const curPitchIndex: number = MusicUtility.pitchArray.indexOf(curPitch);
-        const otherPitchIndex: number = MusicUtility.pitchArray.indexOf(otherPitch);
-
-        return otherPitchIndex - curPitchIndex + 12 * (otherOct - curOct);
-    }
-
 }
