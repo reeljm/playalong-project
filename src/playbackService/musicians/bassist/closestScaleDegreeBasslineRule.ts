@@ -1,5 +1,5 @@
 import { UprightBass } from './uprightBass';
-import { TheoryService } from '../../theory/theory.service';
+import { Theory } from '../../theory/theory';
 import { Note } from '../../theory/note';
 import { BasslineRequestParams } from './basslineRequestParams';
 import { Scale } from '../../theory/scale';
@@ -8,7 +8,7 @@ import { BasslineResponseParams } from './basslineResponseParams';
 
 export class ClosestScaleDegreeBasslineRule implements BasslineRule {
 
-    constructor(private theory: TheoryService) { }
+    constructor(private theory: Theory) { }
 
     public getMatch(params: BasslineRequestParams): any {
         const scale: Scale = this.theory.getScaleForChord(params.currentChord);

@@ -11,11 +11,11 @@ import { DrumSet } from "./playbackService/musicians/drummer/drumset";
 import { UprightBass } from "./playbackService/musicians/bassist/uprightBass";
 import { Bassist } from "./playbackService/musicians/bassist/bassist";
 import { BasslineGenerator } from "./playbackService/musicians/bassist/basslineGenerator";
-import { TheoryService } from "./playbackService/theory/theory.service";
+import { Theory } from "./playbackService/theory/theory";
 
 const bass = new UprightBass();
 const drumset = new DrumSet();
-const theoryService = new TheoryService();
+const theoryService = new Theory();
 const basslineGenerator = new BasslineGenerator(theoryService);
 const bassist = new Bassist(bass, basslineGenerator);
 const drummer = new Drummer(drumset);

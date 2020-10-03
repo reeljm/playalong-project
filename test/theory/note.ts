@@ -1,4 +1,4 @@
-var assert = require('assert');
+import * as assert from "assert";
 import { Note } from "../../src/playbackService/theory/note";
 
 describe('Note', function () {

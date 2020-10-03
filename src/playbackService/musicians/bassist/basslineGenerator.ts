@@ -1,5 +1,5 @@
 import { Measure } from '../../song/measure';
-import { TheoryService } from '../../theory/theory.service';
+import { Theory } from '../../theory/theory';
 import { Note } from '../../theory/note';
 import { BasslineRequestParams } from './basslineRequestParams';
 import { BasslineResponseParams } from './basslineResponseParams';
@@ -21,7 +21,7 @@ export class BasslineGenerator {
     private beatsAlreadySpentOnCurrentChord: number = 0;
     private static DIFFICULT_CHORD_TYPES: string[] = ["min7b5", "dim7", "7b9"];
 
-    constructor(private theory: TheoryService) { }
+    constructor(private theory: Theory) { }
 
     public gerenateBasslineEventParams(currentMeasure: Measure): any[] {
         if (!this.currentOctave) {

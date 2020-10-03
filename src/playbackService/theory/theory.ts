@@ -4,7 +4,7 @@ import { Note } from './note';
 import { MusicUtility } from './pitchArray';
 import { Chord } from './chord';
 
-export class TheoryService {
+export class Theory {
 
     private chordsToScales = (rawChordsToScales as any);
 
