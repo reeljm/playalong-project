@@ -42,7 +42,15 @@ export class Note {
     }
 
     public distanceTo(otherNote: Note): number {
-        return MusicUtility.pitchArray.indexOf(otherNote.pitch) - MusicUtility.pitchArray.indexOf(this.pitch) + 12 * (otherNote.octave - this.octave);
+        const curPitch: string = this.pitch;
+        const otherPitch: string = otherNote.pitch;
+        const curOct: number = this.octave;
+        const otherOct: number = otherNote.octave;
+
+        const curPitchIndex: number = MusicUtility.pitchArray.indexOf(curPitch);
+        const otherPitchIndex: number = MusicUtility.pitchArray.indexOf(otherPitch);
+
+        return otherPitchIndex - curPitchIndex + 12 * (otherOct - curOct);
     }
 
 }

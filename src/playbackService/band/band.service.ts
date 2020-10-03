@@ -30,7 +30,7 @@ export class BandService {
 
     public play() {
         Transport.swing = 0.5;
-        Transport.bpm.value = 100;
+        Transport.bpm.value = 120;
         if (!this.initialized) {
             this.initialize()
                 .then(() => Transport.start())
@@ -57,29 +57,28 @@ export class BandService {
         const self = this;
 
         const song: Song = new Song();
-        const numChoruses: number = 5;
-        const chorusLength: number = 12;
+        const numChoruses: number = 10;
+        const chorusLength: number = 16;
 
         let i = 0;
         for (i = 0; i < numChoruses * chorusLength; i = i + chorusLength) {
-            
-            // another you
-            // song.addMeasure(new Measure(1 + i, self.style, [new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7')], 4));
-            // song.addMeasure(new Measure(2 + i, self.style, [new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7')], 4));
-            // song.addMeasure(new Measure(3 + i, self.style, [new Chord('D', 'min7b5'), new Chord('D', 'min7b5'), new Chord('D', 'min7b5'), new Chord('D', 'min7b5')], 4));
-            // song.addMeasure(new Measure(4 + i, self.style, [new Chord('G', '7b9'), new Chord('G', '7b9'), new Chord('G', '7b9'), new Chord('G', '7b9')], 4));
-            // song.addMeasure(new Measure(5 + i, self.style, [new Chord('C', 'relative min7'), new Chord('C', 'relative min7'), new Chord('C', 'relative min7'), new Chord('C', 'relative min7')], 4));
-            // song.addMeasure(new Measure(6 + i, self.style, [new Chord('C', 'relative min7'), new Chord('C', 'relative min7'), new Chord('C', 'relative min7'), new Chord('C', 'relative min7')], 4));
-            // song.addMeasure(new Measure(7 + i, self.style, [new Chord('Bb', 'min7'), new Chord('Bb', 'min7'), new Chord('Bb', 'min7'), new Chord('Bb', 'min7')], 4));
-            // song.addMeasure(new Measure(8 + i, self.style, [new Chord('Eb', '7'), new Chord('Eb', '7'), new Chord('Eb', '7'), new Chord('Eb', '7')], 4));
-            // song.addMeasure(new Measure(9 + i, self.style, [new Chord('Ab', 'maj7'), new Chord('Ab', 'maj7'), new Chord('Ab', 'maj7'), new Chord('Ab', 'maj7')], 4));
-            // song.addMeasure(new Measure(10 + i, self.style, [new Chord('Ab', 'min7'), new Chord('Ab', 'min7'), new Chord('Ab', 'min7'), new Chord('Ab', 'min7')], 4));
-            // song.addMeasure(new Measure(11 + i, self.style, [new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7')], 4));
-            // song.addMeasure(new Measure(12 + i, self.style, [new Chord('C', 'min7'), new Chord('C', 'min7'), new Chord('C', 'min7'), new Chord('C', 'min7')], 4));
-            // song.addMeasure(new Measure(13 + i, self.style, [new Chord('F', '7'), new Chord('F', '7'), new Chord('F', '7'), new Chord('F', '7')], 4));
-            // song.addMeasure(new Measure(14 + i, self.style, [new Chord('F', '7'), new Chord('F', '7'), new Chord('F', '7'), new Chord('F', '7')], 4));
-            // song.addMeasure(new Measure(15 + i, self.style, [new Chord('F', 'min7'), new Chord('F', 'min7'), new Chord('F', 'min7'), new Chord('F', 'min7')], 4));
-            // song.addMeasure(new Measure(16 + i, self.style, [new Chord('Bb', '7'), new Chord('Bb', '7'), new Chord('Bb', '7'), new Chord('Bb', '7')], 4));
+            //another you
+            song.addMeasure(new Measure(1 + i, self.style, [new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7')], 4));
+            song.addMeasure(new Measure(2 + i, self.style, [new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7')], 4));
+            song.addMeasure(new Measure(3 + i, self.style, [new Chord('D', 'min7b5'), new Chord('D', 'min7b5'), new Chord('D', 'min7b5'), new Chord('D', 'min7b5')], 4));
+            song.addMeasure(new Measure(4 + i, self.style, [new Chord('G', '7b9'), new Chord('G', '7b9'), new Chord('G', '7b9'), new Chord('G', '7b9')], 4));
+            song.addMeasure(new Measure(5 + i, self.style, [new Chord('C', 'relative min7'), new Chord('C', 'relative min7'), new Chord('C', 'relative min7'), new Chord('C', 'relative min7')], 4));
+            song.addMeasure(new Measure(6 + i, self.style, [new Chord('C', 'relative min7'), new Chord('C', 'relative min7'), new Chord('C', 'relative min7'), new Chord('C', 'relative min7')], 4));
+            song.addMeasure(new Measure(7 + i, self.style, [new Chord('Bb', 'min7'), new Chord('Bb', 'min7'), new Chord('Bb', 'min7'), new Chord('Bb', 'min7')], 4));
+            song.addMeasure(new Measure(8 + i, self.style, [new Chord('Eb', '7'), new Chord('Eb', '7'), new Chord('Eb', '7'), new Chord('Eb', '7')], 4));
+            song.addMeasure(new Measure(9 + i, self.style, [new Chord('Ab', 'maj7'), new Chord('Ab', 'maj7'), new Chord('Ab', 'maj7'), new Chord('Ab', 'maj7')], 4));
+            song.addMeasure(new Measure(10 + i, self.style, [new Chord('Ab', 'min7'), new Chord('Ab', 'min7'), new Chord('Ab', 'min7'), new Chord('Ab', 'min7')], 4));
+            song.addMeasure(new Measure(11 + i, self.style, [new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7'), new Chord('Eb', 'maj7')], 4));
+            song.addMeasure(new Measure(12 + i, self.style, [new Chord('C', 'min7'), new Chord('C', 'min7'), new Chord('C', 'min7'), new Chord('C', 'min7')], 4));
+            song.addMeasure(new Measure(13 + i, self.style, [new Chord('F', '7'), new Chord('F', '7'), new Chord('F', '7'), new Chord('F', '7')], 4));
+            song.addMeasure(new Measure(14 + i, self.style, [new Chord('F', '7'), new Chord('F', '7'), new Chord('F', '7'), new Chord('F', '7')], 4));
+            song.addMeasure(new Measure(15 + i, self.style, [new Chord('F', 'min7'), new Chord('F', 'min7'), new Chord('F', 'min7'), new Chord('F', 'min7')], 4));
+            song.addMeasure(new Measure(16 + i, self.style, [new Chord('Bb', '7'), new Chord('Bb', '7'), new Chord('Bb', '7'), new Chord('Bb', '7')], 4));
 
 
 
@@ -105,7 +104,7 @@ export class BandService {
             // song.addMeasure(new Measure(14 + i, self.style, [new Chord('Ab', 'min7'), new Chord('Ab', 'min7'), new Chord('Db', '7'), new Chord('Db', '7')], 4));
             // song.addMeasure(new Measure(15 + i, self.style, [new Chord('C', 'maj7'), new Chord('C', 'maj7'), new Chord('C', 'maj7'), new Chord('C', 'maj7')], 4));
             // song.addMeasure(new Measure(16 + i, self.style, [new Chord('C', 'maj7'), new Chord('C', 'maj7'), new Chord('C', 'maj7'), new Chord('C', 'maj7')], 4));
-            
+
             // song.addMeasure(new Measure(17 + i, self.style, [new Chord('G', 'min7'), new Chord('G', 'min7'), new Chord('C', '7'), new Chord('C', '7')], 4));
             // song.addMeasure(new Measure(18 + i, self.style, [new Chord('G', 'min7'), new Chord('G', 'min7'), new Chord('C', '7'), new Chord('C', '7')], 4));
             // song.addMeasure(new Measure(19 + i, self.style, [new Chord('F', 'maj7'), new Chord('F', 'maj7'), new Chord('F', 'maj7'), new Chord('F', 'maj7')], 4));
@@ -114,7 +113,7 @@ export class BandService {
             // song.addMeasure(new Measure(22 + i, self.style, [new Chord('A', 'min7'), new Chord('A', 'min7'), new Chord('D', '7'), new Chord('D', '7')], 4));
             // song.addMeasure(new Measure(23 + i, self.style, [new Chord('G', '7'), new Chord('G', '7'), new Chord('G', '7'), new Chord('G', '7')], 4));
             // song.addMeasure(new Measure(24 + i, self.style, [new Chord('G', '7'), new Chord('G', '7'), new Chord('G', '7'), new Chord('G', '7')], 4));
-            
+
             // song.addMeasure(new Measure(25 + i, self.style, [new Chord('D', 'min7'), new Chord('D', 'min7'), new Chord('G', '7'), new Chord('G', '7')], 4));
             // song.addMeasure(new Measure(26 + i, self.style, [new Chord('D', 'min7'), new Chord('D', 'min7'), new Chord('G', '7'), new Chord('G', '7')], 4));
             // song.addMeasure(new Measure(27 + i, self.style, [new Chord('E', 'min7'), new Chord('E', 'min7'), new Chord('A', '7'), new Chord('A', '7')], 4));
@@ -123,28 +122,28 @@ export class BandService {
             // song.addMeasure(new Measure(30 + i, self.style, [new Chord('Ab', 'min7'), new Chord('Ab', 'min7'), new Chord('Db', '7'), new Chord('Db', '7')], 4));
             // song.addMeasure(new Measure(31 + i, self.style, [new Chord('C', 'maj7'), new Chord('C', 'maj7'), new Chord('C', 'maj7'), new Chord('C', 'maj7')], 4));
             // song.addMeasure(new Measure(32 + i, self.style, [new Chord('C', 'maj7'), new Chord('C', 'maj7'), new Chord('C', 'maj7'), new Chord('C', 'maj7')], 4));
-            
-            
-            
+
+
+
             // Bb Blues
-            song.addMeasure(new Measure(1 + i, self.style, [new Chord('Bb','7'), new Chord('Bb', '7'), new Chord('Bb', '7'), new Chord('Bb', '7')], 4));
-            song.addMeasure(new Measure(2 + i, self.style, [new Chord('Eb','7'), new Chord('Eb', '7'), new Chord('Eb', '7'), new Chord('Eb', '7')], 4));
-            song.addMeasure(new Measure(3 + i, self.style, [new Chord('Bb','7'), new Chord('Bb', '7'), new Chord('Bb', '7'), new Chord('Bb', '7')], 4));
-            song.addMeasure(new Measure(4 + i, self.style, [new Chord('F','min7'), new Chord('F', 'min7'), new Chord('C', '7'), new Chord('C', '7')], 4));
-            song.addMeasure(new Measure(5 + i, self.style, [new Chord('Eb','7'), new Chord('Eb', '7'), new Chord('Eb', '7'), new Chord('Eb', '7')], 4));
-            song.addMeasure(new Measure(6 + i, self.style, [new Chord('E','7b9'), new Chord('E7', '7b9'), new Chord('E', '7b9'), new Chord('E', '7b9')], 4));
-            song.addMeasure(new Measure(7 + i, self.style, [new Chord('D','7'), new Chord('D', '7'), new Chord('D', '7'), new Chord('D', '7')], 4));
-            song.addMeasure(new Measure(8 + i, self.style, [new Chord('A','7'), new Chord('A', '7'), new Chord('A', '7'), new Chord('A', '7')], 4));
-            song.addMeasure(new Measure(9 + i, self.style, [new Chord('C','min7'), new Chord('C', 'min7'), new Chord('C', 'min7'), new Chord('C', 'min7')], 4));
-            song.addMeasure(new Measure(10 + i, self.style, [new Chord('F','7'), new Chord('F', '7'), new Chord('F', '7'), new Chord('F', '7')], 4));
-            song.addMeasure(new Measure(11 + i, self.style, [new Chord('Bb','7'), new Chord('Bb','7'), new Chord('G', '7'), new Chord('G', '7'),], 4));
-            song.addMeasure(new Measure(12 + i, self.style, [new Chord('C', 'min7'), new Chord('C', 'min7'), new Chord('F', '7'), new Chord('F', '7')], 4));
-            
-            
+            // song.addMeasure(new Measure(1 + i, self.style, [new Chord('Bb','7'), new Chord('Bb', '7'), new Chord('Bb', '7'), new Chord('Bb', '7')], 4));
+            // song.addMeasure(new Measure(2 + i, self.style, [new Chord('Eb','7'), new Chord('Eb', '7'), new Chord('Eb', '7'), new Chord('Eb', '7')], 4));
+            // song.addMeasure(new Measure(3 + i, self.style, [new Chord('Bb','7'), new Chord('Bb', '7'), new Chord('Bb', '7'), new Chord('Bb', '7')], 4));
+            // song.addMeasure(new Measure(4 + i, self.style, [new Chord('F','min7'), new Chord('F', 'min7'), new Chord('C', '7'), new Chord('C', '7')], 4));
+            // song.addMeasure(new Measure(5 + i, self.style, [new Chord('Eb','7'), new Chord('Eb', '7'), new Chord('Eb', '7'), new Chord('Eb', '7')], 4));
+            // song.addMeasure(new Measure(6 + i, self.style, [new Chord('E','7b9'), new Chord('E7', '7b9'), new Chord('E', '7b9'), new Chord('E', '7b9')], 4));
+            // song.addMeasure(new Measure(7 + i, self.style, [new Chord('D','7'), new Chord('D', '7'), new Chord('D', '7'), new Chord('D', '7')], 4));
+            // song.addMeasure(new Measure(8 + i, self.style, [new Chord('A','7'), new Chord('A', '7'), new Chord('A', '7'), new Chord('A', '7')], 4));
+            // song.addMeasure(new Measure(9 + i, self.style, [new Chord('C','min7'), new Chord('C', 'min7'), new Chord('C', 'min7'), new Chord('C', 'min7')], 4));
+            // song.addMeasure(new Measure(10 + i, self.style, [new Chord('F','7'), new Chord('F', '7'), new Chord('F', '7'), new Chord('F', '7')], 4));
+            // song.addMeasure(new Measure(11 + i, self.style, [new Chord('Bb','7'), new Chord('Bb','7'), new Chord('G', '7'), new Chord('G', '7'),], 4));
+            // song.addMeasure(new Measure(12 + i, self.style, [new Chord('C', 'min7'), new Chord('C', 'min7'), new Chord('F', '7'), new Chord('F', '7')], 4));
+
+
         }
         const firstChord = song.measures[0].chords[0];
         song.addMeasure(new Measure(song.measures.length + 1, self.style, [new Chord(firstChord.root, firstChord.type),new Chord(firstChord.root, firstChord.type),new Chord(firstChord.root, firstChord.type),new Chord(firstChord.root, firstChord.type)], 4));
-        
+
         let currentMeasure = 0;
         new Loop(() => {
             if (song.measures.length <= currentMeasure) {
