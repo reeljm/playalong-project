@@ -2,7 +2,7 @@ import * as assert from "assert";
 import { Note } from "../../src/playbackService/theory/note";
 
 describe('Note', function () {
-    describe('#getNote()', function () {
+    describe('#getNote(pitch, octave)', function () {
         it('should return a note when a valid pitch and octave are supplied', () => {
             const n: Note = Note.getNote("C", 5);
             assert.equal(n.pitch, "C");
@@ -36,6 +36,13 @@ describe('Note', function () {
         it('should return null when the pitch supplied is not one of the 12 pitches', () => {
             const n: Note = Note.getNote("F sharp", 1);
             assert.equal(n, null);
+        });
+    });
+
+    describe("#toPlayableString()", function() {
+        it("should return a string representation of the note for Tone.js to play", () => {
+            const n: Note = Note.getNote("F#", 5);
+            assert.equal(n.toPlayableString(), "F#5");
         });
     });
 });

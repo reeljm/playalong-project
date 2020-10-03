@@ -1,5 +1,4 @@
 import * as assert from "assert";
-import { Note } from "../../src/playbackService/theory/note";
 import { Theory } from "../../src/playbackService/theory/theory";
 
 describe('Theory', function () {
@@ -12,21 +11,21 @@ describe('Theory', function () {
                 assert.equal(result, expected)
             });
         };
-        describe("natural notes", () => {
+        describe("Natural notes", () => {
             const naturals: string[] = ["C", "D", "E", "F", "G", "A", "B"];
             for (const n of naturals) {
                 testEnharmonic(n, n);
             }
         });
 
-        describe("simplified sharps", () => {
+        describe("Simplified sharps", () => {
             const naturals: string[] = ["C#", "D#", "F#", "G#", "A#"];
             for (const n of naturals) {
                 testEnharmonic(n, n);
             }
         });
 
-        describe("flats", () => {
+        describe("Flats", () => {
             testEnharmonic("Bb", "A#");
             testEnharmonic("Ab", "G#");
             testEnharmonic("Eb", "D#");
@@ -34,11 +33,18 @@ describe('Theory', function () {
             testEnharmonic("Gb", "F#");
         });
 
-        describe("mix of sharps and flats", () => {
+        describe("Mix of sharps and flats", () => {
             testEnharmonic("C#b#b#b#bbbb", "A");
             testEnharmonic("C############b", "B");
             testEnharmonic("Eb#", "E");
             testEnharmonic("Db#b", "C#");
+        });
+
+        describe("Pitches with invalid characters should return null", () => {
+            testEnharmonic("S#b#b#b#bbbb", null);
+            testEnharmonic("############b", null);
+            testEnharmonic("FF", null);
+            testEnharmonic("bEb", null);
         });
     });
 });

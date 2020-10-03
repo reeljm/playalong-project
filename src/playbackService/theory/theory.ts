@@ -85,6 +85,9 @@ export class Theory {
         }
         const tokenizedPitch: string[] = pitch.split("");
         let currentNoteIndex: number = MusicUtility.pitchArray.indexOf(tokenizedPitch[0]);
+        if (currentNoteIndex == -1) {
+            return null;
+        }
         tokenizedPitch.shift();
         while (tokenizedPitch.length > 0) {
             const sharpOrFlat = tokenizedPitch[0];
@@ -92,6 +95,8 @@ export class Theory {
                 currentNoteIndex++;
             } else if (sharpOrFlat === "b") {
                 currentNoteIndex--;
+            } else {
+                return null;
             }
 
             // handle out of bounds cases:
