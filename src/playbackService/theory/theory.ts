@@ -3,6 +3,7 @@ import { Scale } from './scale';
 import { Note } from './note';
 import { MusicUtility } from './pitchArray';
 import { Chord } from './chord';
+import { InvalidPitchError } from './invalidPitchError';
 
 export class Theory {
 
@@ -16,7 +17,7 @@ export class Theory {
             if (semitones < 0) {
                 pitchIndex = pitchIndex - 1;
                 semitones++;
-            } else if(semitones > 0) {
+            } else {
                 pitchIndex = pitchIndex + 1;
                 semitones--;
             }
@@ -58,7 +59,7 @@ export class Theory {
     }
 
     public getScale(root: string, scaleType: string): Scale {
-        return Scale.getScale(root, scaleType);
+        return Scale.getScale(this.parseEnharmonicPitch(root), scaleType);
     }
 
     public getScaleForChord(chord: Chord): Scale {
@@ -86,7 +87,7 @@ export class Theory {
         const tokenizedPitch: string[] = pitch.split("");
         let currentNoteIndex: number = MusicUtility.pitchArray.indexOf(tokenizedPitch[0]);
         if (currentNoteIndex == -1) {
-            return null;
+            throw new InvalidPitchError(pitch);
         }
         tokenizedPitch.shift();
         while (tokenizedPitch.length > 0) {
@@ -96,7 +97,7 @@ export class Theory {
             } else if (sharpOrFlat === "b") {
                 currentNoteIndex--;
             } else {
-                return null;
+                throw new InvalidPitchError(pitch);
             }
 
             // handle out of bounds cases:
