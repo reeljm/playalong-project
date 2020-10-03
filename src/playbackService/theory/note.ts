@@ -27,16 +27,4 @@ export class Note {
     public toPlayableString() {
         return `${this.pitch}${this.octave}`;
     }
-
-    public compareTo(otherNote: Note): number {
-        if (this.pitch === otherNote.pitch && this.octave === otherNote.octave) {
-            return 0;
-        } else if (this.octave > otherNote.octave ||
-            (this.octave === otherNote.octave &&
-                MusicUtility.pitchArray.indexOf(this.pitch) > MusicUtility.pitchArray.indexOf(otherNote.pitch))) {
-            return 1;
-        } else {
-            return -1;
-        }
-    }
 }
