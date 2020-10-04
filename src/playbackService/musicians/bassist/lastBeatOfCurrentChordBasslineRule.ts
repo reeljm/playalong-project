@@ -81,25 +81,23 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
                 // we have a distance larger than a whole step, pick the closest scale degree:
 
                 // check if the target note is in our currrent scale:
-                if (scale.pitches.includes(targetNote.pitch)) {
-                    let indexCurrentScale = scale.pitches.indexOf(targetNote.pitch);
-                    if (indexCurrentScale > 0) {
-                        if (distanceFromLastNoteToTargetNote > 0) {
-                            indexCurrentScale = indexCurrentScale - 1;
-                            nextDirection = "up";
-                        } else {
-                            indexCurrentScale = indexCurrentScale + 1;
-                            nextDirection = "down";
-                        }
-                        nextNote = this.theory.getNoteInClosestOctave(scale.pitches[indexCurrentScale], targetNote);
+                let indexCurrentScale = scale.pitches.indexOf(targetNote.pitch);
+                if (indexCurrentScale > 0) {
+                    if (distanceFromLastNoteToTargetNote > 0) {
+                        indexCurrentScale = indexCurrentScale - 1;
+                        nextDirection = "up";
                     } else {
-                        if (distanceFromLastNoteToTargetNote > 0) {
-                            nextNote = this.theory.transpose(targetNote, -1);
-                            nextDirection = "up";
-                        } else {
-                            nextNote = this.theory.transpose(targetNote, + 1);
-                            nextDirection = "down";
-                        }
+                        indexCurrentScale = indexCurrentScale + 1;
+                        nextDirection = "down";
+                    }
+                    nextNote = this.theory.getNoteInClosestOctave(scale.pitches[indexCurrentScale], targetNote);
+                } else {
+                    if (distanceFromLastNoteToTargetNote > 0) {
+                        nextNote = this.theory.transpose(targetNote, -1);
+                        nextDirection = "up";
+                    } else {
+                        nextNote = this.theory.transpose(targetNote, + 1);
+                        nextDirection = "down";
                     }
                 }
             }
