@@ -15,6 +15,7 @@ export class Bassist implements Musician {
     play(currentMeasure: Measure) {
         const generator: BasslineGenerator = this.basslineGeneratorMap.get(currentMeasure.style);
         const bassline: any[] = generator.gerenateBasslineEventParams(currentMeasure);
+        console.log(bassline);
         bassline.forEach((event: any) => {
             EventBuilder.newEventBuilder()
                 .startTime(event.startTime)

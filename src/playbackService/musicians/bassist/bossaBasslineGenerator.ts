@@ -130,7 +130,8 @@ export class BossaBasslineGenerator extends BasslineGenerator {
                 noteDuration = "4n.";
             }
 
-            if (playCurrentSkipBeat) {
+            console.log(currentMeasure.numberOfBeats);
+            if (playCurrentSkipBeat && currentMeasure.numberOfBeats > 0) {
                 const skipBeatDuration: string = "8n";
                 if (this.lastMeasureUtilized && currentBeat === 0) {
                     eventParamArray.push({
@@ -141,7 +142,7 @@ export class BossaBasslineGenerator extends BasslineGenerator {
                         probability: 1,
                         note: noteToSchedule.toPlayableString()
                     });
-                } else {
+                } else if (currentBeat === 2) {
                     eventParamArray.push({
                         startTime: `${currentMeasure.measureNumber}:${currentBeat - 1}:2`,
                         velocity: 0.8,

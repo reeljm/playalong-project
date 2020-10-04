@@ -5,7 +5,7 @@
 // Use preload.js to selectively enable features
 // needed in the renderer process.
 
-import { BandService } from "./playbackService/band/band.service";
+import { BandService as Band } from "./playbackService/band/band.service";
 import { Drummer } from "./playbackService/musicians/drummer/drummer";
 import { DrumSet } from "./playbackService/musicians/drummer/drumset";
 import { UprightBass } from "./playbackService/musicians/bassist/uprightBass";
@@ -15,17 +15,17 @@ import { Theory } from "./playbackService/theory/theory";
 import { BossaBasslineGenerator } from "./playbackService/musicians/bassist/bossaBasslineGenerator";
 import { BasslineGenerator } from "./playbackService/musicians/bassist/basslineGenerator";
 
-const bass = new UprightBass();
-const drumset = new DrumSet();
-const theory = new Theory();
+const bass: UprightBass = new UprightBass();
+const drumset: DrumSet = new DrumSet();
+const theory: Theory = new Theory();
 
-const basslineGeneratorMap:Map<string, BasslineGenerator> = new Map<string, BasslineGenerator>();
-const walkingBasslineGenerator = new WalkingBasslineGenerator(theory);
-const bossaBasslineGenerator = new BossaBasslineGenerator(theory);
+const basslineGeneratorMap: Map<string, BasslineGenerator> = new Map<string, BasslineGenerator>();
+const walkingBasslineGenerator: BasslineGenerator = new WalkingBasslineGenerator(theory);
+const bossaBasslineGenerator: BasslineGenerator = new BossaBasslineGenerator(theory);
 basslineGeneratorMap.set("bossa", bossaBasslineGenerator);
 basslineGeneratorMap.set("fourFourTime", walkingBasslineGenerator);
-const bassist = new Bassist(bass, basslineGeneratorMap);
+const bassist: Bassist = new Bassist(bass, basslineGeneratorMap);
 
-const drummer = new Drummer(drumset);
-const band = new BandService(drummer, bassist, theory);
+const drummer: Drummer = new Drummer(drumset);
+const band: Band = new Band(drummer, bassist, theory);
 band.play();
