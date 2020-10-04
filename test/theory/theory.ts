@@ -1,8 +1,44 @@
 import * as assert from "assert";
 import { Theory } from "../../src/playbackService/theory/theory";
 import { Note } from "../../src/playbackService/theory/note";
+import { Chord } from "../../src/playbackService/theory/chord";
+import { Scale } from "../../src/playbackService/theory/scale";
+import { MusicUtility } from "../../src/playbackService/theory/pitchArray";
 
 describe('Theory', function () {
+
+    describe("#getScaleForChord(chord)", function() {
+        const t: Theory = new Theory();
+        const testScaleToChordForAllPitches = (chordType: string, scaleType: string) => {
+            const pitches: string[] = MusicUtility.pitchArray;
+            for (const p of pitches) {
+                const c: Chord = t.getChord(p, chordType);
+                const s: Scale = t.getScaleForChord(c);
+                it(`${p} ${chordType} => ${p} ${scaleType}`, () => {
+                    assert.equal(s.root, p);
+                    assert.equal(s.type, scaleType);
+                });
+            }
+        };
+
+        describe("should return major scales for maj7 chords", () => {
+            testScaleToChordForAllPitches("maj7", "major");
+        });
+
+        describe("should return dorian scales for min7 chords", () => {
+            testScaleToChordForAllPitches("min7", "dorian");
+        });
+
+        describe("should return mixolydian scales for 7 chords", () => {
+            testScaleToChordForAllPitches("7", "mixolydian");
+        });
+
+        it("should throw InvalidScaleError when an invalid chord is supplied", () => {
+            const t: Theory = new Theory();
+            const c: Chord = t.getChord("C", "blah");
+            assert.throws(() => {t.getScaleForChord(c)}, Error);
+        });
+    });
     
     describe("#transpose(note, steps)", function() {
         const t: Theory = new Theory();

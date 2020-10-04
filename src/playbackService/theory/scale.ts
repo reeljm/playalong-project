@@ -1,4 +1,5 @@
 import rawData from '../staticFiles/scales.json';
+import { InvalidScaleError } from './invalidScaleError';
 
 const scaleNamesToPitches = (rawData as any);
 
@@ -21,7 +22,7 @@ export class Scale {
         const scaleName = `${root}_${scaleType}`;
         const pitches: string[] = scaleNamesToPitches[scaleName];
         if (!pitches) {
-            throw Error(`Scale ${scaleName} does not exist.`);
+            throw new InvalidScaleError(scaleName);
         }
         return new Scale(pitches, root, scaleType);
     }

@@ -5,8 +5,6 @@ import { Note } from '../../theory/note';
 export class UprightBass extends Instrument {
     static LOWEST_NOTE = Note.getNote("E", 1);
     static HIGHEST_NOTE = Note.getNote("B", 3);
-    // static LOWEST_NOTE = { pitch: 'E', octave: 4, interval: 0 };
-    // static HIGHEST_NOTE = { pitch: 'Gs', octave: 6, interval: 0 };
 
     sampler: Sampler;
 

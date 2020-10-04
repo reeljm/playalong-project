@@ -15,9 +15,9 @@ import { Theory } from "./playbackService/theory/theory";
 
 const bass = new UprightBass();
 const drumset = new DrumSet();
-const theoryService = new Theory();
-const basslineGenerator = new BasslineGenerator(theoryService);
+const theory = new Theory();
+const basslineGenerator = new BasslineGenerator(theory);
 const bassist = new Bassist(bass, basslineGenerator);
 const drummer = new Drummer(drumset);
-const band = new BandService(drummer, bassist);
+const band = new BandService(drummer, bassist, theory);
 band.play();

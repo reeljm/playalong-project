@@ -68,6 +68,10 @@ export class Theory {
         return this.getScale(root, scaleType);
     }
 
+    public getChord(root: string, type: string): Chord {
+        return Chord.getChord(this.parseEnharmonicPitch(root), type)
+    }
+
     public distanceTo(note1: Note, note2: Note): number {
         const curPitch: string = note1.pitch;
         const otherPitch: string = note2.pitch;
