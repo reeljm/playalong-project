@@ -46,11 +46,11 @@ export class Theory {
         if (min === lowerOctaveDist) {
             return lowerOctaveNote;
         }
-        else if (min === currentOctaveDist) {
-            return currentOctaveNote;
-        }
         else if (min === higherOctaveDist) {
             return higherOctaveNote;
+        }
+        else {
+            return currentOctaveNote;
         }
     }
 

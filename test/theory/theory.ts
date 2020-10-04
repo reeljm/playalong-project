@@ -7,6 +7,59 @@ import { MusicUtility } from "../../src/playbackService/theory/pitchArray";
 
 describe('Theory', function () {
 
+    describe("#transpose(note, steps)", function() {
+        const t: Theory = new Theory();
+        const testTranspose = (startPitch: string, startOctave: number, steps: number, endPitch: string, endOctave: number) => {
+            const n1: Note = t.getNote(startPitch, startOctave);
+            const n2: Note = t.getNote(endPitch, endOctave);
+            const actual = t.transpose(n1, steps);
+            assert.equal(n2.pitch, actual.pitch);
+            assert.equal(n2.octave, actual.octave);
+        }; 
+        it("should transpose the given note up if steps is positive", () => {
+            testTranspose("C", 5, 4, "E", 5);
+        });
+        
+        it("should transpose the given note down if steps is negative", () => {
+            testTranspose("C", 5, -4, "G#", 4);
+        });
+
+        it("should transpose the given note up into a higher octave if steps > 12", () => {
+            testTranspose("C", 5, 12, "C", 6);
+        });
+
+        it("should transpose the given note down into a lower octave if steps < -12", () => {
+            testTranspose("C", 5, -12, "C", 4);
+        });
+
+        it("should return the given note if steps = 0", () => {
+            testTranspose("C", 5, 0, "C", 5);
+        });
+    });
+
+    describe("#getNoteInClosestOctave(pitch, note)", function() {
+        const t: Theory = new Theory();
+        const testGetPitchInClosestOctave = (p: string, targetP: string, targetOct: number, expectedP: string, expectedOct: number) => {
+            const targetNote: Note = t.getNote(targetP, targetOct);
+            const expectedNote = t.getNote(expectedP, expectedOct);
+
+            const actualNote = t.getNoteInClosestOctave(p, targetNote);
+
+            assert.equal(t.distanceTo(expectedNote, actualNote), 0);
+        }; 
+        it("should return the note in the current octave if that note is closest to the target", () => {
+            testGetPitchInClosestOctave("C", "D", 5, "C", 5);
+        });
+
+        it("should return the note in the higher octave if that note is closest to the target", () => {
+            testGetPitchInClosestOctave("C", "G", 5, "C", 6);
+        });
+        
+        it("should return the note in the lower octave if that note is closest to the target", () => {
+            testGetPitchInClosestOctave("G", "C", 5, "G", 4);
+        });
+    });
+
     describe("#getScaleForChord(chord)", function() {
         const t: Theory = new Theory();
         const testScaleToChordForAllPitches = (chordType: string, scaleType: string) => {
@@ -37,36 +90,6 @@ describe('Theory', function () {
             const t: Theory = new Theory();
             const c: Chord = t.getChord("C", "blah");
             assert.throws(() => {t.getScaleForChord(c)}, Error);
-        });
-    });
-    
-    describe("#transpose(note, steps)", function() {
-        const t: Theory = new Theory();
-        const testTranspose = (startPitch: string, startOctave: number, steps: number, endPitch: string, endOctave: number) => {
-            const n1: Note = t.getNote(startPitch, startOctave);
-            const n2: Note = t.getNote(endPitch, endOctave);
-            const actual = t.transpose(n1, steps);
-            assert.equal(n2.pitch, actual.pitch);
-            assert.equal(n2.octave, actual.octave);
-        }; 
-        it("should transpose the given note up if steps is positive", () => {
-            testTranspose("C", 5, 4, "E", 5);
-        });
-        
-        it("should transpose the given note down if steps is negative", () => {
-            testTranspose("C", 5, -4, "G#", 4);
-        });
-
-        it("should transpose the given note up into a higher octave if steps > 12", () => {
-            testTranspose("C", 5, 12, "C", 6);
-        });
-
-        it("should transpose the given note down into a lower octave if steps < -12", () => {
-            testTranspose("C", 5, -12, "C", 4);
-        });
-
-        it("should return the given note if steps = 0", () => {
-            testTranspose("C", 5, 0, "C", 5);
         });
     });
 
