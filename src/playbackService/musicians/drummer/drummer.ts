@@ -46,7 +46,7 @@ export class Drummer implements Musician {
                 .startTime(`${currentMeasure.measureNumber}:${eventParams.start}`)
                 .velocity(eventParams.velocity)
                 .duration(eventParams.duration)
-                .velocityOffset(eventParams.velocityOffset)
+                .velocityOffset(0)
                 .probability(eventParams.probability)
                 .note(partName)
                 .instrument(this.drumSet)

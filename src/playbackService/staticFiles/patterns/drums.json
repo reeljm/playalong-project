@@ -9,25 +9,25 @@
                         {
                             "start": "0:0",
                             "velocity": 0.8,
-                            "velocityOffset":  0.15,
+                            "velocityOffset":  0.05,
                             "probability": 1
                         },
                         {
                             "start": "0:2",
-                            "velocity": 0.25,
-                            "velocityOffset":  0.1,
+                            "velocity": 0.5,
+                            "velocityOffset":  0.05,
                             "probability": 0.05
                         },
                         {
                             "start": "1:0",
                             "velocity": 0.9,
-                            "velocityOffset":  0.15,
+                            "velocityOffset":  0.05,
                             "probability": 1
                         },
                         {
                             "start": "1:2",
-                            "velocity": 0.25,
-                            "velocityOffset":  0.1,
+                            "velocity": 0.5,
+                            "velocityOffset":  0.05,
                             "probability": 0.95
                         },
                         {
@@ -38,8 +38,8 @@
                         },
                         {
                             "start": "2:2",
-                            "velocity": 0.25,
-                            "velocityOffset":  0.1,
+                            "velocity": 0.5,
+                            "velocityOffset":  0.05,
                             "probability": 0.05
                         },
                         {
@@ -50,8 +50,8 @@
                         },
                         {
                             "start": "3:2",
-                            "velocity": 0.25,
-                            "velocityOffset":  0.1,
+                            "velocity": 0.5,
+                            "velocityOffset":  0.05,
                             "probability": 0.95
                         }
                     ],
@@ -114,8 +114,8 @@
                         },
                         {
                             "start": "0:2",
-                            "velocity": 0.25,
-                            "velocityOffset":  0.1,
+                            "velocity": 0.5,
+                            "velocityOffset":  0.05,
                             "probability": 0.00
                         },
                         {
@@ -126,8 +126,8 @@
                         },
                         {
                             "start": "1:2",
-                            "velocity": 0.25,
-                            "velocityOffset":  0.1,
+                            "velocity": 0.5,
+                            "velocityOffset":  0.05,
                             "probability": 0.95
                         },
                         {
@@ -138,8 +138,8 @@
                         },
                         {
                             "start": "2:2",
-                            "velocity": 0.25,
-                            "velocityOffset":  0.1,
+                            "velocity": 0.5,
+                            "velocityOffset":  0.05,
                             "probability": 0.05
                         },
                         {
@@ -150,8 +150,8 @@
                         },
                         {
                             "start": "3:2",
-                            "velocity": 0.25,
-                            "velocityOffset":  0.1,
+                            "velocity": 0.5,
+                            "velocityOffset":  0.05,
                             "probability": 0.95
                         }
                     ],
@@ -284,6 +284,16 @@
                         },
                         {
                             "start": "3:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "5:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "7:0",
                             "velocity": 1,
                             "velocityOffset": 0
                         }

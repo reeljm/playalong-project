@@ -9,7 +9,7 @@ import { Theory } from '../theory/theory';
 export class BandService {
 
     private musicians: Musician[] = [];
-    private style = 'fourFourTime';
+    private style = 'bossa';
     private initialized = false;
 
     constructor(private drummer: Drummer, private bassist: Bassist, private theory: Theory) { }
@@ -29,28 +29,23 @@ export class BandService {
     }
 
     public play() {
-        Transport.swing = 0.5;
-        Transport.bpm.value = 120;
+        Transport.swing = 0;
+        Transport.bpm.value = 240;
         if (!this.initialized) {
             this.initialize()
-                .then(() => Transport.start())
-                .catch((e) => alert('Error initializing the band!'));
+                .then(() => Transport.start());
         } else {
             Transport.start();
         }
     }
 
     private async initialize(): Promise<void> {
-        try {
-            await this.drummer.initialize();
-            await this.bassist.initialize();
-            this.musicians.push(this.drummer);
-            this.musicians.push(this.bassist);
-            this.createScheduleLoop();
-            this.initialized = true;
-        } catch (error) {
-            throw new Error(`Eror: error occurred when loading band: ${JSON.stringify(error, null, 2)}`);
-        }
+        await this.drummer.initialize();
+        await this.bassist.initialize();
+        this.musicians.push(this.drummer);
+        this.musicians.push(this.bassist);
+        this.createScheduleLoop();
+        this.initialized = true;
     }
 
     private createScheduleLoop() {
@@ -58,7 +53,7 @@ export class BandService {
 
         const song: Song = new Song();
         const numChoruses: number = 10;
-        const chorusLength: number = 32;
+        const chorusLength: number = 12;
 
         let i = 0;
         let numChorus = 0;
@@ -88,57 +83,57 @@ export class BandService {
 
 
             // satin doll:
-            song.addMeasure(new Measure(1 + i, self.style, [this.theory.getChord('D','min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
-            song.addMeasure(new Measure(2 + i, self.style, [this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
-            song.addMeasure(new Measure(3 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
-            song.addMeasure(new Measure(4 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
-            song.addMeasure(new Measure(5 + i, self.style, [this.theory.getChord('A', 'min7'), this.theory.getChord('A', 'min7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7')], 4));
-            song.addMeasure(new Measure(6 + i, self.style, [this.theory.getChord('Ab', 'min7'), this.theory.getChord('Ab', 'min7'), this.theory.getChord('Db', '7'), this.theory.getChord('Db', '7')], 4));
-            song.addMeasure(new Measure(7 + i, self.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7')], 4));
-            song.addMeasure(new Measure(8 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
+            // song.addMeasure(new Measure(1 + i, self.style, [this.theory.getChord('D','min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
+            // song.addMeasure(new Measure(2 + i, self.style, [this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
+            // song.addMeasure(new Measure(3 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
+            // song.addMeasure(new Measure(4 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
+            // song.addMeasure(new Measure(5 + i, self.style, [this.theory.getChord('A', 'min7'), this.theory.getChord('A', 'min7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7')], 4));
+            // song.addMeasure(new Measure(6 + i, self.style, [this.theory.getChord('Ab', 'min7'), this.theory.getChord('Ab', 'min7'), this.theory.getChord('Db', '7'), this.theory.getChord('Db', '7')], 4));
+            // song.addMeasure(new Measure(7 + i, self.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7')], 4));
+            // song.addMeasure(new Measure(8 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
 
-            song.addMeasure(new Measure(9 + i, self.style, [this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
-            song.addMeasure(new Measure(10 + i, self.style, [this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
-            song.addMeasure(new Measure(11 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
-            song.addMeasure(new Measure(12 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
-            song.addMeasure(new Measure(13 + i, self.style, [this.theory.getChord('A', 'min7'), this.theory.getChord('A', 'min7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7')], 4));
-            song.addMeasure(new Measure(14 + i, self.style, [this.theory.getChord('Ab', 'min7'), this.theory.getChord('Ab', 'min7'), this.theory.getChord('Db', '7'), this.theory.getChord('Db', '7')], 4));
-            song.addMeasure(new Measure(15 + i, self.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4));
-            song.addMeasure(new Measure(16 + i, self.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4));
+            // song.addMeasure(new Measure(9 + i, self.style, [this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
+            // song.addMeasure(new Measure(10 + i, self.style, [this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
+            // song.addMeasure(new Measure(11 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
+            // song.addMeasure(new Measure(12 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
+            // song.addMeasure(new Measure(13 + i, self.style, [this.theory.getChord('A', 'min7'), this.theory.getChord('A', 'min7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7')], 4));
+            // song.addMeasure(new Measure(14 + i, self.style, [this.theory.getChord('Ab', 'min7'), this.theory.getChord('Ab', 'min7'), this.theory.getChord('Db', '7'), this.theory.getChord('Db', '7')], 4));
+            // song.addMeasure(new Measure(15 + i, self.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4));
+            // song.addMeasure(new Measure(16 + i, self.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4));
 
-            song.addMeasure(new Measure(17 + i, self.style, [this.theory.getChord('G', 'min7'), this.theory.getChord('G', 'min7'), this.theory.getChord('C', '7'), this.theory.getChord('C', '7')], 4));
-            song.addMeasure(new Measure(18 + i, self.style, [this.theory.getChord('G', 'min7'), this.theory.getChord('G', 'min7'), this.theory.getChord('C', '7'), this.theory.getChord('C', '7')], 4));
-            song.addMeasure(new Measure(19 + i, self.style, [this.theory.getChord('F', 'maj7'), this.theory.getChord('F', 'maj7'), this.theory.getChord('F', 'maj7'), this.theory.getChord('F', 'maj7')], 4));
-            song.addMeasure(new Measure(20 + i, self.style, [this.theory.getChord('F', 'maj7'), this.theory.getChord('F', 'maj7'), this.theory.getChord('F', 'maj7'), this.theory.getChord('F', 'maj7')], 4));
-            song.addMeasure(new Measure(21 + i, self.style, [this.theory.getChord('A', 'min7'), this.theory.getChord('A', 'min7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7')], 4));
-            song.addMeasure(new Measure(22 + i, self.style, [this.theory.getChord('A', 'min7'), this.theory.getChord('A', 'min7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7')], 4));
-            song.addMeasure(new Measure(23 + i, self.style, [this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
-            song.addMeasure(new Measure(24 + i, self.style, [this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
+            // song.addMeasure(new Measure(17 + i, self.style, [this.theory.getChord('G', 'min7'), this.theory.getChord('G', 'min7'), this.theory.getChord('C', '7'), this.theory.getChord('C', '7')], 4));
+            // song.addMeasure(new Measure(18 + i, self.style, [this.theory.getChord('G', 'min7'), this.theory.getChord('G', 'min7'), this.theory.getChord('C', '7'), this.theory.getChord('C', '7')], 4));
+            // song.addMeasure(new Measure(19 + i, self.style, [this.theory.getChord('F', 'maj7'), this.theory.getChord('F', 'maj7'), this.theory.getChord('F', 'maj7'), this.theory.getChord('F', 'maj7')], 4));
+            // song.addMeasure(new Measure(20 + i, self.style, [this.theory.getChord('F', 'maj7'), this.theory.getChord('F', 'maj7'), this.theory.getChord('F', 'maj7'), this.theory.getChord('F', 'maj7')], 4));
+            // song.addMeasure(new Measure(21 + i, self.style, [this.theory.getChord('A', 'min7'), this.theory.getChord('A', 'min7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7')], 4));
+            // song.addMeasure(new Measure(22 + i, self.style, [this.theory.getChord('A', 'min7'), this.theory.getChord('A', 'min7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7')], 4));
+            // song.addMeasure(new Measure(23 + i, self.style, [this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
+            // song.addMeasure(new Measure(24 + i, self.style, [this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
 
-            song.addMeasure(new Measure(25 + i, self.style, [this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
-            song.addMeasure(new Measure(26 + i, self.style, [this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
-            song.addMeasure(new Measure(27 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
-            song.addMeasure(new Measure(28 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
-            song.addMeasure(new Measure(29 + i, self.style, [this.theory.getChord('A', 'min7'), this.theory.getChord('A', 'min7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7')], 4));
-            song.addMeasure(new Measure(30 + i, self.style, [this.theory.getChord('Ab', 'min7'), this.theory.getChord('Ab', 'min7'), this.theory.getChord('Db', '7'), this.theory.getChord('Db', '7')], 4));
-            song.addMeasure(new Measure(31 + i, self.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4));
-            song.addMeasure(new Measure(32 + i, self.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4));
+            // song.addMeasure(new Measure(25 + i, self.style, [this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
+            // song.addMeasure(new Measure(26 + i, self.style, [this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4));
+            // song.addMeasure(new Measure(27 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
+            // song.addMeasure(new Measure(28 + i, self.style, [this.theory.getChord('E', 'min7'), this.theory.getChord('E', 'min7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
+            // song.addMeasure(new Measure(29 + i, self.style, [this.theory.getChord('A', 'min7'), this.theory.getChord('A', 'min7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7')], 4));
+            // song.addMeasure(new Measure(30 + i, self.style, [this.theory.getChord('Ab', 'min7'), this.theory.getChord('Ab', 'min7'), this.theory.getChord('Db', '7'), this.theory.getChord('Db', '7')], 4));
+            // song.addMeasure(new Measure(31 + i, self.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4));
+            // song.addMeasure(new Measure(32 + i, self.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4));
 
 
 
             // Bb Blues
-            // song.addMeasure(new Measure(1 + i, self.style, [this.theory.getChord('Bb','7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7')], 4));
-            // song.addMeasure(new Measure(2 + i, self.style, [this.theory.getChord('Eb','7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7')], 4));
-            // song.addMeasure(new Measure(3 + i, self.style, [this.theory.getChord('Bb','7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7')], 4));
-            // song.addMeasure(new Measure(4 + i, self.style, [this.theory.getChord('F','min7'), this.theory.getChord('F', 'min7'), this.theory.getChord('C', '7'), this.theory.getChord('C', '7')], 4));
-            // song.addMeasure(new Measure(5 + i, self.style, [this.theory.getChord('Eb','7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7')], 4));
-            // song.addMeasure(new Measure(6 + i, self.style, [this.theory.getChord('E','7b9'), this.theory.getChord('E7', '7b9'), this.theory.getChord('E', '7b9'), this.theory.getChord('E', '7b9')], 4));
-            // song.addMeasure(new Measure(7 + i, self.style, [this.theory.getChord('D','7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7')], 4));
-            // song.addMeasure(new Measure(8 + i, self.style, [this.theory.getChord('A','7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
-            // song.addMeasure(new Measure(9 + i, self.style, [this.theory.getChord('C','min7'), this.theory.getChord('C', 'min7'), this.theory.getChord('C', 'min7'), this.theory.getChord('C', 'min7')], 4));
-            // song.addMeasure(new Measure(10 + i, self.style, [this.theory.getChord('F','7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7')], 4));
-            // song.addMeasure(new Measure(11 + i, self.style, [this.theory.getChord('Bb','7'), this.theory.getChord('Bb','7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7'),], 4));
-            // song.addMeasure(new Measure(12 + i, self.style, [this.theory.getChord('C', 'min7'), this.theory.getChord('C', 'min7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7')], 4));
+            song.addMeasure(new Measure(1 + i, self.style, [this.theory.getChord('Bb','7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7')], 4));
+            song.addMeasure(new Measure(2 + i, self.style, [this.theory.getChord('Eb','7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7')], 4));
+            song.addMeasure(new Measure(3 + i, self.style, [this.theory.getChord('Bb','7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7')], 4));
+            song.addMeasure(new Measure(4 + i, self.style, [this.theory.getChord('F','min7'), this.theory.getChord('F', 'min7'), this.theory.getChord('C', '7'), this.theory.getChord('C', '7')], 4));
+            song.addMeasure(new Measure(5 + i, self.style, [this.theory.getChord('Eb','7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7')], 4));
+            song.addMeasure(new Measure(6 + i, self.style, [this.theory.getChord('E','7b9'), this.theory.getChord('E', '7b9'), this.theory.getChord('E', '7b9'), this.theory.getChord('E', '7b9')], 4));
+            song.addMeasure(new Measure(7 + i, self.style, [this.theory.getChord('D','7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7'), this.theory.getChord('D', '7')], 4));
+            song.addMeasure(new Measure(8 + i, self.style, [this.theory.getChord('A','7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7'), this.theory.getChord('A', '7')], 4));
+            song.addMeasure(new Measure(9 + i, self.style, [this.theory.getChord('C','min7'), this.theory.getChord('C', 'min7'), this.theory.getChord('C', 'min7'), this.theory.getChord('C', 'min7')], 4));
+            song.addMeasure(new Measure(10 + i, self.style, [this.theory.getChord('F','7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7')], 4));
+            song.addMeasure(new Measure(11 + i, self.style, [this.theory.getChord('Bb','7'), this.theory.getChord('Bb','7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7'),], 4));
+            song.addMeasure(new Measure(12 + i, self.style, [this.theory.getChord('C', 'min7'), this.theory.getChord('C', 'min7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7')], 4));
 
             numChorus++;
         }
@@ -153,13 +148,13 @@ export class BandService {
             const measure = song.measures[currentMeasure];
 
             // mess with the current measure.. Let's see if we can switch styles!
-            if (currentMeasure % 2 === 0) {
-                this.style = this.style === "bossa" ? "fourFourTime" : "bossa";
-            }
-            if (((currentMeasure - 1) % 2) === 0) {
-                Transport.swing = Transport.swing === 0.5 ? 0 : 0.5;
-            }
-            measure.style = this.style;
+            // if (currentMeasure % 2 === 0) {
+            //     this.style = this.style === "bossa" ? "fourFourTime" : "bossa";
+            // }
+            // if (((currentMeasure - 1) % 2) === 0) {
+            //     Transport.swing = Transport.swing === 0.5 ? 0 : 0.5;
+            // }
+            // measure.style = this.style;
 
             self.musicians.forEach(musician => musician.play(measure));
             currentMeasure++;
