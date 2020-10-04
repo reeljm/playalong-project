@@ -17,12 +17,14 @@ export class DrumSet extends Instrument {
         return new Promise((resolve, reject) => {
             try {
                 const fileConfig = {
-                    "C1": "./src/playbackService/staticFiles/samples/drums/ride_1.mp3",
-                    "D1": "./src/playbackService/staticFiles/samples/drums/ride_2.mp3",
-                    "E1": "./src/playbackService/staticFiles/samples/drums/ride_3.mp3",
-                    "F1": "./src/playbackService/staticFiles/samples/drums/ride_4.mp3",
-                    "G1": "./src/playbackService/staticFiles/samples/drums/hatChick_1.mp3",
-                    "A1": "./src/playbackService/staticFiles/samples/drums/crossStick_1.mp3"
+                    "C1": "./src/playbackService/staticFiles/samples/drums/ride_1.wav",
+                    "D1": "./src/playbackService/staticFiles/samples/drums/ride_2.wav",
+                    "E1": "./src/playbackService/staticFiles/samples/drums/ride_3.wav",
+                    "F1": "./src/playbackService/staticFiles/samples/drums/hatChick_1.wav",
+                    "G1": "./src/playbackService/staticFiles/samples/drums/hatChick_2.wav",
+                    "A1": "./src/playbackService/staticFiles/samples/drums/crossStick_1.wav",
+                    "B1": "./src/playbackService/staticFiles/samples/drums/crossStick_2.wav",
+                    "C2": "./src/playbackService/staticFiles/samples/drums/crossStick_3.wav"
                 };
 
                 this.kitPiecesToNoteNames.set("rideCym", new Array() as string[]);
