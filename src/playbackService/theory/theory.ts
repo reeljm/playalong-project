@@ -90,7 +90,7 @@ export class Theory {
         }
         const tokenizedPitch: string[] = pitch.split("");
         let currentNoteIndex: number = MusicUtility.pitchArray.indexOf(tokenizedPitch[0]);
-        if (currentNoteIndex == -1) {
+        if (currentNoteIndex === -1) {
             throw new InvalidPitchError(pitch);
         }
         tokenizedPitch.shift();
