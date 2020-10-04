@@ -6,14 +6,15 @@ import { BasslineGenerator } from './basslineGenerator';
 
 export class Bassist implements Musician {
 
-    constructor(private bass: UprightBass, private basslineGenerator: BasslineGenerator) { }
+    constructor(private bass: UprightBass, private basslineGeneratorMap: Map<string, BasslineGenerator>) { }
 
     initialize(): Promise<void> {
         return this.bass.loadInstrument();
     }
 
     play(currentMeasure: Measure) {
-        const bassline = this.basslineGenerator.gerenateBasslineEventParams(currentMeasure);
+        const generator: BasslineGenerator = this.basslineGeneratorMap.get(currentMeasure.style);
+        const bassline: any[] = generator.gerenateBasslineEventParams(currentMeasure);
         bassline.forEach((event: any) => {
             EventBuilder.newEventBuilder()
                 .startTime(event.startTime)

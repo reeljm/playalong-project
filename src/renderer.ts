@@ -12,14 +12,20 @@ import { UprightBass } from "./playbackService/musicians/bassist/uprightBass";
 import { Bassist } from "./playbackService/musicians/bassist/bassist";
 import { WalkingBasslineGenerator } from "./playbackService/musicians/bassist/walkingBasslineGenerator";
 import { Theory } from "./playbackService/theory/theory";
+import { BossaBasslineGenerator } from "./playbackService/musicians/bassist/bossaBasslineGenerator";
+import { BasslineGenerator } from "./playbackService/musicians/bassist/basslineGenerator";
 
 const bass = new UprightBass();
 const drumset = new DrumSet();
 const theory = new Theory();
+
+const basslineGeneratorMap:Map<string, BasslineGenerator> = new Map<string, BasslineGenerator>();
 const walkingBasslineGenerator = new WalkingBasslineGenerator(theory);
-// const bossaBasslineGenerator = new BossaBasslineGenerator(theory);
-// const bassist = new Bassist(bass, walkingBasslineGenerator);
-const bassist = new Bassist(bass, walkingBasslineGenerator);
+const bossaBasslineGenerator = new BossaBasslineGenerator(theory);
+basslineGeneratorMap.set("bossa", bossaBasslineGenerator);
+basslineGeneratorMap.set("fourFourTime", walkingBasslineGenerator);
+const bassist = new Bassist(bass, basslineGeneratorMap);
+
 const drummer = new Drummer(drumset);
 const band = new BandService(drummer, bassist, theory);
 band.play();
