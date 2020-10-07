@@ -10,6 +10,7 @@ export class EventBuilder {
     private prob: number;
     private n: string;
     private inst: Instrument;
+    private eventScheduled: boolean = false;
 
     static newEventBuilder(): EventBuilder {
         return new EventBuilder();
@@ -51,8 +52,12 @@ export class EventBuilder {
     }
 
     create(): ToneEvent {
+        const self = this;
         const event = new ToneEvent((time) => {
+            if (!self.eventScheduled) {
+                self.eventScheduled = true;
             this.inst.play(this.n, time, this.dur, this.offset(this.vel, this.velOffset));
+            }
         }, {}).start(this.start);
         event.probability = this.prob;
         return event;

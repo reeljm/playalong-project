@@ -43,7 +43,7 @@ export class BandService {
         await this.drummer.initialize();
         await this.bassist.initialize();
         this.musicians.push(this.drummer);
-        // this.musicians.push(this.bassist);
+        this.musicians.push(this.bassist);
         this.createScheduleLoop();
         this.initialized = true;
     }
