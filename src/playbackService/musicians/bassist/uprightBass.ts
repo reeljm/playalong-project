@@ -1,4 +1,4 @@
-import { Sampler } from 'tone';
+import { Panner, Sampler } from 'tone';
 import { Instrument } from '../instrument';
 import { Note } from '../../theory/note';
 
@@ -46,9 +46,10 @@ export class UprightBass extends Instrument {
                     'A#3.wav':  './src/playbackService/staticFiles/samples/upright-bass/As_3.wav',
                     'B3.wav':  './src/playbackService/staticFiles/samples/upright-bass/B_3.wav'
                  };
-                self.sampler = new Sampler(fileConfig, () => {
-                    resolve();
-                }).toDestination();
+                self.sampler = new Sampler(fileConfig, () => resolve());
+                const panner: Panner = new Panner().toDestination();
+                panner.pan.value = 0.75;
+                this.sampler.connect(panner);
             } catch (error) {
                 alert('error loading instrument');
                 reject();
