@@ -3,8 +3,11 @@ import { Measure } from '../../song/measure';
 import { UprightBass } from './uprightBass';
 import { EventBuilder } from '../../eventBuilder/eventBuilder';
 import { BasslineGenerator } from './basslineGenerator';
+import { BasslineCurrentState } from './basslineCurrentState';
 
 export class Bassist implements Musician {
+
+    private basslineCurrentState: BasslineCurrentState = new BasslineCurrentState();
 
     constructor(private bass: UprightBass, private basslineGeneratorMap: Map<string, BasslineGenerator>) { }
 
@@ -14,7 +17,7 @@ export class Bassist implements Musician {
 
     play(currentMeasure: Measure) {
         const generator: BasslineGenerator = this.basslineGeneratorMap.get(currentMeasure.style);
-        const bassline: any[] = generator.gerenateBasslineEventParams(currentMeasure);
+        const bassline: any[] = generator.gerenateBasslineEventParams(currentMeasure, this.basslineCurrentState);
         console.log(bassline);
         bassline.forEach((event: any) => {
             EventBuilder.newEventBuilder()

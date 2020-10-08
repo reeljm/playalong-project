@@ -1,7 +1,8 @@
+
+import { Note } from '../../theory/note';
 import { BasslineRequestParams } from './basslineRequestParams';
-import { BasslineResponseParams } from './basslineResponseParams';
 
 export interface BasslineRule {
 
-    getMatch(params: BasslineRequestParams): BasslineResponseParams
+    getMatch(params: BasslineRequestParams): Note
 }

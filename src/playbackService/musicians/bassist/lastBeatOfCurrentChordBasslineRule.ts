@@ -2,7 +2,6 @@ import { UprightBass } from './uprightBass';
 import { Theory } from '../../theory/theory';
 import { Note } from '../../theory/note';
 import { BasslineRequestParams } from './basslineRequestParams';
-import { BasslineResponseParams } from './basslineResponseParams';
 import { Scale } from '../../theory/scale';
 import { BasslineRule } from './basslineRule';
 
@@ -10,7 +9,7 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
 
     constructor(private theory: Theory) { }
 
-    public getMatch(params: BasslineRequestParams): any {
+    public getMatch(params: BasslineRequestParams): Note {
 
         // this is the last beat of the current chord. recalculate a more graceful resolution to next chord:
         if (params.isLastBeatOfCurrentChord || params.nextBeatIsStrongBeat) {
@@ -118,10 +117,7 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
                 directionChange = true;
             }
 
-            const response = BasslineResponseParams.createBasslineResponseParams();
-            response.notesScheduled = [nextNote];
-            response.directionChange = directionChange;
-            return response;
+            return nextNote;
         }
     }
 
