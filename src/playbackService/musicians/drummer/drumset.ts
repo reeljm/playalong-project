@@ -1,4 +1,4 @@
-import { Panner, Sampler } from 'tone';
+import { Compressor, Panner, Sampler } from 'tone';
 import { Instrument } from '../instrument';
 
 export enum KitPiece {
@@ -44,10 +44,10 @@ export class DrumSet extends Instrument {
                 });
 
                 self.sampler = new Sampler(fileConfig, () => resolve());
+                self.sampler.volume.value = -5;
                 const panner: Panner = new Panner().toDestination();
                 panner.pan.value = -0.75;
                 this.sampler.connect(panner);
-                self.sampler.volume.value = -10;
             } catch (error) {
                 alert('error loading instrument');
                 reject();
