@@ -44,7 +44,7 @@ export class DrumSet extends Instrument {
                 });
 
                 self.sampler = new Sampler(fileConfig, () => resolve());
-                self.sampler.volume.value = -5;
+                self.sampler.volume.value = -7;
                 const panner: Panner = new Panner().toDestination();
                 panner.pan.value = -0.75;
                 this.sampler.connect(panner);

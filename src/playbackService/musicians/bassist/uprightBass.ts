@@ -48,7 +48,7 @@ export class UprightBass extends Instrument {
                  };
 
                 self.sampler = new Sampler(fileConfig, () => resolve());
-                this.sampler.volume.value = 5
+                this.sampler.volume.value = 6
                 const panner: Panner = new Panner().toDestination();
                 panner.pan.value = 0.75;
                 this.sampler.connect(panner);
