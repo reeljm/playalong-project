@@ -1,4 +1,4 @@
-import { BandService as Band } from "./playbackService/band/band.service";
+import { BandService as Band, BandService } from "./playbackService/band/band.service";
 import { Drummer } from "./playbackService/musicians/drummer/drummer";
 import { DrumSet } from "./playbackService/musicians/drummer/drumset";
 import { UprightBass } from "./playbackService/musicians/bassist/uprightBass";
@@ -8,11 +8,14 @@ import { Theory } from "./playbackService/theory/theory";
 import { BossaBasslineGenerator } from "./playbackService/musicians/bassist/bossaBasslineGenerator";
 import { BasslineGenerator } from "./playbackService/musicians/bassist/basslineGenerator";
 
-document.querySelector('button').addEventListener('click', function() {
-    start();
-});
+import $ from "jquery";
+import "bootstrap";
 
-function start() {
+let band: BandService = null;
+let style: string = "fourFourTime";
+
+$(() => {
+    // initialize player
     const bass: UprightBass = new UprightBass();
     const drumset: DrumSet = new DrumSet();
     const theory: Theory = new Theory();
@@ -24,6 +27,34 @@ function start() {
     basslineGeneratorMap.set("fourFourTime", walkingBasslineGenerator);
     const bassist: Bassist = new Bassist(bass, basslineGeneratorMap);
     const drummer: Drummer = new Drummer(drumset);
-    const band: Band = new Band(drummer, bassist, theory);
-    band.play();
-}
+    band = new Band(drummer, bassist, theory);
+
+    $("#pause").hide();
+    $("#play").on("click", () => {
+        $("#play").hide();
+        $("#pause").show();
+        band.play();
+    });
+    
+    $("#pause").on("click", () => {
+        $("#pause").hide();
+        $("#play").show();
+        band.pause();
+    });
+
+    $("#stop").on("click", () => {
+        $("#pause").hide();
+        $("#play").show();
+        band.stop();
+    });
+
+    $("#swing").on("click", () => {
+        style = "fourFourTime";
+        band.setStyle(style);
+    });
+
+    $("#latin").on("click", () => {
+        style = "bossa";
+        band.setStyle(style);
+    });
+});

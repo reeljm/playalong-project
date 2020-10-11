@@ -30,7 +30,7 @@ export class BandService {
 
     public play() {
         Transport.swing = 0.5;
-        Transport.bpm.value = 120;
+        Transport.bpm.value = 250;
         Transport.context.resume();
         if (!this.initialized) {
             this.initialize()
@@ -49,18 +49,26 @@ export class BandService {
         this.initialized = true;
     }
 
+    private setTransportBasedOnPreviousMeasure(previousMeasure: Measure) {
+        if (previousMeasure && previousMeasure.style === 'fourFourTime') {
+            Transport.swing = 0.5;
+        } else {
+            Transport.swing = 0;
+        }
+    }
+
     private createScheduleLoop() {
         const self = this;
 
         const song: Song = new Song();
-        const numChoruses: number = 1;
+        const numChoruses: number = 3;
         const chorusLength: number = 16;
 
         let i = 0;
         let numChorus = 0;
         for (i = 0; i < numChoruses * chorusLength; i = i + chorusLength) {
             //another you
-            song.addMeasure(new Measure(1 + i, self.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('E', 'maj7'), this.theory.getChord('D', 'maj7'), this.theory.getChord('Db', 'maj7')], 4));
+            song.addMeasure(new Measure(1 + i, self.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4));
             song.addMeasure(new Measure(2 + i, self.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4));
             song.addMeasure(new Measure(3 + i, self.style, [this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5')], 4));
             song.addMeasure(new Measure(4 + i, self.style, [this.theory.getChord('G', '7b9'), this.theory.getChord('G', '7b9'), this.theory.getChord('G', '7b9'), this.theory.getChord('G', '7b9')], 4));
@@ -141,24 +149,19 @@ export class BandService {
         const firstChord = song.measures[0].chords[0];
         song.addMeasure(new Measure(song.measures.length + 1, self.style, [this.theory.getChord(firstChord.root, firstChord.type),this.theory.getChord(firstChord.root, firstChord.type),this.theory.getChord(firstChord.root, firstChord.type),this.theory.getChord(firstChord.root, firstChord.type)], 4));
 
-        let currentMeasure = 0;
+        let currentMeasure: number = 0;
+        let previousMeasure: Measure = null;
         new Loop(() => {
             if (song.measures.length <= currentMeasure) {
                 return;
             }
+            this.setTransportBasedOnPreviousMeasure(previousMeasure);
             const measure = song.measures[currentMeasure];
-
-            // mess with the current measure.. Let's see if we can switch styles!
-            // if (currentMeasure % 2 === 0) {
-            //     this.style = this.style === "bossa" ? "fourFourTime" : "bossa";
-            // }
-            // if (((currentMeasure - 1) % 2) === 0) {
-            //     Transport.swing = Transport.swing === 0.5 ? 0 : 0.5;
-            // }
-            // measure.style = this.style;
-
+            measure.style = this.style;
+            
             self.musicians.forEach(musician => musician.play(measure));
             currentMeasure++;
+            previousMeasure = measure;
         }, '1m').start(0);
     }
 }

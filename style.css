@@ -1,0 +1,10 @@
+.control-button {
+    width: 200;
+    height: 200;
+    font-size: 50px;
+    color: #505fff;
+}
+
+.control-button:hover {
+    color: #717dff;
+}
