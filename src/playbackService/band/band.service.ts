@@ -9,8 +9,9 @@ import { Theory } from '../theory/theory';
 export class BandService {
 
     private musicians: Musician[] = [];
-    private style = 'fourFourTime';
-    private initialized = false;
+    private style: string = 'fourFourTime';
+    private initialized: boolean = false;
+    private tempo: number = 120;
 
     constructor(private drummer: Drummer, private bassist: Bassist, private theory: Theory) { }
 
@@ -30,7 +31,7 @@ export class BandService {
 
     public play() {
         Transport.swing = 0.5;
-        Transport.bpm.value = 250;
+        Transport.bpm.value = this.tempo;
         Transport.context.resume();
         if (!this.initialized) {
             this.initialize()
@@ -38,6 +39,11 @@ export class BandService {
         } else {
             Transport.start();
         }
+    }
+
+    public setTempo(tempo: number) {
+        this.tempo = tempo;
+        Transport.bpm.value = this.tempo;
     }
 
     private async initialize(): Promise<void> {

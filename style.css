@@ -1,10 +1,41 @@
 .control-button {
-    width: 200;
-    height: 200;
-    font-size: 50px;
+    line-height: 0;
+    font-size: 30px;
     color: #505fff;
+    display: inline-block;
 }
 
 .control-button:hover {
     color: #717dff;
+}
+
+.style-select {
+    display: inline-block;
+}
+
+.tempo-container {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0.5% 3% 0 3%;
+}
+
+.style-container {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0.5% 3% 0 3%;
+    
+}
+
+#tempo {
+    width: 20%;
+    height: 20px;
+}
+
+#playback-container {
+    display: inline-block;;
+    
+}
+
+#header {
+    text-align: center;
 }

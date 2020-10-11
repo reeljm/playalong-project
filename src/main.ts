@@ -30,6 +30,7 @@ $(() => {
     band = new Band(drummer, bassist, theory);
 
     $("#pause").hide();
+
     $("#play").on("click", () => {
         $("#play").hide();
         $("#pause").show();
@@ -55,6 +56,16 @@ $(() => {
 
     $("#latin").on("click", () => {
         style = "bossa";
+        band.setStyle(style);
+    });
+
+    $("#tempo").on("change", function() {
+        const tempoNum: number = parseInt($(this).val().toString());
+        band.setTempo(tempoNum);
+    });
+    
+    $("#style").on("change", function() {
+        const style: string = $(this).val().toString()
         band.setStyle(style);
     });
 });

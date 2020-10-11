@@ -5,34 +5,37 @@
 		<title>Hello World!</title>
 	</head>
 	<body>
-		<span id="play" class="control-button">
-			<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-play-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-				<path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"></path>
-			</svg>
-		</span>
-		<span id="pause" class="control-button">
-			<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pause-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-				<path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
-			  </svg>
-		</span>
-		<span id=stop class="control-button">
-			<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-stop" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-				<path fill-rule="evenodd" d="M3.5 5A1.5 1.5 0 0 1 5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5zM5 4.5a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 .5-.5V5a.5.5 0 0 0-.5-.5H5z"/>
-			</svg>
-		</span>
-
-		<div>
-			<h3>
-				Styles
-			</h1>
-			<button id="swing" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-				Swing
-			</button>
-			<button id="latin" type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-				Latin
-			</button>
-		</div>
-
+		<div id="header">
+			<div id="playback-container">
+				<span id="play" class="control-button">
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-play-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"></path>
+					</svg>
+				</span>
+				<span id="pause" class="control-button">
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pause-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
+						</svg>
+				</span>
+				<span id=stop class="control-button">
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-stop" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" d="M3.5 5A1.5 1.5 0 0 1 5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5zM5 4.5a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 .5-.5V5a.5.5 0 0 0-.5-.5H5z"/>
+					</svg>
+				</span>
+			</div>
+			<div class="style-container">
+				<label>Style</label>
+				<select id="style">
+					<option selected value="fourFourTime">Swing</option>
+					<option value="bossa">Latin</option>
+				</select>
+			</div>
+			<div class="tempo-container">
+				<label>Tempo</label>
+				<input id="tempo" type="number" value="120" required>
+			</div>
+	</div>
+	
 	</body>
 	<script src="./dist/bundle.js"></script>
 	<link rel="stylesheet" 
