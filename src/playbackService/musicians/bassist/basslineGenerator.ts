@@ -8,12 +8,11 @@ import { BasslineRule } from './basslineRule';
 import { DesiredScaleDegreeBasslineRule } from './desiredScaleDegreeBasslineRule';
 import { ClosestScaleDegreeBasslineRule } from './closestScaleDegreeBasslineRule';
 import { LastBeatOfCurrentChordBasslineRule } from './lastBeatOfCurrentChordBasslineRule';
-import { EventParams } from '../drummer/drumPatterns';
 
 export abstract class BasslineGenerator {
     
     private static DEFAULT_STARTING_OCTAVE: number = 2;
-    private static DEFAULT_STARTING_DIRECTION: string = "up";
+    private static DEFAULT_STARTING_DIRECTION: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Up;
     
     constructor(protected theory: Theory) { }
     
@@ -24,14 +23,15 @@ export abstract class BasslineGenerator {
         if (!basslineCurrentState.direction) {
             basslineCurrentState.direction = BasslineGenerator.DEFAULT_STARTING_DIRECTION;
         }
-        
-        const eventParamArray: EventParams[] = [];
-        
+
+        const eventParamArray: any[] = [];
+
         for (let currentBeat = 0; currentBeat < currentMeasure.numberOfBeats; currentBeat++) {
+            const isLastNoteOfTune: boolean = !currentMeasure.nextMeasure;
             const params: BasslineRequestParams = new BasslineRequestParams();
             this.configureBasslineParamsForNextNote(basslineCurrentState, currentMeasure, currentBeat, params);
             const noteToSchedule = this.getNextBasslineNote(params, basslineCurrentState);
-
+            
             // Save info about this schedule cycle:
             const currentChord: Chord = currentMeasure.chords[currentBeat];
             if (basslineCurrentState.previousChord && basslineCurrentState.previousChord.equals(currentChord)) {
@@ -39,14 +39,15 @@ export abstract class BasslineGenerator {
             } else {
                 basslineCurrentState.beatsAlreadySpentOnCurrentChord = 0;
             }
-            const prevNote = basslineCurrentState.previousNoteScheduled;
-            const prevDirection = basslineCurrentState.direction;
-            // basslineCurrentState.direction = this.calculateDirection(prevNote, noteToSchedule, prevDirection);
             basslineCurrentState.previousChord = currentChord;
-            basslineCurrentState.previousNoteScheduled = noteToSchedule;
-
-            console.log(noteToSchedule.toPlayableString());
-            this.scheduleEventsForNote(currentMeasure, currentBeat, eventParamArray, noteToSchedule);
+            if (noteToSchedule) {
+                basslineCurrentState.previousNoteScheduled = noteToSchedule;
+                this.scheduleEventsForNote(currentMeasure, currentBeat, eventParamArray, noteToSchedule);
+            }
+            if (isLastNoteOfTune) {
+                eventParamArray[0].duration = "1n";
+                break;
+            }
         }
         return eventParamArray;
     }
@@ -56,13 +57,13 @@ export abstract class BasslineGenerator {
     protected abstract configureBasslineParamsForNextNote(basslineCurrentState: BasslineCurrentState, currentMeasure: Measure, currentBeat: number, params: BasslineRequestParams): void;
 
     private getNextBasslineNote(params: BasslineRequestParams, basslineCurrentState: BasslineCurrentState): Note {
-        console.log(params);
         const desiredScaleDegreeRule: BasslineRule = new DesiredScaleDegreeBasslineRule(this.theory);
         const lastBeatOfCurrentChordRule: BasslineRule = new LastBeatOfCurrentChordBasslineRule(this.theory);
         const closestScaleDegreeChordRule: BasslineRule = new ClosestScaleDegreeBasslineRule(this.theory);
 
         const rules: BasslineRule[] = [desiredScaleDegreeRule, lastBeatOfCurrentChordRule, closestScaleDegreeChordRule];
 
+        if (params.rest) return; 
         for (const rule of rules) {
             const res: any = rule.getMatch(params);
             if (res) {

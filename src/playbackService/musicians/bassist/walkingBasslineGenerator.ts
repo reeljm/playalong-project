@@ -27,11 +27,13 @@ export class WalkingBasslineGenerator extends BasslineGenerator {
     }
 
     protected configureBasslineParamsForNextNote(basslineCurrentState: BasslineCurrentState, currentMeasure: Measure, currentBeat: number, params: BasslineRequestParams): void {
+        const up: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Up;
+        const down: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Down;
         if (currentBeat === 1) {
             // randomly choose to change direction:
             const dirSwitch = Math.random() >= 0.9;
             if (dirSwitch) {
-                basslineCurrentState.direction = basslineCurrentState.direction === "up" ? "down" : "up";
+                basslineCurrentState.direction = basslineCurrentState.direction === up ? down : up;
             }
         }
 

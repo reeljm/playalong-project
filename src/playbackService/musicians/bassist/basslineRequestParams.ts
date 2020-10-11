@@ -4,7 +4,7 @@ import { Chord } from "../../theory/chord";
 export class BasslineRequestParams {
     requireRoot: boolean = true;
     currentChord: Chord;
-    desiredDirection: string;
+    desiredDirection:BasslineRequestParams.Dir;
     highestNote: Note;
     lowestNote: Note;
     previousNoteScheduled?: Note;
@@ -15,4 +15,14 @@ export class BasslineRequestParams {
     isLastBeatOfCurrentChord: boolean;
     beatsAlreadySpentOnCurrentChord: number;
     nextBeatIsStrongBeat: boolean;
+    rest: boolean;
+}
+
+export namespace BasslineRequestParams
+{
+    export enum Dir
+    {
+        Up = "up",
+        Down = "down",
+    }
 }

@@ -11,7 +11,7 @@ export class ClosestScaleDegreeBasslineRule implements BasslineRule {
 
     public getMatch(params: BasslineRequestParams): any {
         const scale: Scale = this.theory.getScaleForChord(params.currentChord);
-        let nextDirection = params.desiredDirection;
+        let nextDirection: BasslineRequestParams.Dir = params.desiredDirection;
 
         let nextNote: Note = null;
         // use lastNoteScheduled, chordTone, scale, and desiredDirection to get the next note:
@@ -36,11 +36,13 @@ export class ClosestScaleDegreeBasslineRule implements BasslineRule {
             });
         }
 
+        const up: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Up;
+        const down: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Down;
         // filter out notes that violate our direction requirement:
         chordToneNotesAndDistances = chordToneNotesAndDistances.filter(noteAndDistance => {
-            if (params.desiredDirection === "up" && noteAndDistance.dist > 0) {
+            if (params.desiredDirection === up && noteAndDistance.dist > 0) {
                 return true;
-            } else if (params.desiredDirection === "down" && noteAndDistance.dist < 0) {
+            } else if (params.desiredDirection === down && noteAndDistance.dist < 0) {
                 return true;
             } else {
                 return false;
@@ -54,12 +56,12 @@ export class ClosestScaleDegreeBasslineRule implements BasslineRule {
         // make sure the note is within the instrument's range:
         while (this.theory.distanceTo(nextNote, UprightBass.HIGHEST_NOTE) < 0) {
             nextNote = Note.getNote(nextNote.pitch, nextNote.octave - 1);
-            nextDirection = "down";
+            nextDirection = down;
         }
 
         while (this.theory.distanceTo(nextNote, UprightBass.LOWEST_NOTE) > 0) {
             nextNote = Note.getNote(nextNote.pitch, nextNote.octave + 1);
-            nextDirection = "up";
+            nextDirection = up;
         }
 
         return {note: nextNote, nextDirection: nextDirection};

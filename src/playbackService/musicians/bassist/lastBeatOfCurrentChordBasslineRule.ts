@@ -13,13 +13,13 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
         
         // this is the last beat of the current chord. recalculate a more graceful resolution to next chord:
         if (params.isLastBeatOfCurrentChord || params.nextBeatIsStrongBeat) {
-            const currentOctave = params.previousNoteScheduled.octave;
             const lastNote = params.previousNoteScheduled;
-            let directionChange: boolean = false;
             let nextNote: Note = null;
             const scale: Scale = this.theory.getScaleForChord(params.currentChord);
             const nextScale: Scale = this.theory.getScaleForChord(params.nextChord);
             let nextDirection = params.desiredDirection;
+            const up: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Up;
+            const down: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Down;
             
             // pick which note we want to target:
             const rootOfNextChord: Note = this.theory.getNoteInClosestOctave(nextScale.pitches[0], lastNote);
@@ -54,27 +54,27 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
             if (distanceFromLastNoteToTargetNote === 2) {
                 // whole step below next target, schedule half step above:
                 nextNote = this.theory.transpose(targetNote, -1);
-                nextDirection = "up";
+                nextDirection = up;
             } else if (distanceFromLastNoteToTargetNote === -2) {
                 // whole step above next target, schedule half step below:
                 nextNote = this.theory.transpose(targetNote, 1);
-                nextDirection = "down";
+                nextDirection = down;
             } else if (distanceFromLastNoteToTargetNote === 1) {
                 // halfstep step below next target, schedule half step above:
                 nextNote = this.theory.transpose(targetNote, 1);
-                nextDirection = "down";
+                nextDirection = down;
             } else if (distanceFromLastNoteToTargetNote === -1) {
                 // halfstep step above next target, schedule half step below:
                 nextNote = this.theory.transpose(targetNote, -1);
-                nextDirection = "up";
+                nextDirection = up;
             } else if (distanceFromLastNoteToTargetNote === 0) {
-                if (params.desiredDirection === "up") {
+                if (params.desiredDirection === up) {
                     nextNote = this.theory.transpose(targetNote, 1);
-                    nextDirection = "down";
+                    nextDirection = down;
                 }
-                else if (params.desiredDirection === "down") {
+                else if (params.desiredDirection === down) {
                     nextNote = this.theory.transpose(targetNote, -1);
-                    nextDirection = "up";
+                    nextDirection = up;
                 }
             } else {
                 // we have a distance larger than a whole step, pick the closest scale degree:
@@ -83,47 +83,42 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
                 if (indexCurrentScale > 0) {
                     if (distanceFromLastNoteToTargetNote > 0) {
                         indexCurrentScale = indexCurrentScale - 1;
-                        nextDirection = "up";
+                        nextDirection = up;
                     } else {
                         indexCurrentScale = indexCurrentScale + 1;
-                        nextDirection = "down";
+                        nextDirection = down;
                     }
                     nextNote = this.theory.getNoteInClosestOctave(scale.pitches[indexCurrentScale], targetNote);
                 } else {
                     if (distanceFromLastNoteToTargetNote > 0) {
                         nextNote = this.theory.transpose(targetNote, -1);
-                        nextDirection = "up";
+                        nextDirection = up;
                     } else {
                         nextNote = this.theory.transpose(targetNote, + 1);
-                        nextDirection = "down";
+                        nextDirection = down;
                     }
                 }
-            }
-
-            directionChange = false;
-            if (params.desiredDirection !== nextDirection) {
-                directionChange = true;
             }
 
             // make sure the note is within the instrument's range:
             while (this.theory.distanceTo(nextNote, UprightBass.HIGHEST_NOTE) < 0) {
                 nextNote = Note.getNote(nextNote.pitch, nextNote.octave - 1);
-                directionChange = true;
             }
 
             while (this.theory.distanceTo(nextNote, UprightBass.LOWEST_NOTE) > 0) {
                 nextNote = Note.getNote(nextNote.pitch, nextNote.octave + 1);
-                directionChange = true;
             }
 
             return {note: nextNote, nextDirection: nextDirection};
         }
     }
 
-    private distanceIsMajorOrMinor3rdInDesiredDirection(noteDistance: number, desiredDirection: string): boolean {
-        if (desiredDirection === "up" && (noteDistance === 3 || noteDistance === 4)) {
+    private distanceIsMajorOrMinor3rdInDesiredDirection(noteDistance: number, desiredDirection: BasslineRequestParams.Dir): boolean {
+        const up: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Up;
+        const down: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Down;
+        if (desiredDirection === up && (noteDistance === 3 || noteDistance === 4)) {
             return true;
-        } else if (desiredDirection === "down" && (noteDistance === -3 || noteDistance === -4)) {
+        } else if (desiredDirection === down && (noteDistance === -3 || noteDistance === -4)) {
             return true;
         }
         return false;
