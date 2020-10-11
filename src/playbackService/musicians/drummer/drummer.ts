@@ -11,7 +11,8 @@ export class Drummer implements Musician {
 
     pattern: DrumPattern;
     patternNameToPatternArray: Map<string, DrumPattern[]> = new Map<string, DrumPattern[]>();
-    measuresAlreadyScheduled = 0;
+    eventsToSchedule: EventBuilder[] = [];
+    currentStyle: string = null;
 
     constructor(private drumSet: DrumSet) { }
 
@@ -25,37 +26,49 @@ export class Drummer implements Musician {
         return this.drumSet.loadInstrument();
     }
 
-
-    play(currentMeasure: Measure) {
+    public play(currentMeasure: Measure): void {
         this.playTime(currentMeasure);
     }
 
-    playTime(currentMeasure: Measure) {
-        if (this.measuresAlreadyScheduled > 0) {
-            this.measuresAlreadyScheduled--;
+    private playTime(currentMeasure: Measure): void {
+        if (this.eventsToSchedule.length > 0 && this.currentStyle === currentMeasure.style) {
+            // schedule the events stored in eventsToSchedule array
+            while (this.eventsToSchedule.length > 0){
+                this.eventsToSchedule.pop().create();
+            }
+            console.log("scheduled stuff from before");
             return;
         }
 
+        this.eventsToSchedule = [];
+
         this.pattern = this.getDrumPatternForStyle(currentMeasure.style);
-        this.measuresAlreadyScheduled = this.pattern.numberOfMeasures - 1;
         const parts: Parts = this.pattern.parts;
 
         Object.entries(parts).forEach(([partName, eventParamsList]) => {
             eventParamsList.forEach((eventParams: EventParams) => {
-                EventBuilder.newEventBuilder()
+                const beatOfEvent: number = Number.parseInt(eventParams.start.split(":")[0]);
+
+                const builder: EventBuilder = EventBuilder.newEventBuilder()
                 .startTime(`${currentMeasure.measureNumber}:${eventParams.start}`)
                 .velocity(eventParams.velocity)
                 .duration(eventParams.duration)
                 .velocityOffset(eventParams.velocityOffset ? eventParams.velocityOffset : 0)
                 .probability(eventParams.probability)
                 .note(partName)
-                .instrument(this.drumSet)
-                .create();
+                .instrument(this.drumSet);
+                
+                if (beatOfEvent > currentMeasure.numberOfBeats - 1) {
+                    this.eventsToSchedule.push(builder);
+                } else {
+                    builder.create();
+                }
             });
         });
+        this.currentStyle = currentMeasure.style;
     }
 
-    getDrumPatternForStyle(style: string): DrumPattern {
+    private getDrumPatternForStyle(style: string): DrumPattern {
         const patterns = this.patternNameToPatternArray.get(style);
         return this.pattern = patterns[Math.floor(Math.random() * patterns.length)];
     }
