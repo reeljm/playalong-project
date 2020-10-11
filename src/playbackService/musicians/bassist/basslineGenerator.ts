@@ -45,7 +45,7 @@ export abstract class BasslineGenerator {
                 this.scheduleEventsForNote(currentMeasure, currentBeat, eventParamArray, noteToSchedule);
             }
             if (isLastNoteOfTune) {
-                eventParamArray[0].duration = "1n";
+                eventParamArray[eventParamArray.length - 1].duration = "1n";
                 break;
             }
         }

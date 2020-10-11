@@ -54,15 +54,15 @@ export class BandService {
 
         const song: Song = new Song();
         const numChoruses: number = 1;
-        const chorusLength: number = 3;
+        const chorusLength: number = 1;
 
         let i = 0;
         let numChorus = 0;
         for (i = 0; i < numChoruses * chorusLength; i = i + chorusLength) {
             //another you
             song.addMeasure(new Measure(1 + i, self.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4));
-            song.addMeasure(new Measure(2 + i, self.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4));
-            song.addMeasure(new Measure(3 + i, self.style, [this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5')], 4));
+            // song.addMeasure(new Measure(2 + i, self.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4));
+            // song.addMeasure(new Measure(3 + i, self.style, [this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5')], 4));
             // song.addMeasure(new Measure(4 + i, self.style, [this.theory.getChord('G', '7b9'), this.theory.getChord('G', '7b9'), this.theory.getChord('G', '7b9'), this.theory.getChord('G', '7b9')], 4));
             // song.addMeasure(new Measure(5 + i, self.style, [this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7')], 4));
             // song.addMeasure(new Measure(6 + i, self.style, [this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7')], 4));
