@@ -9,12 +9,17 @@ import { BasslineCurrentState } from './basslineCurrentState';
 export class BossaBasslineGenerator extends BasslineGenerator {
     private playNextSkipBeat: boolean = true;
     private lastMeasureUtilized: number = null;
-    
+
     constructor(theory: Theory) {
         super(theory);
     }
-    
-    protected scheduleEventsForNote(currentMeasure: Measure, currentBeat: number, eventParamArray: any[], noteToSchedule: Note): void {
+
+    protected scheduleEventsForNote(
+        currentMeasure: Measure,
+        currentBeat: number,
+        eventParamArray: any[],
+        noteToSchedule: Note
+    ): void {
         const playCurrentSkipBeat: boolean = this.playNextSkipBeat;
         let noteDuration = "2n";
         this.playNextSkipBeat = Math.random() >= 0.1;
@@ -56,7 +61,12 @@ export class BossaBasslineGenerator extends BasslineGenerator {
         this.lastMeasureUtilized = currentMeasure.measureNumber;
     }
 
-    protected configureBasslineParamsForNextNote(basslineCurrentState: BasslineCurrentState, currentMeasure: Measure, currentBeat: number, params: BasslineRequestParams): void {
+    protected configureBasslineParamsForNextNote(
+        basslineCurrentState: BasslineCurrentState,
+        currentMeasure: Measure,
+        currentBeat: number,
+        params: BasslineRequestParams
+    ): void {
         if (this.lastMeasureUtilized < currentMeasure.measureNumber - 1) {
             this.lastMeasureUtilized = null;
         }

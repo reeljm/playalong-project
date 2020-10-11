@@ -14,7 +14,12 @@ export class WalkingBasslineGenerator extends BasslineGenerator {
         super(theory);
     }
 
-    protected scheduleEventsForNote(currentMeasure: Measure, currentBeat: number, eventParamArray: any[], noteToSchedule: Note): void {
+    protected scheduleEventsForNote(
+        currentMeasure: Measure,
+        currentBeat: number,
+        eventParamArray: any[],
+        noteToSchedule: Note
+    ): void {
         const noteDuration: string = "4n";
         eventParamArray.push({
             startTime: `${currentMeasure.measureNumber}:${currentBeat}:0`,
@@ -26,7 +31,12 @@ export class WalkingBasslineGenerator extends BasslineGenerator {
         });
     }
 
-    protected configureBasslineParamsForNextNote(basslineCurrentState: BasslineCurrentState, currentMeasure: Measure, currentBeat: number, params: BasslineRequestParams): void {
+    protected configureBasslineParamsForNextNote(
+        basslineCurrentState: BasslineCurrentState,
+        currentMeasure: Measure,
+        currentBeat: number,
+        params: BasslineRequestParams
+    ): void {
         const up: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Up;
         const down: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Down;
         if (currentBeat === 1) {

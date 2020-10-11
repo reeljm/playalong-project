@@ -46,6 +46,10 @@ export class BandService {
         Transport.bpm.value = this.tempo;
     }
 
+    public getTempo() {
+        return this.tempo;
+    }
+
     private async initialize(): Promise<void> {
         await this.drummer.initialize();
         await this.bassist.initialize();
@@ -73,7 +77,7 @@ export class BandService {
         let i = 0;
         let numChorus = 0;
         for (i = 0; i < numChoruses * chorusLength; i = i + chorusLength) {
-            //another you
+            // another you
             song.addMeasure(new Measure(1 + i, self.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4));
             song.addMeasure(new Measure(2 + i, self.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4));
             song.addMeasure(new Measure(3 + i, self.style, [this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5')], 4));
@@ -164,7 +168,7 @@ export class BandService {
             this.setTransportBasedOnPreviousMeasure(previousMeasure);
             const measure = song.measures[currentMeasure];
             measure.style = this.style;
-            
+
             self.musicians.forEach(musician => musician.play(measure));
             currentMeasure++;
             previousMeasure = measure;

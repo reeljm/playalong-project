@@ -10,7 +10,7 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
     constructor(private theory: Theory) { }
 
     public getMatch(params: BasslineRequestParams): any {
-        
+
         // this is the last beat of the current chord. recalculate a more graceful resolution to next chord:
         if (params.isLastBeatOfCurrentChord || params.nextBeatIsStrongBeat) {
             const lastNote = params.previousNoteScheduled;
@@ -20,7 +20,7 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
             let nextDirection = params.desiredDirection;
             const up: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Up;
             const down: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Down;
-            
+
             // pick which note we want to target:
             const rootOfNextChord: Note = this.theory.getNoteInClosestOctave(nextScale.pitches[0], lastNote);
             const fifthOfNextChord: Note = this.theory.getNoteInClosestOctave(nextScale.pitches[4], lastNote);
@@ -113,7 +113,10 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
         }
     }
 
-    private distanceIsMajorOrMinor3rdInDesiredDirection(noteDistance: number, desiredDirection: BasslineRequestParams.Dir): boolean {
+    private distanceIsMajorOrMinor3rdInDesiredDirection(
+        noteDistance: number,
+        desiredDirection: BasslineRequestParams.Dir
+    ): boolean {
         const up: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Up;
         const down: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Down;
         if (desiredDirection === up && (noteDistance === 3 || noteDistance === 4)) {

@@ -19,7 +19,7 @@ $(() => {
     const bass: UprightBass = new UprightBass();
     const drumset: DrumSet = new DrumSet();
     const theory: Theory = new Theory();
-    
+
     const basslineGeneratorMap: Map<string, BasslineGenerator> = new Map<string, BasslineGenerator>();
     const walkingBasslineGenerator: BasslineGenerator = new WalkingBasslineGenerator(theory);
     const bossaBasslineGenerator: BasslineGenerator = new BossaBasslineGenerator(theory);
@@ -36,7 +36,7 @@ $(() => {
         $("#pause").show();
         band.play();
     });
-    
+
     $("#pause").on("click", () => {
         $("#pause").hide();
         $("#play").show();
@@ -59,13 +59,32 @@ $(() => {
         band.setStyle(style);
     });
 
-    $("#tempo").on("change", function() {
-        const tempoNum: number = parseInt($(this).val().toString());
+    const parseTempoAndSetVal = (tempoNum: number) => {
+        if (isNaN(tempoNum) || tempoNum > 400 || tempoNum < 40) {
+            $("#tempo").val(band.getTempo());
+            return;
+        }
         band.setTempo(tempoNum);
+        $("#tempo").val(tempoNum);
+    };
+
+    $("#tempo").on("change", function() {
+        const tempoNum: number = parseInt($(this).val().toString(), 0x0);
+        parseTempoAndSetVal(tempoNum);
     });
-    
+
+    $("#tempo-increase").on("click", () => {
+        band.getTempo()
+        parseTempoAndSetVal(band.getTempo() + 1);
+    });
+
+    $("#tempo-decrease").on("click", () => {
+        band.getTempo()
+        parseTempoAndSetVal(band.getTempo() - 1);
+    });
+
     $("#style").on("change", function() {
-        const style: string = $(this).val().toString()
-        band.setStyle(style);
+        const styleInput: string = $(this).val().toString()
+        band.setStyle(styleInput);
     });
 });

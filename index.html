@@ -24,23 +24,25 @@
 				</span>
 			</div>
 			<div class="style-container">
-				<label>Style</label>
-				<select id="style">
+				<select id="style" class="style-select">
 					<option selected value="fourFourTime">Swing</option>
 					<option value="bossa">Latin</option>
 				</select>
 			</div>
-			<div class="tempo-container">
-				<label>Tempo</label>
-				<input id="tempo" type="number" value="120" required>
+			<div class="tempo-container noselect">
+				<div id="tempo-decrease" class="tempo-control">-</div>
+				<input id="tempo" type="number" value="120" min="40" max="400" pattern="\d*" required>
+				<div id="tempo-increase" class="tempo-control">+</div>
 			</div>
 	</div>
-	
+
+<input type="range" orient="vertical" />
+
 	</body>
 	<script src="./dist/bundle.js"></script>
-	<link rel="stylesheet" 
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 		crossorigin="anonymous">
 	<link rel="stylesheet"
 		href="./style.css">

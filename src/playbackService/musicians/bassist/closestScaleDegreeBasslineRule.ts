@@ -25,7 +25,7 @@ export class ClosestScaleDegreeBasslineRule implements BasslineRule {
             possibleIntervals = Array.from(Array(scale.pitches.length).keys());
         }
 
-        // go through these notes in the octave below, the current octave, and the octave above to see which note is closest:
+        // go through these notes in the octacve-1, octacve, and octacve+1 to see which note is closest:
         let chordToneNotesAndDistances: any[] = [];
         for (let octave = currentOctave - 1; octave <= currentOctave + 1; octave++) {
             possibleIntervals.forEach(interval => {
@@ -50,7 +50,8 @@ export class ClosestScaleDegreeBasslineRule implements BasslineRule {
         });
 
         // select the note that is closest:
-        chordToneNotesAndDistances = chordToneNotesAndDistances.sort((nd1,nd2) => Math.abs(nd1.dist) - Math.abs(nd2.dist));
+        const sortFunc = (nd1: any, nd2:any) => Math.abs(nd1.dist) - Math.abs(nd2.dist);
+        chordToneNotesAndDistances = chordToneNotesAndDistances.sort(sortFunc);
         nextNote = chordToneNotesAndDistances[0].note;
 
         // make sure the note is within the instrument's range:

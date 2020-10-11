@@ -10,12 +10,12 @@ import { ClosestScaleDegreeBasslineRule } from './closestScaleDegreeBasslineRule
 import { LastBeatOfCurrentChordBasslineRule } from './lastBeatOfCurrentChordBasslineRule';
 
 export abstract class BasslineGenerator {
-    
+
     private static DEFAULT_STARTING_OCTAVE: number = 2;
     private static DEFAULT_STARTING_DIRECTION: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Up;
-    
+
     constructor(protected theory: Theory) { }
-    
+
     public gerenateBasslineEventParams(currentMeasure: Measure, basslineCurrentState: BasslineCurrentState): any[] {
         if (!basslineCurrentState.currentOctave) {
             basslineCurrentState.currentOctave = BasslineGenerator.DEFAULT_STARTING_OCTAVE;
@@ -31,7 +31,7 @@ export abstract class BasslineGenerator {
             const params: BasslineRequestParams = new BasslineRequestParams();
             this.configureBasslineParamsForNextNote(basslineCurrentState, currentMeasure, currentBeat, params);
             const noteToSchedule = this.getNextBasslineNote(params, basslineCurrentState);
-            
+
             // Save info about this schedule cycle:
             const currentChord: Chord = currentMeasure.chords[currentBeat];
             if (basslineCurrentState.previousChord && basslineCurrentState.previousChord.equals(currentChord)) {
@@ -52,9 +52,19 @@ export abstract class BasslineGenerator {
         return eventParamArray;
     }
 
-    protected abstract scheduleEventsForNote(currentMeasure: Measure, currentBeat: number, eventParamArray: any[], noteToSchedule: Note): void;
+    protected abstract scheduleEventsForNote(
+        currentMeasure: Measure,
+        currentBeat: number,
+        eventParamArray: any[],
+        noteToSchedule: Note
+    ): void;
 
-    protected abstract configureBasslineParamsForNextNote(basslineCurrentState: BasslineCurrentState, currentMeasure: Measure, currentBeat: number, params: BasslineRequestParams): void;
+    protected abstract configureBasslineParamsForNextNote(
+        basslineCurrentState: BasslineCurrentState,
+        currentMeasure: Measure,
+        currentBeat: number,
+        params: BasslineRequestParams
+    ): void;
 
     private getNextBasslineNote(params: BasslineRequestParams, basslineCurrentState: BasslineCurrentState): Note {
         const desiredScaleDegreeRule: BasslineRule = new DesiredScaleDegreeBasslineRule(this.theory);
@@ -63,7 +73,7 @@ export abstract class BasslineGenerator {
 
         const rules: BasslineRule[] = [desiredScaleDegreeRule, lastBeatOfCurrentChordRule, closestScaleDegreeChordRule];
 
-        if (params.rest) return; 
+        if (params.rest) return;
         for (const rule of rules) {
             const res: any = rule.getMatch(params);
             if (res) {

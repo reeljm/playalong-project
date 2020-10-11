@@ -36,7 +36,6 @@ export class Drummer implements Musician {
             while (this.eventsToSchedule.length > 0){
                 this.eventsToSchedule.pop().create();
             }
-            console.log("scheduled stuff from before");
             return;
         }
 
@@ -47,7 +46,7 @@ export class Drummer implements Musician {
 
         Object.entries(parts).forEach(([partName, eventParamsList]) => {
             eventParamsList.forEach((eventParams: EventParams) => {
-                const beatOfEvent: number = Number.parseInt(eventParams.start.split(":")[0]);
+                const beatOfEvent: number = Number.parseInt(eventParams.start.split(":")[0], 0x0);
 
                 const builder: EventBuilder = EventBuilder.newEventBuilder()
                 .startTime(`${currentMeasure.measureNumber}:${eventParams.start}`)
@@ -57,7 +56,7 @@ export class Drummer implements Musician {
                 .probability(eventParams.probability)
                 .note(partName)
                 .instrument(this.drumSet);
-                
+
                 if (beatOfEvent > currentMeasure.numberOfBeats - 1) {
                     this.eventsToSchedule.push(builder);
                 } else {
