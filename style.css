@@ -1,5 +1,7 @@
 #header {
     color: #515151;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 13px;
 }
 
 .control-button {
@@ -15,25 +17,31 @@
 
 .style-select {
     display: inline-block;
-    padding: 1px 2px 1px 2px;
+    border-color: lightgrey;
+    width: 120%;
+    height: 20px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
 }
 
 .tempo-container {
     display: inline-block;
     vertical-align: top;
-    margin: 0.5% 3% 0 3%;
-    width: 25%;
+    margin: 0.5% 1% 0 1%;
+    width: 90px;
 }
 
 .style-container {
     display: inline-block;
     vertical-align: top;
-    margin: 0.5% 3% 0 3%;
-    padding: 1px 2px 1px 2px;
+    margin: 0.5% 1% 0 1%;
 }
 
 #tempo {
-    width: 25%;
+    width: 40px;
     height: 20px;
     text-align: center;
     border-radius: 0;
@@ -46,7 +54,6 @@
 .tempo-control {
     display: inline-block;
     padding: 0;
-    height: 25px;
     width: 25px;
     border-style: solid;
     border-width: 1px;
@@ -78,7 +85,6 @@
 }
 
 #tempo-decrease {
-    margin-left: -5px;
     border-radius: 3px 0 0 3px;
     -webkit-border-radius: 3px 0 0 3px;
     -moz-border-radius: 3px 0 0 3px;
