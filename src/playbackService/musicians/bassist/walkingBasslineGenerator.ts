@@ -62,6 +62,10 @@ export class WalkingBasslineGenerator extends BasslineGenerator {
             // if we are starting or ending, schedule the root:
             params.desiredScaleDegree = 0;
             params.desiredOctave = basslineCurrentState.currentOctave;
+        } else if (params.isLastBeatOfCurrentChord && params.beatsAlreadySpentOnCurrentChord === 0) {
+            // this chord is 1 beat long, schedule the root:
+            params.desiredScaleDegree = 0;
+            params.desiredOctave = basslineCurrentState.currentOctave;
         } else if (currentBeat % currentMeasure.numberOfBeats === 0) {
             // this is a downbeat, schedule the root:
             params.requireRoot = true;
