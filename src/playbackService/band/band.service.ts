@@ -30,10 +30,11 @@ export class BandService {
 
     public play() {
         Transport.swing = 0.5;
-        Transport.bpm.value = 150;
+        Transport.bpm.value = 120;
+        Transport.context.resume();
         if (!this.initialized) {
             this.initialize()
-                .then(() => Transport.start());
+            .then(() => Transport.start());
         } else {
             Transport.start();
         }
@@ -148,13 +149,13 @@ export class BandService {
             const measure = song.measures[currentMeasure];
 
             // mess with the current measure.. Let's see if we can switch styles!
-            if (currentMeasure % 2 === 0) {
-                this.style = this.style === "bossa" ? "fourFourTime" : "bossa";
-            }
-            if (((currentMeasure - 1) % 2) === 0) {
-                Transport.swing = Transport.swing === 0.5 ? 0 : 0.5;
-            }
-            measure.style = this.style;
+            // if (currentMeasure % 2 === 0) {
+            //     this.style = this.style === "bossa" ? "fourFourTime" : "bossa";
+            // }
+            // if (((currentMeasure - 1) % 2) === 0) {
+            //     Transport.swing = Transport.swing === 0.5 ? 0 : 0.5;
+            // }
+            // measure.style = this.style;
 
             self.musicians.forEach(musician => musician.play(measure));
             currentMeasure++;

@@ -9,9 +9,9 @@ export class DesiredScaleDegreeBasslineRule implements BasslineRule {
 
     constructor(private theory: Theory) { }
 
-    public getMatch(params: BasslineRequestParams): Note {
+    public getMatch(params: BasslineRequestParams): any {
         const scale: Scale = this.theory.getScaleForChord(params.currentChord);
-        let directionChange = false;
+        let nextDirection = params.desiredDirection;
 
         let nextNote: Note = null;
         if (params.desiredScaleDegree != null) {
@@ -22,15 +22,15 @@ export class DesiredScaleDegreeBasslineRule implements BasslineRule {
             // make sure the note is within the instrument's range:
             while (this.theory.distanceTo(nextNote, UprightBass.HIGHEST_NOTE) < 0) {
                 nextNote = Note.getNote(nextNote.pitch, nextNote.octave - 1);
-                directionChange = true;
+                nextDirection = "down";
             }
 
             while (this.theory.distanceTo(nextNote, UprightBass.LOWEST_NOTE) > 0) {
                 nextNote = Note.getNote(nextNote.pitch, nextNote.octave + 1);
-                directionChange = true;
+                nextDirection = "up";
             }
 
-            return nextNote;
+            return {note: nextNote, nextDirection: nextDirection};
         }
     }
 }

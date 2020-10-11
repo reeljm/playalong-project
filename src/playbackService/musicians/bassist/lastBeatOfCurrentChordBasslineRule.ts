@@ -9,8 +9,8 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
 
     constructor(private theory: Theory) { }
 
-    public getMatch(params: BasslineRequestParams): Note {
-
+    public getMatch(params: BasslineRequestParams): any {
+        
         // this is the last beat of the current chord. recalculate a more graceful resolution to next chord:
         if (params.isLastBeatOfCurrentChord || params.nextBeatIsStrongBeat) {
             const currentOctave = params.previousNoteScheduled.octave;
@@ -19,7 +19,8 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
             let nextNote: Note = null;
             const scale: Scale = this.theory.getScaleForChord(params.currentChord);
             const nextScale: Scale = this.theory.getScaleForChord(params.nextChord);
-
+            let nextDirection = params.desiredDirection;
+            
             // pick which note we want to target:
             const rootOfNextChord: Note = this.theory.getNoteInClosestOctave(nextScale.pitches[0], lastNote);
             const fifthOfNextChord: Note = this.theory.getNoteInClosestOctave(nextScale.pitches[4], lastNote);
@@ -50,7 +51,6 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
             }
 
             // set the next note to initially be the note we are targeting:
-            let nextDirection = params.desiredDirection;
             if (distanceFromLastNoteToTargetNote === 2) {
                 // whole step below next target, schedule half step above:
                 nextNote = this.theory.transpose(targetNote, -1);
@@ -78,7 +78,6 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
                 }
             } else {
                 // we have a distance larger than a whole step, pick the closest scale degree:
-
                 // check if the target note is in our currrent scale:
                 let indexCurrentScale = scale.pitches.indexOf(targetNote.pitch);
                 if (indexCurrentScale > 0) {
@@ -117,7 +116,7 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
                 directionChange = true;
             }
 
-            return nextNote;
+            return {note: nextNote, nextDirection: nextDirection};
         }
     }
 

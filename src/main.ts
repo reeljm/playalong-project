@@ -1,44 +1,30 @@
-import { app, BrowserWindow } from "electron";
-import * as path from "path";
+import { BandService as Band } from "./playbackService/band/band.service";
+import { Drummer } from "./playbackService/musicians/drummer/drummer";
+import { DrumSet } from "./playbackService/musicians/drummer/drumset";
+import { UprightBass } from "./playbackService/musicians/bassist/uprightBass";
+import { Bassist } from "./playbackService/musicians/bassist/bassist";
+import { WalkingBasslineGenerator } from "./playbackService/musicians/bassist/walkingBasslineGenerator";
+import { Theory } from "./playbackService/theory/theory";
+// import { BossaBasslineGenerator } from "./playbackService/musicians/bassist/bossaBasslineGenerator";
+import { BasslineGenerator } from "./playbackService/musicians/bassist/basslineGenerator";
 
-function createWindow() {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
-    },
-    width: 800,
-  });
+document.querySelector('button').addEventListener('click', function() {
+    start();
+    console.log("started");
+});
 
-  // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, "../index.html"));
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+function start() {
+    const bass: UprightBass = new UprightBass();
+    const drumset: DrumSet = new DrumSet();
+    const theory: Theory = new Theory();
+    
+    const basslineGeneratorMap: Map<string, BasslineGenerator> = new Map<string, BasslineGenerator>();
+    const walkingBasslineGenerator: BasslineGenerator = new WalkingBasslineGenerator(theory);
+    // const bossaBasslineGenerator: BasslineGenerator = new BossaBasslineGenerator(theory);
+    // basslineGeneratorMap.set("bossa", bossaBasslineGenerator);
+    basslineGeneratorMap.set("fourFourTime", walkingBasslineGenerator);
+    const bassist: Bassist = new Bassist(bass, basslineGeneratorMap);
+    const drummer: Drummer = new Drummer(drumset);
+    const band: Band = new Band(drummer, bassist, theory);
+    band.play();
 }
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on("ready", () => {
-  createWindow();
-
-  app.on("activate", () => {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
-});
-
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
-});
-
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.
