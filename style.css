@@ -7,12 +7,12 @@
 .control-button {
     line-height: 0;
     font-size: 30px;
-    color: #505fff;
+    color: #4386f4;
     display: inline-block;
 }
 
 .control-button:hover {
-    color: #717dff;
+    color: #77abff;
 }
 
 .style-select {
@@ -92,9 +92,8 @@
     -o-border-radius: 3px 0 0 3px;
 }
 
-#playback-container {
-    display: inline-block;;
-
+.playback-container {
+    display: inline-block;
 }
 
 #header {
