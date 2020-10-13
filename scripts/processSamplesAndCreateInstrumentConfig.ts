@@ -31,9 +31,9 @@
         files.forEach((file: any) => {
             const fileName = `${notes[notesIndex].replace("#","s")}_${currentOctave}.wav`;
             const fullFileName = `${sampleDir}/${fileName}`;
-            console.log(file + " to " + fileName);
-            // fs.rename( file, fileName);
-            output[`${notes[notesIndex]}_${currentOctave}`] = fullFileName;
+            console.log(`${sampleDir}/${file}` + " to " + fileName);
+            fs.rename(`${sampleDir}/${file}`, `${sampleDir}/${fileName}`, (e:any) =>{ console.log(e);});
+            output[`${notes[notesIndex]}${currentOctave}.wav`] = fullFileName;
             const prevIndex = notesIndex;
             notesIndex = (notesIndex + 1) % 12;
             if (prevIndex > notesIndex) {
