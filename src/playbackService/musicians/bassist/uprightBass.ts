@@ -1,12 +1,12 @@
 import { Panner, Sampler } from 'tone';
 import { Instrument } from '../instrument';
 import { Note } from '../../theory/note';
-import rawData from '../../staticFiles/samples/piano/config.json';
+import rawData from '../../staticFiles/samples/upright-bass/config.json';
 const fileConfig = (rawData as any);
 
 export class UprightBass extends Instrument {
-    static LOWEST_NOTE = Note.getNote("C", 2);
-    static HIGHEST_NOTE = Note.getNote("C", 4);
+    static LOWEST_NOTE = Note.getNote("E", 1);
+    static HIGHEST_NOTE = Note.getNote("B", 3);
 
     sampler: Sampler;
 
