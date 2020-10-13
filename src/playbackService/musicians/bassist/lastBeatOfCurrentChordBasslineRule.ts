@@ -23,10 +23,15 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
 
             // pick which note we want to target:
             const rootOfNextChord: Note = this.theory.getNoteInClosestOctave(nextScale.pitches[0], lastNote);
-            const fifthOfNextChord: Note = this.theory.getNoteInClosestOctave(nextScale.pitches[4], lastNote);
+            let fifthOfNextChord: Note = this.theory.getNoteInClosestOctave(nextScale.pitches[4], lastNote);
 
             const distanceToNextRoot: number = this.theory.distanceTo(lastNote, rootOfNextChord);
-            const distanceToNextFifth: number = this.theory.distanceTo(lastNote, fifthOfNextChord);
+            let distanceToNextFifth: number = this.theory.distanceTo(lastNote, fifthOfNextChord);
+
+            if (params.isLastBeatOfCurrentChord) {
+                fifthOfNextChord = rootOfNextChord;
+                distanceToNextFifth = distanceToNextRoot;
+            }
 
             let targetNote: Note = null;
             let distanceFromLastNoteToTargetNote: number = 0;
@@ -79,22 +84,23 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
             } else {
                 // we have a distance larger than a whole step, pick the closest scale degree:
                 // check if the target note is in our currrent scale:
-                let indexCurrentScale = scale.pitches.indexOf(targetNote.pitch);
+                let indexCurrentScale: number = scale.pitches.indexOf(targetNote.pitch);
                 if (indexCurrentScale > 0) {
                     if (distanceFromLastNoteToTargetNote > 0) {
-                        indexCurrentScale = indexCurrentScale - 1;
+                        indexCurrentScale = (indexCurrentScale - 1) % scale.pitches.length;
                         nextDirection = up;
                     } else {
-                        indexCurrentScale = indexCurrentScale + 1;
+                        indexCurrentScale = (indexCurrentScale + 1) % scale.pitches.length;;
                         nextDirection = down;
                     }
                     nextNote = this.theory.getNoteInClosestOctave(scale.pitches[indexCurrentScale], targetNote);
                 } else {
+                    const distFromTarget: number = ((Math.round(Math.random())) % 2) + 1;
                     if (distanceFromLastNoteToTargetNote > 0) {
-                        nextNote = this.theory.transpose(targetNote, -1);
+                        nextNote = this.theory.transpose(targetNote, -distFromTarget);
                         nextDirection = up;
                     } else {
-                        nextNote = this.theory.transpose(targetNote, + 1);
+                        nextNote = this.theory.transpose(targetNote, + distFromTarget);
                         nextDirection = down;
                     }
                 }
@@ -109,7 +115,7 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
                 nextNote = Note.getNote(nextNote.pitch, nextNote.octave + 1);
             }
 
-            return {note: nextNote, nextDirection: nextDirection};
+            return { note: nextNote, nextDirection: nextDirection };
         }
     }
 
