@@ -29,16 +29,17 @@ export abstract class BasslineGenerator {
         for (let currentBeat = 0; currentBeat < currentMeasure.numberOfBeats; currentBeat++) {
             const isLastNoteOfTune: boolean = !currentMeasure.nextMeasure;
             const params: BasslineRequestParams = new BasslineRequestParams();
-            this.configureBasslineParamsForNextNote(basslineCurrentState, currentMeasure, currentBeat, params);
-            const noteToSchedule = this.getNextBasslineNote(params, basslineCurrentState);
 
-            // Save info about this schedule cycle:
             const currentChord: Chord = currentMeasure.chords[currentBeat];
-            if (basslineCurrentState.previousChord && basslineCurrentState.previousChord.equals(currentChord)) {
+            if (!basslineCurrentState.previousChord || basslineCurrentState.previousChord.equals(currentChord)) {
                 basslineCurrentState.beatsAlreadySpentOnCurrentChord++;
             } else {
                 basslineCurrentState.beatsAlreadySpentOnCurrentChord = 0;
             }
+            this.configureBasslineParamsForNextNote(basslineCurrentState, currentMeasure, currentBeat, params);
+            const noteToSchedule = this.getNextBasslineNote(params, basslineCurrentState);
+
+            // Save info about this schedule cycle:
             basslineCurrentState.previousChord = currentChord;
             if (noteToSchedule) {
                 basslineCurrentState.previousNoteScheduled = noteToSchedule;
