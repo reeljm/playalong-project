@@ -22,7 +22,7 @@ export class WalkingBasslineGenerator extends BasslineGenerator {
     ): void {
         const noteDuration: string = "4n";
         eventParamArray.push({
-            startTime: `${currentMeasure.measureNumber}:${currentBeat}:0`,
+            startTime: `${currentMeasure.arrangementMeasureNumber}:${currentBeat}:0`,
             velocity: 0.8,
             duration: noteDuration,
             velocityOffset: 0,

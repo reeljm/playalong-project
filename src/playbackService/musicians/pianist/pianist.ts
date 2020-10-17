@@ -39,7 +39,7 @@ export class Pianist implements Musician {
                 }
                 voicing.forEach(note => {
                     eventParamArray.push({
-                        startTime: `${currentMeasure.measureNumber}:${currentBeat}:0`,
+                        startTime: `${currentMeasure.arrangementMeasureNumber}:${currentBeat}:0`,
                         velocity: 0.7,
                         duration: noteDuration,
                         velocityOffset: 0,

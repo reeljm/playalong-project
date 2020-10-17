@@ -53,7 +53,7 @@ export class Drummer implements Musician {
                 const beatOfEvent: number = Number.parseInt(eventParams.start.split(":")[0], 0x0);
 
                 const builder: EventBuilder = EventBuilder.newEventBuilder()
-                .startTime(`${currentMeasure.measureNumber}:${eventParams.start}`)
+                .startTime(`${currentMeasure.arrangementMeasureNumber}:${eventParams.start}`)
                 .velocity(eventParams.velocity)
                 .duration(eventParams.duration)
                 .velocityOffset(eventParams.velocityOffset ? eventParams.velocityOffset : 0)

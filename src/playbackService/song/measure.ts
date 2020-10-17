@@ -2,14 +2,15 @@ import { Chord } from '../theory/chord';
 
 export class Measure {
 
-    measureNumber: number;
+    arrangementMeasureNumber: number;
+    originalMeasureNumber: number;
     style: string;
     chords: Chord[];
     numberOfBeats: number;
-    nextMeasure?: Measure;
+    public nextMeasure: Measure;
 
     constructor(measureNumber: number, style: string, chords: Chord[], numberOfBeats: number) {
-        this.measureNumber = measureNumber;
+        this.originalMeasureNumber = measureNumber;
         this.style = style;
         this.chords = chords;
         this.numberOfBeats = numberOfBeats;

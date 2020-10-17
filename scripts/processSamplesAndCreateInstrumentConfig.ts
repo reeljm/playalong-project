@@ -1,10 +1,3 @@
-// params:
-// path to folder to process
-// starting note C1
-//
-
-
-
 (function () {
     const fs = require('fs');
     const instrumentName = process.argv[2];

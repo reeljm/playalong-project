@@ -13,6 +13,7 @@ import "bootstrap";
 import { Piano } from "./playbackService/musicians/pianist/piano";
 import { Pianist } from "./playbackService/musicians/pianist/pianist";
 import { Musician } from "./playbackService/musicians/musician";
+import { Song } from "./playbackService/song/song";
 
 let band: BandService = null;
 let style: string = "fourFourTime";
@@ -35,7 +36,8 @@ $(() => {
     const drummer: Drummer = new Drummer(drumset);
     const pianist: Pianist = new Pianist(piano, theory);
     const musicians: Musician[] = [pianist, drummer, bassist];
-    band = new Band(musicians, theory);
+    const song: Song = new Song(theory);
+    band = new Band(song, musicians);
 
     $("#pause").hide();
 

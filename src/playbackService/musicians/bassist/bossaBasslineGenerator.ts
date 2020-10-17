@@ -31,7 +31,7 @@ export class BossaBasslineGenerator extends BasslineGenerator {
             const skipBeatDuration: string = "8n";
             if (this.lastMeasureUtilized && currentBeat === 0) {
                 eventParamArray.push({
-                    startTime: `${currentMeasure.measureNumber - 1}:${currentMeasure.numberOfBeats - 1}:2`,
+                    startTime: `${currentMeasure.arrangementMeasureNumber - 1}:${currentMeasure.numberOfBeats - 1}:2`,
                     velocity: 0.65,
                     duration: skipBeatDuration,
                     velocityOffset: 0,
@@ -40,7 +40,7 @@ export class BossaBasslineGenerator extends BasslineGenerator {
                 });
             } else if (currentBeat === 2) {
                 eventParamArray.push({
-                    startTime: `${currentMeasure.measureNumber}:${currentBeat - 1}:2`,
+                    startTime: `${currentMeasure.arrangementMeasureNumber}:${currentBeat - 1}:2`,
                     velocity: 0.65,
                     duration: skipBeatDuration,
                     velocityOffset: 0,
@@ -51,14 +51,14 @@ export class BossaBasslineGenerator extends BasslineGenerator {
         }
 
         eventParamArray.push({
-            startTime: `${currentMeasure.measureNumber}:${currentBeat}:0`,
+            startTime: `${currentMeasure.arrangementMeasureNumber}:${currentBeat}:0`,
             velocity: 0.8,
             duration: noteDuration,
             velocityOffset: 0,
             probability: 1,
             note: noteToSchedule.toPlayableString()
         });
-        this.lastMeasureUtilized = currentMeasure.measureNumber;
+        this.lastMeasureUtilized = currentMeasure.arrangementMeasureNumber;
     }
 
     protected configureBasslineParamsForNextNote(
@@ -67,7 +67,7 @@ export class BossaBasslineGenerator extends BasslineGenerator {
         currentBeat: number,
         params: BasslineRequestParams
     ): void {
-        if (this.lastMeasureUtilized < currentMeasure.measureNumber - 1) {
+        if (this.lastMeasureUtilized < currentMeasure.arrangementMeasureNumber - 1) {
             this.lastMeasureUtilized = null;
         }
 
