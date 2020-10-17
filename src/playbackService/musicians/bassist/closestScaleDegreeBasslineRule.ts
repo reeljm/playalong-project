@@ -11,7 +11,7 @@ export class ClosestScaleDegreeBasslineRule implements BasslineRule {
 
     public getMatch(params: BasslineRequestParams): any {
         const scale: Scale = this.theory.getScaleForChord(params.currentChord);
-        let nextDirection: BasslineRequestParams.Dir = params.desiredDirection;
+        let nextDir: BasslineRequestParams.Dir = params.desiredDirection;
 
         let nextNote: Note = null;
         // use lastNoteScheduled, chordTone, scale, and desiredDirection to get the next note:
@@ -29,9 +29,9 @@ export class ClosestScaleDegreeBasslineRule implements BasslineRule {
         let chordToneNotesAndDistances: any[] = [];
         for (let octave = currentOctave - 1; octave <= currentOctave + 1; octave++) {
             possibleIntervals.forEach(interval => {
-                const note: Note = this.theory.getNote(scale.pitches[interval], octave);
-                const dist: number = this.theory.distanceTo(lastNote, note);
-                const noteAndDist = {note: note, dist: dist};
+                const n: Note = this.theory.getNote(scale.pitches[interval], octave);
+                const distance: number = this.theory.distanceTo(lastNote, n);
+                const noteAndDist = {note: n, dist: distance};
                 chordToneNotesAndDistances.push(noteAndDist);
             });
         }
@@ -57,14 +57,14 @@ export class ClosestScaleDegreeBasslineRule implements BasslineRule {
         // make sure the note is within the instrument's range:
         while (this.theory.distanceTo(nextNote, UprightBass.HIGHEST_NOTE) < 0) {
             nextNote = Note.getNote(nextNote.pitch, nextNote.octave - 1);
-            nextDirection = down;
+            nextDir = down;
         }
 
         while (this.theory.distanceTo(nextNote, UprightBass.LOWEST_NOTE) > 0) {
             nextNote = Note.getNote(nextNote.pitch, nextNote.octave + 1);
-            nextDirection = up;
+            nextDir = up;
         }
 
-        return {note: nextNote, nextDirection: nextDirection};
+        return {note: nextNote, nextDirection: nextDir};
     }
 }

@@ -17,7 +17,7 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
             let nextNote: Note = null;
             const scale: Scale = this.theory.getScaleForChord(params.currentChord);
             const nextScale: Scale = this.theory.getScaleForChord(params.nextChord);
-            let nextDirection = params.desiredDirection;
+            let nextDir = params.desiredDirection;
             const up: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Up;
             const down: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Down;
 
@@ -59,27 +59,27 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
             if (distanceFromLastNoteToTargetNote === 2) {
                 // whole step below next target, schedule half step above:
                 nextNote = this.theory.transpose(targetNote, -1);
-                nextDirection = up;
+                nextDir = up;
             } else if (distanceFromLastNoteToTargetNote === -2) {
                 // whole step above next target, schedule half step below:
                 nextNote = this.theory.transpose(targetNote, 1);
-                nextDirection = down;
+                nextDir = down;
             } else if (distanceFromLastNoteToTargetNote === 1) {
                 // halfstep step below next target, schedule half step above:
                 nextNote = this.theory.transpose(targetNote, 1);
-                nextDirection = down;
+                nextDir = down;
             } else if (distanceFromLastNoteToTargetNote === -1) {
                 // halfstep step above next target, schedule half step below:
                 nextNote = this.theory.transpose(targetNote, -1);
-                nextDirection = up;
+                nextDir = up;
             } else if (distanceFromLastNoteToTargetNote === 0) {
                 if (params.desiredDirection === up) {
                     nextNote = this.theory.transpose(targetNote, 1);
-                    nextDirection = down;
+                    nextDir = down;
                 }
                 else if (params.desiredDirection === down) {
                     nextNote = this.theory.transpose(targetNote, -1);
-                    nextDirection = up;
+                    nextDir = up;
                 }
             } else {
                 // we have a distance larger than a whole step, pick the closest scale degree:
@@ -88,20 +88,20 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
                 if (indexCurrentScale > 0) {
                     if (distanceFromLastNoteToTargetNote > 0) {
                         indexCurrentScale = (indexCurrentScale - 1) % scale.pitches.length;
-                        nextDirection = up;
+                        nextDir = up;
                     } else {
                         indexCurrentScale = (indexCurrentScale + 1) % scale.pitches.length;;
-                        nextDirection = down;
+                        nextDir = down;
                     }
                     nextNote = this.theory.getNoteInClosestOctave(scale.pitches[indexCurrentScale], targetNote);
                 } else {
                     const distFromTarget: number = ((Math.round(Math.random())) % 2) + 1;
                     if (distanceFromLastNoteToTargetNote > 0) {
                         nextNote = this.theory.transpose(targetNote, -distFromTarget);
-                        nextDirection = up;
+                        nextDir = up;
                     } else {
                         nextNote = this.theory.transpose(targetNote, + distFromTarget);
-                        nextDirection = down;
+                        nextDir = down;
                     }
                 }
             }
@@ -115,7 +115,7 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
                 nextNote = Note.getNote(nextNote.pitch, nextNote.octave + 1);
             }
 
-            return { note: nextNote, nextDirection: nextDirection };
+            return { note: nextNote, nextDirection: nextDir };
         }
     }
 

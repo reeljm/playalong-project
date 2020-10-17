@@ -33,15 +33,15 @@ export class Pianist implements Musician {
                 voicing.push(this.theory.getNote(scale.pitches[4], this.currentOctave));
                 voicing.push(this.theory.getNote(scale.pitches[6], this.currentOctave));
 
-                let duration: string = "2n";
+                let noteDuration: string = "2n";
                 if (isFirstBeatOfLastMeasure) {
-                    duration = "4m"
+                    noteDuration = "4m"
                 }
                 voicing.forEach(note => {
                     eventParamArray.push({
                         startTime: `${currentMeasure.measureNumber}:${currentBeat}:0`,
                         velocity: 0.7,
-                        duration: duration,
+                        duration: noteDuration,
                         velocityOffset: 0,
                         probability: 1,
                         note: note.toPlayableString()
