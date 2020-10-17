@@ -10,6 +10,9 @@ import { BasslineGenerator } from "./playbackService/musicians/bassist/basslineG
 
 import $ from "jquery";
 import "bootstrap";
+import { Piano } from "./playbackService/musicians/pianist/piano";
+import { Pianist } from "./playbackService/musicians/pianist/pianist";
+import { Musician } from "./playbackService/musicians/musician";
 
 let band: BandService = null;
 let style: string = "fourFourTime";
@@ -18,16 +21,21 @@ $(() => {
     // initialize player
     const bass: UprightBass = new UprightBass();
     const drumset: DrumSet = new DrumSet();
+    const piano: Piano = new Piano();
     const theory: Theory = new Theory();
 
+    // configure bassist
     const basslineGeneratorMap: Map<string, BasslineGenerator> = new Map<string, BasslineGenerator>();
     const walkingBasslineGenerator: BasslineGenerator = new WalkingBasslineGenerator(theory);
     const bossaBasslineGenerator: BasslineGenerator = new BossaBasslineGenerator(theory);
     basslineGeneratorMap.set("bossa", bossaBasslineGenerator);
     basslineGeneratorMap.set("fourFourTime", walkingBasslineGenerator);
     const bassist: Bassist = new Bassist(bass, basslineGeneratorMap);
+
     const drummer: Drummer = new Drummer(drumset);
-    band = new Band(drummer, bassist, theory);
+    const pianist: Pianist = new Pianist(piano, theory);
+    const musicians: Musician[] = [pianist, drummer, bassist];
+    band = new Band(musicians, theory);
 
     $("#pause").hide();
 

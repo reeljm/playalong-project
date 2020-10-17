@@ -21,7 +21,7 @@ export class BossaBasslineGenerator extends BasslineGenerator {
         noteToSchedule: Note
     ): void {
         const playCurrentSkipBeat: boolean = this.playNextSkipBeat;
-        let noteDuration = "2n";
+        let noteDuration: string = "2n";
         this.playNextSkipBeat = Math.random() >= 0.1;
         if (this.playNextSkipBeat) {
             noteDuration = "4n.";
@@ -32,7 +32,7 @@ export class BossaBasslineGenerator extends BasslineGenerator {
             if (this.lastMeasureUtilized && currentBeat === 0) {
                 eventParamArray.push({
                     startTime: `${currentMeasure.measureNumber - 1}:${currentMeasure.numberOfBeats - 1}:2`,
-                    velocity: 0.8,
+                    velocity: 0.65,
                     duration: skipBeatDuration,
                     velocityOffset: 0,
                     probability: 1,
@@ -41,7 +41,7 @@ export class BossaBasslineGenerator extends BasslineGenerator {
             } else if (currentBeat === 2) {
                 eventParamArray.push({
                     startTime: `${currentMeasure.measureNumber}:${currentBeat - 1}:2`,
-                    velocity: 0.8,
+                    velocity: 0.65,
                     duration: skipBeatDuration,
                     velocityOffset: 0,
                     probability: 1,
@@ -71,15 +71,6 @@ export class BossaBasslineGenerator extends BasslineGenerator {
             this.lastMeasureUtilized = null;
         }
 
-        let noteDuration: string = "2n";
-        if (!currentMeasure.nextMeasure) {
-            // the tune is over:
-            if (currentBeat === 0) {
-                noteDuration = "4m";
-            } else {
-                return;
-            }
-        }
         if (currentBeat === 1) {
             // randomly choose to change direction:
             const dirSwitch = Math.random() >= 0.9;

@@ -1,4 +1,21 @@
 {
+    "lastMeasure": {
+        "sustainedCrash": [
+            {
+                "numberOfMeasures": 1,
+                "allowsComping": false,
+                "parts": {
+                    "rideCym": [
+                        {
+                            "start": "0:0",
+                            "velocity": 1.2,
+                            "velocityOffset": 0
+                        }
+                    ]
+                }
+            }
+        ]
+    },
     "swing": {
         "fourFourTime": [
             {

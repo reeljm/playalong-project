@@ -31,9 +31,13 @@ export class Drummer implements Musician {
     }
 
     private playTime(currentMeasure: Measure): void {
-        if (this.eventsToSchedule.length > 0 && this.currentStyle === currentMeasure.style) {
-            // schedule the events stored in eventsToSchedule array
-            while (this.eventsToSchedule.length > 0){
+        let style: string = currentMeasure.style;
+        if (!currentMeasure.nextMeasure) {
+            // if last measure, play a single note on beat 1
+            style = "sustainedCrash";
+        } else if (this.eventsToSchedule.length > 0 && this.currentStyle === currentMeasure.style) {
+            // schedule the events stored in eventsToSchedule array if needed
+            while (this.eventsToSchedule.length > 0) {
                 this.eventsToSchedule.pop().create();
             }
             return;
@@ -41,7 +45,7 @@ export class Drummer implements Musician {
 
         this.eventsToSchedule = [];
 
-        this.pattern = this.getDrumPatternForStyle(currentMeasure.style);
+        this.pattern = this.getDrumPatternForStyle(style);
         const parts: Parts = this.pattern.parts;
 
         Object.entries(parts).forEach(([partName, eventParamsList]) => {
@@ -69,7 +73,7 @@ export class Drummer implements Musician {
 
     private getDrumPatternForStyle(style: string): DrumPattern {
         const patterns = this.patternNameToPatternArray.get(style);
-        return this.pattern = patterns[Math.floor(Math.random() * patterns.length)];
+        return patterns[Math.floor(Math.random() * patterns.length)];
     }
 
 }
