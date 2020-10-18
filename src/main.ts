@@ -39,10 +39,10 @@ $(() => {
     const drummer: Drummer = new Drummer(drumset);
     const pianist: Pianist = new Pianist(piano, theory);
     const musicians: Musician[] = [pianist, drummer, bassist];
-    const song: Song = new Song(theory);
-    band = new Band(song, musicians);
+    const songToPlay: Song = new Song(theory);
+    band = new Band(songToPlay, musicians);
 
-    createLeadSheet(song);
+    createLeadSheet(songToPlay);
 
     function createLeadSheet(song: Song) {
         $(".lead-sheet").append(`<h1 class="song-name">${song.songName}</h2>`)
@@ -103,7 +103,7 @@ $(() => {
 
                         let type = c.type;
                         while (type.length > 0) {
-                            for (let entry of Array.from(svgMap.entries())) {
+                            for (const entry of Array.from(svgMap.entries())) {
                                 const key: string = entry[0];
                                 const value: string = entry[1];
 
@@ -150,7 +150,9 @@ $(() => {
                     let chordHTML: string = "";
                     chords.forEach((c: Chord) => {
                         // create chord symbol
-                        const chordEq = (c1: Chord, c2: Chord) => c1.writtenRoot === c2.writtenRoot && c1.type === c2.type;
+                        const chordEq = (c1: Chord, c2: Chord) => {
+                            return c1.writtenRoot === c2.writtenRoot && c1.type === c2.type;
+                        };
                         if (!previousChord || !chordEq(c, previousChord)) {
                             chordHTML += `<div class="chord">`;
                             const svgMap: Map<string, string> = new Map([
@@ -183,7 +185,7 @@ $(() => {
 
                             let type = c.type;
                             while (type.length > 0) {
-                                for (let entry of Array.from(svgMap.entries())) {
+                                for (const entry of Array.from(svgMap.entries())) {
                                     const key: string = entry[0];
                                     const value: string = entry[1];
 

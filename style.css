@@ -128,10 +128,14 @@ input[type=number] {
 
 .chord-symbol {
     width: 20px;
+    margin-left: -5px;
+    background-color: transparent;
+    fill: none;
+    /* opacity: 0; */
 }
 
 .lead-sheet {
-    width: 80%;
+    width: 90%;
     text-align: left;
     margin: auto;
 }
@@ -151,9 +155,10 @@ input[type=number] {
 }
 
 .measure {
-    min-width: 180px;
-    display: inline-block;
-    text-align: center;
+    min-width: 18%;
+    display: inline-flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
 }
 
 .section-header {
