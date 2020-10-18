@@ -7,7 +7,7 @@ export class Measure {
     style: string;
     chords: Chord[];
     numberOfBeats: number;
-    public nextMeasure: Measure;
+    nextMeasure: Measure;
 
     constructor(measureNumber: number, style: string, chords: Chord[], numberOfBeats: number) {
         this.originalMeasureNumber = measureNumber;
