@@ -45,7 +45,7 @@ $(() => {
     createLeadSheet(songToPlay);
 
     function createLeadSheet(song: Song) {
-        $(".lead-sheet").append(`<h1 class="song-name">${song.songName}</h2>`)
+        $(".song-name").text(song.songName);
 
         const sections: Section[] = song.allSections;
         sections.forEach((s: Section) => {

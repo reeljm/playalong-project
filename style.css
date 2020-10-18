@@ -137,8 +137,7 @@ input[type=number] {
 .lead-sheet {
     width: 90%;
     text-align: left;
-    margin: auto;
-    margin-bottom: 10%;
+    margin: auto auto 10% 10%;
 }
 
 .chord {
