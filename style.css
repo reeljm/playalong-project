@@ -121,3 +121,25 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.chord-root {
+    width: 40px;
+}
+
+.chord-symbol {
+    width: 20px;
+}
+
+.lead-sheet {
+    width: 80%;
+    text-align: left;
+    margin: auto;
+}
+
+.chord {
+    display: inline-block;
+}
+
+.endingMarker {
+    width: 20px
+}

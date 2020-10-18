@@ -14,6 +14,9 @@ import { Piano } from "./playbackService/musicians/pianist/piano";
 import { Pianist } from "./playbackService/musicians/pianist/pianist";
 import { Musician } from "./playbackService/musicians/musician";
 import { Song } from "./playbackService/song/song";
+import { Section } from "./playbackService/song/section";
+import { Measure } from "./playbackService/song/measure";
+import { Chord } from "./playbackService/theory/chord";
 
 let band: BandService = null;
 let style: string = "fourFourTime";
@@ -39,7 +42,160 @@ $(() => {
     const song: Song = new Song(theory);
     band = new Band(song, musicians);
 
-    $("#pause").hide();
+    createLeadSheet(song);
+
+    function createLeadSheet(song: Song) {
+
+        const sections: Section[] = song.allSections;
+        sections.forEach((s: Section) => {
+            // create bar lines:
+            if (s.repeats) {
+                $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/startRepeat.svg">`)
+            } else {
+                $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/doubleBarLine.svg">`)
+            }
+
+            const measures: Measure[] = s.allMeasures;
+            let initialMeasure: boolean = true;
+            measures.forEach((m: Measure) => {
+                if (initialMeasure) {
+                    initialMeasure = false;
+                } else {
+                    $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/barLine.svg">`)
+                }
+                const chords: Chord[] = m.chords;
+                let previousChord: Chord = null;
+                chords.forEach((c: Chord) => {
+                    // create chord symbol
+                    const chordEq = (c1: Chord, c2: Chord) => c1.root === c2.root && c1.type === c2.type;
+                    if (!previousChord || !chordEq(c, previousChord)) {
+                        let chordHTML: string = "";
+                        chordHTML += `<div class="chord">`;
+                        const svgMap: Map<string, string> = new Map([
+                            ["A", "A.svg"],
+                            ["B", "B.svg"],
+                            ["C", "C.svg"],
+                            ["D", "D.svg"],
+                            ["E", "E.svg"],
+                            ["F", "F.svg"],
+                            ["G", "G.svg"],
+                            ["#", "sharp.svg"],
+                            ["b", "flat.svg"],
+                            ["5" ,"5.svg"],
+                            ["7" ,"7.svg"],
+                            ["9" ,"9.svg"],
+                            ["dim" ,"dim.svg"],
+                            ["alt" ,"alt.svg"],
+                            ["maj" ,"maj.svg"],
+                            ["min" ,"min.svg"],
+                            ["relative min" ,"min.svg"]
+                        ]);
+                        const tokenizedChord = c.root.split("");
+                        tokenizedChord.forEach((e: string) => {
+                            if (e === "b" || e === "#") {
+                                chordHTML += `<img class="chord-symbol" src="./src/playbackService/staticFiles/svgs/${svgMap.get(e)}">`;
+                            } else {
+                                chordHTML += `<img class="chord-root" src="./src/playbackService/staticFiles/svgs/${svgMap.get(e)}">`;
+                            }
+                        });
+
+                        let type = c.type;
+                        while (type.length > 0) {
+                            for (let entry of Array.from(svgMap.entries())) {
+                                const key: string = entry[0];
+                                const value: string = entry[1];
+
+                                if (type.indexOf(key) === 0) {
+                                    chordHTML += `<img class="chord-symbol" src="./src/playbackService/staticFiles/svgs/${value}">`;
+                                    type = type.replace(key, "");
+                                    continue;
+                                }
+                            }
+                        }
+                        chordHTML+=`</div>`
+                        $(".lead-sheet").append(chordHTML);
+                        previousChord = c;
+                    }
+                });
+            });
+
+
+            const endings: Measure[][] = s.allEndings || [];
+            let endingNumber: number = 1;
+            endings.forEach((ending: Measure[]) => {
+                let initialMeasure = true;
+                $(".lead-sheet").append(`<br>`)
+                ending.forEach((m: Measure) => {
+                    $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/barLine.svg">`)
+                    if (initialMeasure) {
+                        initialMeasure = false;
+                        $(".lead-sheet").append(`<img class="endingMarker" src="./src/playbackService/staticFiles/svgs/repeatBracket.svg">`);
+                        $(".lead-sheet").append(`<img class="endingMarker" src="./src/playbackService/staticFiles/svgs/repeat${endingNumber}.svg">`);
+                    }
+                    const chords: Chord[] = m.chords;
+                    let previousChord: Chord = null;
+                    chords.forEach((c: Chord) => {
+                        // create chord symbol
+                        const chordEq = (c1: Chord, c2: Chord) => c1.root === c2.root && c1.type === c2.type;
+                        if (!previousChord || !chordEq(c, previousChord)) {
+                            let chordHTML: string = "";
+                            chordHTML += `<div class="chord">`;
+                            const svgMap: Map<string, string> = new Map([
+                                ["A", "A.svg"],
+                                ["B", "B.svg"],
+                                ["C", "C.svg"],
+                                ["D", "D.svg"],
+                                ["E", "E.svg"],
+                                ["F", "F.svg"],
+                                ["G", "G.svg"],
+                                ["#", "sharp.svg"],
+                                ["b", "flat.svg"],
+                                ["5" ,"5.svg"],
+                                ["7" ,"7.svg"],
+                                ["9" ,"9.svg"],
+                                ["dim" ,"dim.svg"],
+                                ["alt" ,"alt.svg"],
+                                ["maj" ,"maj.svg"],
+                                ["min" ,"min.svg"],
+                                ["relative min" ,"min.svg"]
+                            ]);
+                            const tokenizedChord = c.root.split("");
+                            tokenizedChord.forEach((e: string) => {
+                                if (e === "b" || e === "#") {
+                                    chordHTML += `<img class="chord-symbol" src="./src/playbackService/staticFiles/svgs/${svgMap.get(e)}">`;
+                                } else {
+                                    chordHTML += `<img class="chord-root" src="./src/playbackService/staticFiles/svgs/${svgMap.get(e)}">`;
+                                }
+                            });
+
+                            let type = c.type;
+                            while (type.length > 0) {
+                                for (let entry of Array.from(svgMap.entries())) {
+                                    const key: string = entry[0];
+                                    const value: string = entry[1];
+
+                                    if (type.indexOf(key) === 0) {
+                                        chordHTML += `<img class="chord-symbol" src="./src/playbackService/staticFiles/svgs/${value}">`;
+                                        type = type.replace(key, "");
+                                        continue;
+                                    }
+                                }
+                            }
+                            chordHTML+=`</div>`
+                            $(".lead-sheet").append(chordHTML);
+                            previousChord = c;
+                        }
+                    });
+                });
+                endingNumber++;
+            });
+
+            if (s.repeats) {
+                $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/endRepeat.svg">`)
+            }
+            $(".lead-sheet").append(`<br>`)
+        });
+    }
 
     $("#play").on("click", () => {
         $("#play").hide();

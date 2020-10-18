@@ -59,4 +59,16 @@ export class Section {
         }
         return measure;
     }
+
+    public get allMeasures(): Measure[] {
+        return this.measures;
+    }
+
+    public get allEndings(): Measure[][] {
+        return this.endings;
+    }
+
+    public get repeats(): boolean {
+        return this.repeat;
+    }
 }
