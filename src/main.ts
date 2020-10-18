@@ -52,9 +52,9 @@ $(() => {
             $(".lead-sheet").append(`<h2 class="section-header">${s.sectionName}</h2>`)
             // create bar lines:
             if (s.repeats) {
-                $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/startRepeat.svg">`)
+                $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/startRepeat.svg">`);
             } else {
-                $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/doubleBarLine.svg">`)
+                $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/doubleBarLine.svg">`);
             }
 
             const measures: Measure[] = s.allMeasures;
@@ -63,7 +63,7 @@ $(() => {
             let measureIndex = 0;
             measures.forEach((m: Measure) => {
                 if (measureIndex > 0) {
-                    $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/barLine.svg">`)
+                    $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/barLine.svg">`);
                 }
                 const chords: Chord[] = m.chords;
                 let previousChord: Chord = null;
@@ -137,7 +137,7 @@ $(() => {
                     $(".lead-sheet").append(`<br>`)
                 }
                 ending.forEach((m: Measure) => {
-                    $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/barLine.svg">`)
+                    $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/barLine.svg">`);
                     if (initialMeasure) {
                         initialMeasure = false;
                         let markerHTML: string = "";
@@ -201,15 +201,15 @@ $(() => {
                     $(".lead-sheet").append(`<div class="measure">${chordHTML}</div>`);
                 });
                 if (endingNumber !== endings.length) {
-                    $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/endRepeat.svg">`)
+                    $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/endRepeat.svg">`);
                 }
                 endingNumber++;
             });
 
             if (s.repeats && !endings) {
-                $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/endRepeat.svg">`)
+                $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/endRepeat.svg">`);
             } else {
-                $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/doubleBarLine.svg">`)
+                $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/doubleBarLine.svg">`);
             }
             $(".lead-sheet").append(`<br>`)
         });

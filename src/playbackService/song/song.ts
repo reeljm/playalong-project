@@ -17,27 +17,27 @@ export class Song {
 
     constructor(private theory: Theory) {
         // lady bird
-        // const headMeasures: Measure[] = [
-        //     new Measure(1, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4),
-        //     new Measure(2, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4),
-        //     new Measure(3, this.style, [this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7')], 4),
-        //     new Measure(4, this.style, [this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7')], 4),
-        //     new Measure(5, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4),
-        //     new Measure(6, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4),
-        //     new Measure(7, this.style, [this.theory.getChord('Bb', 'min7'), this.theory.getChord('Bb', 'min7'), this.theory.getChord('Bb', 'min7'), this.theory.getChord('Bb', 'min7')], 4),
-        //     new Measure(8, this.style, [this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7')], 4),
-        //     new Measure(9, this.style, [this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7')], 4),
-        //     new Measure(10, this.style, [this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7')], 4),
-        //     new Measure(11, this.style, [this.theory.getChord('G', 'maj7'), this.theory.getChord('G', 'maj7'), this.theory.getChord('G', 'maj7'), this.theory.getChord('G', 'maj7')], 4),
-        //     new Measure(12, this.style, [this.theory.getChord('G', 'maj7'), this.theory.getChord('G', 'maj7'), this.theory.getChord('G', 'maj7'), this.theory.getChord('G', 'maj7')], 4),
-        //     new Measure(13, this.style, [this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7')], 4),
-        //     new Measure(14, this.style, [this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4),
-        //     new Measure(15, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4),
-        //     new Measure(16, this.style, [this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Db', 'maj7'), this.theory.getChord('Db', 'maj7')], 4),
-        // ];
-        // const head: Section = new Section("head", headMeasures, false);
-        // this.sections.push(head);
-        // this.name = "Lady Bird"
+        const headMeasures: Measure[] = [
+            new Measure(1, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4),
+            new Measure(2, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4),
+            new Measure(3, this.style, [this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7')], 4),
+            new Measure(4, this.style, [this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7')], 4),
+            new Measure(5, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4),
+            new Measure(6, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4),
+            new Measure(7, this.style, [this.theory.getChord('Bb', 'min7'), this.theory.getChord('Bb', 'min7'), this.theory.getChord('Bb', 'min7'), this.theory.getChord('Bb', 'min7')], 4),
+            new Measure(8, this.style, [this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7')], 4),
+            new Measure(9, this.style, [this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7')], 4),
+            new Measure(10, this.style, [this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7')], 4),
+            new Measure(11, this.style, [this.theory.getChord('G', 'maj7'), this.theory.getChord('G', 'maj7'), this.theory.getChord('G', 'maj7'), this.theory.getChord('G', 'maj7')], 4),
+            new Measure(12, this.style, [this.theory.getChord('G', 'maj7'), this.theory.getChord('G', 'maj7'), this.theory.getChord('G', 'maj7'), this.theory.getChord('G', 'maj7')], 4),
+            new Measure(13, this.style, [this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7'), this.theory.getChord('D', 'min7')], 4),
+            new Measure(14, this.style, [this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4),
+            new Measure(15, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4),
+            new Measure(16, this.style, [this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Db', 'maj7'), this.theory.getChord('Db', 'maj7')], 4),
+        ];
+        const head: Section = new Section("Head", headMeasures, false);
+        this.sections.push(head);
+        this.name = "Lady Bird"
 
 
 
@@ -45,38 +45,38 @@ export class Song {
 
 
         // another you
-        const measuresA: Measure[] = [
-            new Measure(1, this.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4),
-            new Measure(2, this.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4),
-            new Measure(3, this.style, [this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5')], 4),
-            new Measure(4, this.style, [this.theory.getChord('G', '7b9'), this.theory.getChord('G', '7b9'), this.theory.getChord('G', '7b9'), this.theory.getChord('G', '7b9')], 4),
-            new Measure(5, this.style, [this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7')], 4),
-            new Measure(6, this.style, [this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7')], 4),
-            new Measure(7, this.style, [this.theory.getChord('Bb', 'min7'), this.theory.getChord('Bb', 'min7'), this.theory.getChord('Bb', 'min7'), this.theory.getChord('Bb', 'min7')], 4),
-            new Measure(8, this.style, [this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7')], 4),
-            new Measure(9, this.style, [this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7')], 4),
-            new Measure(10, this.style, [this.theory.getChord('Db', '7'), this.theory.getChord('Db', '7'), this.theory.getChord('Db', '7'), this.theory.getChord('Db', '7')], 4),
-            new Measure(11, this.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4),
-            new Measure(12, this.style, [this.theory.getChord('C', 'min7'), this.theory.getChord('C', 'min7'), this.theory.getChord('C', 'min7'), this.theory.getChord('C', 'min7')], 4),
-        ];
+        // const measuresA: Measure[] = [
+        //     new Measure(1, this.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4),
+        //     new Measure(2, this.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4),
+        //     new Measure(3, this.style, [this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5'), this.theory.getChord('D', 'min7b5')], 4),
+        //     new Measure(4, this.style, [this.theory.getChord('G', '7b9'), this.theory.getChord('G', '7b9'), this.theory.getChord('G', '7b9'), this.theory.getChord('G', '7b9')], 4),
+        //     new Measure(5, this.style, [this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7')], 4),
+        //     new Measure(6, this.style, [this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7'), this.theory.getChord('C', 'relative min7')], 4),
+        //     new Measure(7, this.style, [this.theory.getChord('Bb', 'min7'), this.theory.getChord('Bb', 'min7'), this.theory.getChord('Bb', 'min7'), this.theory.getChord('Bb', 'min7')], 4),
+        //     new Measure(8, this.style, [this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7'), this.theory.getChord('Eb', '7')], 4),
+        //     new Measure(9, this.style, [this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7'), this.theory.getChord('Ab', 'maj7')], 4),
+        //     new Measure(10, this.style, [this.theory.getChord('Db', '7'), this.theory.getChord('Db', '7'), this.theory.getChord('Db', '7'), this.theory.getChord('Db', '7')], 4),
+        //     new Measure(11, this.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4),
+        //     new Measure(12, this.style, [this.theory.getChord('C', 'min7'), this.theory.getChord('C', 'min7'), this.theory.getChord('C', 'min7'), this.theory.getChord('C', 'min7')], 4),
+        // ];
 
-        const e1: Measure[] = [
-            new Measure(13, this.style, [this.theory.getChord('F', '7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7')], 4),
-            new Measure(14, this.style, [this.theory.getChord('F', '7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7')], 4),
-            new Measure(15, this.style, [this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7')], 4),
-            new Measure(16, this.style, [this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7')], 4),
-        ];
+        // const e1: Measure[] = [
+        //     new Measure(13, this.style, [this.theory.getChord('F', '7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7')], 4),
+        //     new Measure(14, this.style, [this.theory.getChord('F', '7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7'), this.theory.getChord('F', '7')], 4),
+        //     new Measure(15, this.style, [this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7')], 4),
+        //     new Measure(16, this.style, [this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7')], 4),
+        // ];
 
-        const e2: Measure[] = [
-            new Measure(17, this.style, [this.theory.getChord('G', 'min7'), this.theory.getChord('G', 'min7'), this.theory.getChord('Ab', '7'), this.theory.getChord('Ab', '7')], 4),
-            new Measure(18, this.style, [this.theory.getChord('G', 'min7'), this.theory.getChord('G', 'min7'), this.theory.getChord('C', '7'), this.theory.getChord('C', '7')], 4),
-            new Measure(19, this.style, [this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7')], 4),
-            new Measure(20, this.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4),
-        ];
+        // const e2: Measure[] = [
+        //     new Measure(17, this.style, [this.theory.getChord('G', 'min7'), this.theory.getChord('G', 'min7'), this.theory.getChord('Ab', '7'), this.theory.getChord('Ab', '7')], 4),
+        //     new Measure(18, this.style, [this.theory.getChord('G', 'min7'), this.theory.getChord('G', 'min7'), this.theory.getChord('C', '7'), this.theory.getChord('C', '7')], 4),
+        //     new Measure(19, this.style, [this.theory.getChord('F', 'min7'), this.theory.getChord('F', 'min7'), this.theory.getChord('Bb', '7'), this.theory.getChord('Bb', '7')], 4),
+        //     new Measure(20, this.style, [this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7'), this.theory.getChord('Eb', 'maj7')], 4),
+        // ];
 
-        const head: Section = new Section("Head", measuresA, true, 2, [e1, e2]);
-        this.sections.push(head);
-        this.name = "There Will Never Be Another You"
+        // const head: Section = new Section("Head", measuresA, true, 2, [e1, e2]);
+        // this.sections.push(head);
+        // this.name = "There Will Never Be Another You"
 
 
 
@@ -102,7 +102,7 @@ export class Song {
         //     new Measure(9, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4),
         //     new Measure(10, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4),
         // ];
-        // const a: Section = new Section("a", measuresA, true, 2, [e1, e2]);
+        // const a: Section = new Section("A", measuresA, true, 2, [e1, e2]);
 
 
         // const measuresB: Measure[] = [
@@ -115,7 +115,7 @@ export class Song {
         //     new Measure(17, this.style, [this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4),
         //     new Measure(18, this.style, [this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7'), this.theory.getChord('G', '7')], 4)
         // ];
-        // const b: Section = new Section("b", measuresB, false);
+        // const b: Section = new Section("B", measuresB, false);
 
 
         // const measuresC: Measure[] = [
@@ -128,8 +128,8 @@ export class Song {
         //     new Measure(25, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4),
         //     new Measure(26, this.style, [this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7'), this.theory.getChord('C', 'maj7')], 4)
         // ];
-        // const c: Section = new Section("c", measuresC, false);
-        // this.sections.push(a, b, c);
+        // const lastA: Section = new Section("A", measuresC, false);
+        // this.sections.push(a, b, lastA);
         // this.name = "Satin Doll"
 
 
