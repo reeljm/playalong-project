@@ -3,6 +3,8 @@ export class Chord {
     root: string;
     type: string;
 
+    writtenRoot: string;
+
     private constructor(chordRoot: string, chordType: string) {
         this.root = chordRoot;
         this.type = chordType;

@@ -71,4 +71,8 @@ export class Section {
     public get repeats(): boolean {
         return this.repeat;
     }
+
+    public get sectionName(): string {
+        return this.name;
+    }
 }

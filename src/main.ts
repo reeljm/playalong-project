@@ -45,9 +45,11 @@ $(() => {
     createLeadSheet(song);
 
     function createLeadSheet(song: Song) {
+        $(".lead-sheet").append(`<h1 class="song-name">${song.songName}</h2>`)
 
         const sections: Section[] = song.allSections;
         sections.forEach((s: Section) => {
+            $(".lead-sheet").append(`<h2 class="section-header">${s.sectionName}</h2>`)
             // create bar lines:
             if (s.repeats) {
                 $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/startRepeat.svg">`)
@@ -56,20 +58,20 @@ $(() => {
             }
 
             const measures: Measure[] = s.allMeasures;
-            let initialMeasure: boolean = true;
+            const numMeasures: number = measures.length;
+            const endings: Measure[][] = s.allEndings || [];
+            let measureIndex = 0;
             measures.forEach((m: Measure) => {
-                if (initialMeasure) {
-                    initialMeasure = false;
-                } else {
+                if (measureIndex > 0) {
                     $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/barLine.svg">`)
                 }
                 const chords: Chord[] = m.chords;
                 let previousChord: Chord = null;
+                let chordHTML: string = "";
                 chords.forEach((c: Chord) => {
                     // create chord symbol
-                    const chordEq = (c1: Chord, c2: Chord) => c1.root === c2.root && c1.type === c2.type;
+                    const chordEq = (c1: Chord, c2: Chord) => c1.writtenRoot === c2.writtenRoot && c1.type === c2.type;
                     if (!previousChord || !chordEq(c, previousChord)) {
-                        let chordHTML: string = "";
                         chordHTML += `<div class="chord">`;
                         const svgMap: Map<string, string> = new Map([
                             ["A", "A.svg"],
@@ -90,7 +92,7 @@ $(() => {
                             ["min" ,"min.svg"],
                             ["relative min" ,"min.svg"]
                         ]);
-                        const tokenizedChord = c.root.split("");
+                        const tokenizedChord = c.writtenRoot.split("");
                         tokenizedChord.forEach((e: string) => {
                             if (e === "b" || e === "#") {
                                 chordHTML += `<img class="chord-symbol" src="./src/playbackService/staticFiles/svgs/${svgMap.get(e)}">`;
@@ -112,33 +114,44 @@ $(() => {
                                 }
                             }
                         }
-                        chordHTML+=`</div>`
-                        $(".lead-sheet").append(chordHTML);
+                        chordHTML +=`</div>`
                         previousChord = c;
                     }
                 });
+
+                $(".lead-sheet").append(`<div class="measure">${chordHTML}</div>`);
+
+                if (((measureIndex + 1) % 4) === 0 && (measureIndex !== numMeasures - 1 || endings.length > 0)) {
+                    $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/barLine.svg">`);
+                    $(".lead-sheet").append(`<br>`);
+                }
+                measureIndex++;
             });
 
 
-            const endings: Measure[][] = s.allEndings || [];
+
             let endingNumber: number = 1;
             endings.forEach((ending: Measure[]) => {
                 let initialMeasure = true;
-                $(".lead-sheet").append(`<br>`)
+                if (endingNumber !== 1) {
+                    $(".lead-sheet").append(`<br>`)
+                }
                 ending.forEach((m: Measure) => {
                     $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/barLine.svg">`)
                     if (initialMeasure) {
                         initialMeasure = false;
-                        $(".lead-sheet").append(`<img class="endingMarker" src="./src/playbackService/staticFiles/svgs/repeatBracket.svg">`);
-                        $(".lead-sheet").append(`<img class="endingMarker" src="./src/playbackService/staticFiles/svgs/repeat${endingNumber}.svg">`);
+                        let markerHTML: string = "";
+                        markerHTML += `<img class="ending-marker" src="./src/playbackService/staticFiles/svgs/repeatBracket.svg">`;
+                        markerHTML += `<img class="ending-marker" src="./src/playbackService/staticFiles/svgs/repeat${endingNumber}.svg">`;
+                        $(".lead-sheet").append(`<div class="ending-marker-container">${markerHTML}</div>`);
                     }
                     const chords: Chord[] = m.chords;
                     let previousChord: Chord = null;
+                    let chordHTML: string = "";
                     chords.forEach((c: Chord) => {
                         // create chord symbol
-                        const chordEq = (c1: Chord, c2: Chord) => c1.root === c2.root && c1.type === c2.type;
+                        const chordEq = (c1: Chord, c2: Chord) => c1.writtenRoot === c2.writtenRoot && c1.type === c2.type;
                         if (!previousChord || !chordEq(c, previousChord)) {
-                            let chordHTML: string = "";
                             chordHTML += `<div class="chord">`;
                             const svgMap: Map<string, string> = new Map([
                                 ["A", "A.svg"],
@@ -159,7 +172,7 @@ $(() => {
                                 ["min" ,"min.svg"],
                                 ["relative min" ,"min.svg"]
                             ]);
-                            const tokenizedChord = c.root.split("");
+                            const tokenizedChord = c.writtenRoot.split("");
                             tokenizedChord.forEach((e: string) => {
                                 if (e === "b" || e === "#") {
                                     chordHTML += `<img class="chord-symbol" src="./src/playbackService/staticFiles/svgs/${svgMap.get(e)}">`;
@@ -182,16 +195,21 @@ $(() => {
                                 }
                             }
                             chordHTML+=`</div>`
-                            $(".lead-sheet").append(chordHTML);
                             previousChord = c;
                         }
                     });
+                    $(".lead-sheet").append(`<div class="measure">${chordHTML}</div>`);
                 });
+                if (endingNumber !== endings.length) {
+                    $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/endRepeat.svg">`)
+                }
                 endingNumber++;
             });
 
-            if (s.repeats) {
+            if (s.repeats && !endings) {
                 $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/endRepeat.svg">`)
+            } else {
+                $(".lead-sheet").append(`<img class="chord-root" src="./src/playbackService/staticFiles/svgs/doubleBarLine.svg">`)
             }
             $(".lead-sheet").append(`<br>`)
         });

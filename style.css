@@ -140,6 +140,28 @@ input[type=number] {
     display: inline-block;
 }
 
-.endingMarker {
-    width: 20px
+.ending-marker {
+    width: 20px;
+    display: inline-block;
+}
+
+.ending-marker-container {
+    display: inline-block;
+    margin-right: -40px;
+}
+
+.measure {
+    min-width: 180px;
+    display: inline-block;
+    text-align: center;
+}
+
+.section-header {
+    color: black;
+    width: min-content;
+}
+
+.song-name {
+    margin: auto;
+    text-align: center;
 }

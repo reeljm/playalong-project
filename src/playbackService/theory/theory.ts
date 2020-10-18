@@ -69,7 +69,9 @@ export class Theory {
     }
 
     public getChord(root: string, type: string): Chord {
-        return Chord.getChord(this.parseEnharmonicPitch(root), type)
+        const chord: Chord = Chord.getChord(this.parseEnharmonicPitch(root), type)
+        chord.writtenRoot = root;
+        return chord;
     }
 
     public distanceTo(note1: Note, note2: Note): number {
