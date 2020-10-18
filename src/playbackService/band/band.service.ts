@@ -23,6 +23,7 @@ export class BandService {
         Transport.stop();
         Transport.cancel(0);
         this.createScheduleLoop();
+        this.song.restart();
     }
 
     public play() {
