@@ -138,6 +138,7 @@ input[type=number] {
     width: 90%;
     text-align: left;
     margin: auto;
+    margin-bottom: 10%;
 }
 
 .chord {
@@ -152,6 +153,8 @@ input[type=number] {
 .ending-marker-container {
     display: inline-block;
     margin-right: -40px;
+    height: 0px;
+    margin-top: -20px;
 }
 
 .measure {
@@ -169,4 +172,8 @@ input[type=number] {
 .song-name {
     margin: auto;
     text-align: center;
+}
+
+.bar-line {
+    height: 80px;
 }
