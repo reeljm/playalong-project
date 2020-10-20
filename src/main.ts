@@ -21,7 +21,7 @@ import { Chord } from "./playbackService/theory/chord";
 let band: BandService = null;
 let style: string = "fourFourTime";
 
-$(() => {
+$(async () => {
     // initialize player
     const bass: UprightBass = new UprightBass();
     const drumset: DrumSet = new DrumSet();
@@ -40,6 +40,12 @@ $(() => {
     const pianist: Pianist = new Pianist(piano, theory);
     const musicians: Musician[] = [pianist, drummer, bassist];
     const songToPlay: Song = new Song(theory);
+
+    // make request to backend:
+    const server = "http://localhost:3000/"
+    const data = await $.get(server);
+    songToPlay.deserialize(data);
+
     band = new Band(songToPlay, musicians);
 
     createLeadSheet(songToPlay);
