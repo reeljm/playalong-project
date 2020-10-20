@@ -7,9 +7,6 @@ import { WalkingBasslineGenerator } from "./playbackService/musicians/bassist/wa
 import { Theory } from "./playbackService/theory/theory";
 import { BossaBasslineGenerator } from "./playbackService/musicians/bassist/bossaBasslineGenerator";
 import { BasslineGenerator } from "./playbackService/musicians/bassist/basslineGenerator";
-
-import $ from "jquery";
-import "bootstrap";
 import { Piano } from "./playbackService/musicians/pianist/piano";
 import { Pianist } from "./playbackService/musicians/pianist/pianist";
 import { Musician } from "./playbackService/musicians/musician";
@@ -17,6 +14,9 @@ import { Song } from "./playbackService/song/song";
 import { Section } from "./playbackService/song/section";
 import { Measure } from "./playbackService/song/measure";
 import { Chord } from "./playbackService/theory/chord";
+
+import $ from "jquery";
+import "bootstrap";
 
 let band: BandService = null;
 let style: string = "fourFourTime";
@@ -41,10 +41,15 @@ $(async () => {
     const musicians: Musician[] = [pianist, drummer, bassist];
     const songToPlay: Song = new Song(theory);
 
-    // make request to backend:
-    const server = "http://localhost:3000/"
-    const data = await $.get(server);
-    songToPlay.deserialize(data);
+    // get metadata for all songs:
+    const songsURI = "http://localhost:3000/songs";
+    const songsMetadata = await $.get(songsURI);
+
+    // get first song:
+    const songDataURI = `http://localhost:3000/songs/id/${songsMetadata[3]._id}`;
+    const songData = await $.get(songDataURI);
+
+    songToPlay.deserialize(songData);
 
     band = new Band(songToPlay, musicians);
 
