@@ -47,6 +47,10 @@ export class BandService {
         return this.tempo;
     }
 
+    public setSong(song: Song): void {
+        this.song = song;
+    }
+
     private async initialize(): Promise<void> {
         this.musicians.forEach(async (m:Musician) => {
             await m.initialize();

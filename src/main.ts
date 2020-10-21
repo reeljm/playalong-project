@@ -42,12 +42,13 @@ $(async () => {
     const songToPlay: Song = new Song(theory);
 
     // get metadata for all songs:
-    const songsURI = "http://localhost:3000/songs";
-    const songsMetadata = await $.get(songsURI);
+    const songsURI: string = "http://localhost:3000/songs";
+    const songsMetadata: any[] = await $.get(songsURI);
 
     // get first song:
-    const songDataURI = `http://localhost:3000/songs/id/${songsMetadata[3]._id}`;
-    const songData = await $.get(songDataURI);
+    let songIndex: number = 0;
+    const songDataURI: string = `http://localhost:3000/songs/id/${songsMetadata[songIndex]._id}`;
+    const songData: any = await $.get(songDataURI);
 
     songToPlay.deserialize(songData);
 
@@ -228,6 +229,7 @@ $(async () => {
         });
     }
 
+    $("#pause").hide();
     $("#play").on("click", () => {
         $("#play").hide();
         $("#pause").show();
@@ -244,6 +246,39 @@ $(async () => {
         $("#pause").hide();
         $("#play").show();
         band.stop();
+    });
+
+    $("#skip-start").on("click", async () => {
+        $("#pause").hide();
+        $("#play").show();
+        band.stop();
+
+        songIndex = (songIndex - 1) % songsMetadata.length;
+        if (songIndex < 0) {
+            songIndex = songsMetadata.length-1;
+        }
+        const songDataURI: string = `http://localhost:3000/songs/id/${songsMetadata[songIndex]._id}`;
+        const songData: any = await $.get(songDataURI);
+        const newSong = new Song(theory);
+        newSong.deserialize(songData);
+        band.setSong(newSong);
+        $(".lead-sheet").empty();
+        createLeadSheet(newSong);
+    });
+
+    $("#skip-end").on("click", async () => {
+        $("#pause").hide();
+        $("#play").show();
+        band.stop();
+
+        songIndex = (songIndex + 1) % songsMetadata.length;
+        const songDataURI: string = `http://localhost:3000/songs/id/${songsMetadata[songIndex]._id}`;
+        const songData: any = await $.get(songDataURI);
+        const newSong = new Song(theory);
+        newSong.deserialize(songData);
+        band.setSong(newSong);
+        $(".lead-sheet").empty();
+        createLeadSheet(newSong);
     });
 
     $("#swing").on("click", () => {
