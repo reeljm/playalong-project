@@ -19,7 +19,6 @@ export class Piano extends Instrument {
                     const panner: Panner = new Panner().toDestination();
                     panner.pan.value = 0;
                     self.sampler.connect(panner);
-                    console.log("piano loaded!");
                     resolve();
                 });
             } catch (error) {

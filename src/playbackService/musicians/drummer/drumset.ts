@@ -39,7 +39,6 @@ export class DrumSet extends Instrument {
                     const panner: Panner = new Panner().toDestination();
                     panner.pan.value = -0.75;
                     self.sampler.connect(panner);
-                    console.log("drums loaded!");
                     resolve();
                 });
             } catch (error) {

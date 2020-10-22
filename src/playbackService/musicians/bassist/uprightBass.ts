@@ -19,7 +19,6 @@ export class UprightBass extends Instrument {
                     const panner: Panner = new Panner().toDestination();
                     panner.pan.value = 0.75;
                     self.sampler.connect(panner);
-                    console.log("bass has loaded!");
                     resolve();
                 });
             } catch (error) {

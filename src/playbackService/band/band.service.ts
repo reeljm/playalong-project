@@ -52,9 +52,9 @@ export class BandService {
     }
 
     private async initialize(): Promise<void> {
-        this.musicians.forEach(async (m:Musician) => {
-            await m.initialize();
-        });
+        for (let i = 0; i < this.musicians.length; i++) {
+            await this.musicians[i].initialize();
+        }
         this.createScheduleLoop();
         this.initialized = true;
     }
