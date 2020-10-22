@@ -26,13 +26,13 @@ export class BandService {
         this.song.restart();
     }
 
-    public play() {
+    public async play() {
         Transport.swing = 0.5;
         Transport.bpm.value = this.tempo;
         Transport.context.resume();
         if (!this.initialized) {
-            this.initialize()
-            .then(() => Transport.start());
+            await this.initialize();
+            Transport.start();
         } else {
             Transport.start();
         }

@@ -14,11 +14,14 @@ export class UprightBass extends Instrument {
         const self = this;
         return new Promise((resolve, reject) => {
             try {
-                self.sampler = new Sampler(fileConfig, () => resolve());
-                this.sampler.volume.value = 6;
-                const panner: Panner = new Panner().toDestination();
-                panner.pan.value = 0.75;
-                this.sampler.connect(panner);
+                self.sampler = new Sampler(fileConfig, () => {
+                    self.sampler.volume.value = 6;
+                    const panner: Panner = new Panner().toDestination();
+                    panner.pan.value = 0.75;
+                    self.sampler.connect(panner);
+                    console.log("bass has loaded!");
+                    resolve();
+                });
             } catch (error) {
                 alert('error loading instrument');
                 reject();

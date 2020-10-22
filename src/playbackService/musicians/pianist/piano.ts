@@ -14,11 +14,14 @@ export class Piano extends Instrument {
         const self = this;
         return new Promise((resolve, reject) => {
             try {
-                self.sampler = new Sampler(fileConfig, () => resolve());
-                this.sampler.volume.value = -4;
-                const panner: Panner = new Panner().toDestination();
-                panner.pan.value = 0;
-                this.sampler.connect(panner);
+                self.sampler = new Sampler(fileConfig, () => {
+                    self.sampler.volume.value = -4;
+                    const panner: Panner = new Panner().toDestination();
+                    panner.pan.value = 0;
+                    self.sampler.connect(panner);
+                    console.log("piano loaded!");
+                    resolve();
+                });
             } catch (error) {
                 alert('error loading instrument');
                 reject();
