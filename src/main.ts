@@ -42,12 +42,14 @@ $(async () => {
     const songToPlay: Song = new Song(theory);
 
     // get metadata for all songs:
-    const songsURI: string = "http://localhost:3000/songs";
+    const prodServer: string = "http://34.72.104.7:3000/";
+    const prodPort: string = "3000";
+    const songsURI: string = `http://${prodServer}:${prodPort}/songs`;
     const songsMetadata: any[] = await $.get(songsURI);
 
     // get first song:
     let songIndex: number = 0;
-    const songDataURI: string = `http://localhost:3000/songs/id/${songsMetadata[songIndex]._id}`;
+    const songDataURI: string = `http://${prodServer}:${prodPort}/songs/id/${songsMetadata[songIndex]._id}`;
     const songData: any = await $.get(songDataURI);
 
     songToPlay.deserialize(songData);
@@ -257,7 +259,7 @@ $(async () => {
         if (songIndex < 0) {
             songIndex = songsMetadata.length-1;
         }
-        const songDataURI: string = `http://localhost:3000/songs/id/${songsMetadata[songIndex]._id}`;
+        const songDataURI: string = `http://${prodServer}:${prodPort}/songs/id/${songsMetadata[songIndex]._id}`;
         const songData: any = await $.get(songDataURI);
         const newSong = new Song(theory);
         newSong.deserialize(songData);
@@ -272,7 +274,7 @@ $(async () => {
         band.stop();
 
         songIndex = (songIndex + 1) % songsMetadata.length;
-        const songDataURI: string = `http://localhost:3000/songs/id/${songsMetadata[songIndex]._id}`;
+        const songDataURI: string = `http://${prodServer}:${prodPort}/songs/id/${songsMetadata[songIndex]._id}`;
         const songData: any = await $.get(songDataURI);
         const newSong = new Song(theory);
         newSong.deserialize(songData);
