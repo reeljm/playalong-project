@@ -42,7 +42,7 @@ $(async () => {
     const songToPlay: Song = new Song(theory);
 
     // get metadata for all songs:
-    const prodServer: string = "http://34.72.104.7:3000/";
+    const prodServer: string = "34.72.104.7";
     const prodPort: string = "3000";
     const songsURI: string = `http://${prodServer}:${prodPort}/songs`;
     const songsMetadata: any[] = await $.get(songsURI);
