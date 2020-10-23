@@ -9,7 +9,7 @@ export class Song {
     private currentSection: Section;
     private repeatNumber: number = 0;
     private currentIteration: number = 0;
-    private totalIterations: number = 1;
+    private totalIterations: number = 3;
     private sections: Section[] = [];
     private previousMeasure: Measure;
     private measureNumber: number = 0;
