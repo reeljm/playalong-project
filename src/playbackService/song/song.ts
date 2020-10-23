@@ -131,4 +131,12 @@ export class Song {
         return this.name
     }
 
+    public setTotalIterations(iterations: number) {
+        this.totalIterations = iterations;
+    }
+
+    public getTotalIterations() {
+        return this.totalIterations;
+    }
+
 }

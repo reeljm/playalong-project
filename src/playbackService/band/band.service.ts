@@ -47,6 +47,14 @@ export class BandService {
         return this.tempo;
     }
 
+    public setRepeats(tempo: number) {
+        this.song.setTotalIterations(tempo);
+    }
+
+    public getRepeats() {
+        return this.song.getTotalIterations();
+    }
+
     public setSong(song: Song): void {
         this.song = song;
     }

@@ -42,9 +42,14 @@
 				</select>
 			</div>
 			<div class="tempo-container noselect">
-				<div id="tempo-decrease" class="tempo-control">-</div>
-				<input id="tempo" type="number" value="120" min="40" max="400" pattern="\d*" required>
-				<div id="tempo-increase" class="tempo-control">+</div>
+				<div id="tempo-decrease" class="tempo-control decrease">-</div>
+				<input id="tempo" class="number-input" type="number" value="120" min="40" max="400" pattern="\d*" required>
+				<div id="tempo-increase" class="tempo-control increase">+</div>
+			</div>
+			<div class="tempo-container noselect">
+				<div id="repeats-decrease" class="tempo-control decrease">-</div>
+				<input id="repeats" class="number-input" type="number" value="3" min="0" max="400" pattern="\d*" required>
+				<div id="repeats-increase" class="tempo-control increase">+</div>
 			</div>
 	</div>
 	<h1 class="song-name"></h2>

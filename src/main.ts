@@ -293,6 +293,7 @@ $(async () => {
         band.setStyle(style);
     });
 
+    // tempo controller
     const parseTempoAndSetVal = (tempoNum: number) => {
         if (isNaN(tempoNum) || tempoNum > 400 || tempoNum < 40) {
             $("#tempo").val(band.getTempo());
@@ -320,5 +321,33 @@ $(async () => {
     $("#style").on("change", function() {
         const styleInput: string = $(this).val().toString()
         band.setStyle(styleInput);
+    });
+
+
+
+
+    // repeats controller
+    const parseRepeatsAndSetVal = (repeatsNum: number) => {
+        if (isNaN(repeatsNum) || repeatsNum > 400 || repeatsNum < 1) {
+            $("#repeats").val(band.getRepeats());
+            return;
+        }
+        band.setRepeats(repeatsNum);
+        $("#repeats").val(repeatsNum);
+    };
+
+    $("#repeats").on("change", function() {
+        const repeatsNum: number = parseInt($(this).val().toString(), 0x0);
+        parseRepeatsAndSetVal(repeatsNum);
+    });
+
+    $("#repeats-increase").on("click", () => {
+        band.getRepeats()
+        parseRepeatsAndSetVal(band.getRepeats() + 1);
+    });
+
+    $("#repeats-decrease").on("click", () => {
+        band.getRepeats()
+        parseRepeatsAndSetVal(band.getRepeats() - 1);
     });
 });

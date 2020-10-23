@@ -40,7 +40,7 @@
     margin: 0.5% 1% 0 1%;
 }
 
-#tempo {
+.number-input {
     width: 40px;
     height: 20px;
     text-align: center;
@@ -75,7 +75,7 @@
     user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
   }
 
-#tempo-increase {
+.increase {
     margin-left: -5px;
     border-radius: 0 3px 3px 0;
     -webkit-border-radius: 0 3px 3px 0;
@@ -84,7 +84,7 @@
     -o-border-radius: 0 3px 3px 0;
 }
 
-#tempo-decrease {
+.decrease {
     border-radius: 3px 0 0 3px;
     -webkit-border-radius: 3px 0 0 3px;
     -moz-border-radius: 3px 0 0 3px;
