@@ -9,6 +9,7 @@ module.exports = {
             patterns: [
               { from: 'src/index.html' },
               { from: 'src/style.css' },
+              { from: 'src/favicon.ico' },
             ],
         }),
     ],
