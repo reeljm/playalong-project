@@ -7,7 +7,7 @@
     "build-dev": "npx webpack --config webpack.dev.js && tsc",
     "build-prod": "npx webpack --config webpack.prod.js && tsc",
     "lint": "tslint -c tslint.json -p tsconfig.json",
-    "start": "node server.js",
+    "start": "node src/server.js",
     "test": "nyc --reporter=html mocha -r ts-node/register test/**/*.ts"
   },
   "repository": "",

@@ -1,10 +1,10 @@
 {
-    "C1": "./src/playbackService/staticFiles/samples/drums/ride_1.mp3",
-    "D1": "./src/playbackService/staticFiles/samples/drums/ride_2.mp3",
-    "E1": "./src/playbackService/staticFiles/samples/drums/ride_3.mp3",
-    "F1": "./src/playbackService/staticFiles/samples/drums/hatChick_1.mp3",
-    "G1": "./src/playbackService/staticFiles/samples/drums/hatChick_2.mp3",
-    "A1": "./src/playbackService/staticFiles/samples/drums/crossStick_1.mp3",
-    "B1": "./src/playbackService/staticFiles/samples/drums/crossStick_2.mp3",
-    "C2": "./src/playbackService/staticFiles/samples/drums/crossStick_3.mp3"
+    "C1": "./assets/drums/ride_1.mp3",
+    "D1": "./assets/drums/ride_2.mp3",
+    "E1": "./assets/drums/ride_3.mp3",
+    "F1": "./assets/drums/hatChick_1.mp3",
+    "G1": "./assets/drums/hatChick_2.mp3",
+    "A1": "./assets/drums/crossStick_1.mp3",
+    "B1": "./assets/drums/crossStick_2.mp3",
+    "C2": "./assets/drums/crossStick_3.mp3"
 }
