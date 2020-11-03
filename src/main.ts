@@ -280,7 +280,7 @@ $(async () => {
     $("#skip-end").on("click", async () => {
         $("#pause").hide();
         $("#play").show();
-        band.stop();
+        await band.stop();
 
         songIndex = (songIndex + 1) % songsMetadata.length;
         const songDataURI: string = `http://${prodServer}:${prodPort}/songs/id/${songsMetadata[songIndex]._id}`;

@@ -19,10 +19,10 @@ export class BandService {
         Transport.pause('+0');
     }
 
-    public stop() {
+    public async stop() {
         Transport.stop();
         Transport.cancel(0);
-        this.createScheduleLoop();
+        await this.initialize();
         this.song.restart();
     }
 

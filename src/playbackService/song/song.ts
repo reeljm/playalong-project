@@ -118,9 +118,8 @@ export class Song {
     public restart(): void {
         this.arrangementMeasureNumber = -1;
         this.currentIteration = 0;
-
         this.sectionIndex = 0;
-        this.currentSection = this.sections[0];
+        this.currentSection = null;
         this.repeatNumber = 0;
         this.previousMeasure = null;
         this.arrangementMeasureNumber = 0;
