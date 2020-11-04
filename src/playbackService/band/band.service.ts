@@ -19,10 +19,10 @@ export class BandService {
         Transport.pause('+0');
     }
 
-    public async stop() {
+    public stop() {
         Transport.stop();
         Transport.cancel(0);
-        await this.initialize();
+        this.createScheduleLoop();
         this.song.restart();
     }
 
@@ -31,6 +31,7 @@ export class BandService {
         Transport.bpm.value = this.tempo;
         Transport.context.resume();
         if (!this.initialized) {
+            this.createScheduleLoop();
             await this.initialize();
             Transport.start();
         } else {
@@ -63,7 +64,6 @@ export class BandService {
         for (let i = 0; i < this.musicians.length; i++) {
             await this.musicians[i].initialize();
         }
-        this.createScheduleLoop();
         this.initialized = true;
     }
 
