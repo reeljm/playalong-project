@@ -15,6 +15,11 @@ body {
     display: inline-block;
 }
 
+.playback-info {
+    text-align: right;
+    width: 85%;
+}
+
 .dropdown-content {
     position: absolute;
     background-color: #f1f1f1;
@@ -201,6 +206,10 @@ input[type=number] {
     display: inline-flex;
     flex-flow: row wrap;
     justify-content: space-around;
+}
+
+.highlighted-measure {
+    background: #9bc1ff;
 }
 
 .section-header {

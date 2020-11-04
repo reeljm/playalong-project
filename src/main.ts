@@ -62,11 +62,25 @@ $(async () => {
     songToPlay.deserialize(songData);
 
     band = new Band(songToPlay, musicians);
+    band.setNewMeasureCallback((measure: Measure) => {
+        if (!measure) {
+            return;
+        }
+        $(".highlighted-measure").removeClass("highlighted-measure");
+        $(`#${measure.uniqueID}`).addClass("highlighted-measure");
+    });
 
     createLeadSheet(songToPlay);
 
     function createLeadSheet(song: Song) {
         $(".song-name").text(song.songName);
+
+        function createUUID(): string {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
 
         const sections: Section[] = song.allSections;
         sections.forEach((s: Section) => {
@@ -140,7 +154,9 @@ $(async () => {
                     }
                 });
 
-                $(".lead-sheet").append(`<div class="measure">${chordHTML}</div>`);
+                const uuid: string = createUUID();
+                m.uniqueID = uuid;
+                $(".lead-sheet").append(`<div id='${uuid}' class="measure">${chordHTML}</div>`);
 
                 if (((measureIndex + 1) % 4) === 0 && (measureIndex !== numMeasures - 1 || endings.length > 0)) {
                     $(".lead-sheet").append(`<img class="bar-line" src="./assets/svgs/barLine.svg">`);
@@ -221,7 +237,9 @@ $(async () => {
                             previousChord = c;
                         }
                     });
-                    $(".lead-sheet").append(`<div class="measure">${chordHTML}</div>`);
+                    const uuid: string = createUUID();
+                    m.uniqueID = uuid;
+                    $(".lead-sheet").append(`<div id='${uuid}' class="measure">${chordHTML}</div>`);
                 });
                 if (endingNumber !== endings.length) {
                     $(".lead-sheet").append(`<img class="bar-line" src="./assets/svgs/endRepeat.svg">`);
@@ -238,6 +256,7 @@ $(async () => {
         });
     }
 
+    $("#repeat-text").html(`1 of ${band.getRepeats()}`);
     $("#pause").hide();
     $(".dropdown-content").hide();
     $("#play").on("click", () => {
@@ -256,6 +275,7 @@ $(async () => {
         $("#pause").hide();
         $("#play").show();
         band.stop();
+        $(".highlighted-measure").removeClass("highlighted-measure");
     });
 
     $("#skip-start").on("click", async () => {
@@ -365,15 +385,16 @@ $(async () => {
     $("#repeats").on("change", function() {
         const repeatsNum: number = parseInt($(this).val().toString(), 0x0);
         parseRepeatsAndSetVal(repeatsNum);
+        $("#repeat-text").html(`1 of ${band.getRepeats()}`);
     });
 
     $("#repeats-increase").on("click", () => {
-        band.getRepeats()
         parseRepeatsAndSetVal(band.getRepeats() + 1);
+        $("#repeat-text").html(`1 of ${band.getRepeats()}`);
     });
 
     $("#repeats-decrease").on("click", () => {
-        band.getRepeats()
         parseRepeatsAndSetVal(band.getRepeats() - 1);
+        $("#repeat-text").html(`1 of ${band.getRepeats()}`);
     });
 });

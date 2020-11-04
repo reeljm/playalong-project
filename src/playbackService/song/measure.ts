@@ -8,6 +8,7 @@ export class Measure {
     chords: Chord[];
     numberOfBeats: number;
     nextMeasure: Measure;
+    uniqueID: string;
 
     constructor(measureNumber: number, style: string, chords: Chord[], numberOfBeats: number) {
         this.originalMeasureNumber = measureNumber;

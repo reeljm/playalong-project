@@ -8,11 +8,16 @@ export class BandService {
     private style: string = 'fourFourTime';
     private initialized: boolean = false;
     private tempo: number = 120;
+    private newMeasureCallback: Function;
 
     constructor(private song: Song, private musicians: Musician[]) { }
 
     public setStyle(style: string) {
         this.style = style;
+    }
+
+    public setNewMeasureCallback(fn: Function) {
+        this.newMeasureCallback = fn;
     }
 
     public pause() {
@@ -87,6 +92,7 @@ export class BandService {
             }
             currentMeasure.style = this.style;
             self.musicians.forEach(musician => musician.play(currentMeasure));
+            this.newMeasureCallback(previousMeasure);
             previousMeasure = currentMeasure;
         }, '1m').start(0);
     }
