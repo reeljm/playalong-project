@@ -239,6 +239,7 @@ $(async () => {
     }
 
     $("#pause").hide();
+    $(".dropdown-content").hide();
     $("#play").on("click", () => {
         $("#play").hide();
         $("#pause").show();
@@ -330,8 +331,26 @@ $(async () => {
         band.setStyle(styleInput);
     });
 
+    $("#tempo-icon").on("click", () =>  {
+        $("#tempo-dropdown").toggle();
+    });
 
+    $("#repeat-icon").on("click", () =>  {
+        $("#repeat-dropdown").toggle();
+    });
 
+    $(document).on("click", (event) => {
+        var $target = $(event.target);
+        if(!$target.closest('#repeat-dropdown-container').length &&
+        $('#repeat-dropdown').is(":visible")) {
+            $('#repeat-dropdown').hide();
+        }
+
+        if(!$target.closest('#tempo-dropdown-container').length &&
+        $('#tempo-dropdown').is(":visible")) {
+            $('#tempo-dropdown').hide();
+        }
+    });
 
     // repeats controller
     const parseRepeatsAndSetVal = (repeatsNum: number) => {
