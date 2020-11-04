@@ -9,6 +9,7 @@ export class BandService {
     private initialized: boolean = false;
     private tempo: number = 120;
     private newMeasureCallback: Function;
+    private newChorusCallback: Function;
 
     constructor(private song: Song, private musicians: Musician[]) { }
 
@@ -20,6 +21,10 @@ export class BandService {
         this.newMeasureCallback = fn;
     }
 
+    public setNewChorusCallback(fn: Function) {
+        this.newChorusCallback = fn;
+    }
+
     public pause() {
         Transport.pause('+0');
     }
@@ -27,8 +32,10 @@ export class BandService {
     public stop() {
         Transport.stop();
         Transport.cancel(0);
-        this.createScheduleLoop();
-        this.song.restart();
+        if (this.initialized) {
+            this.createScheduleLoop();
+            this.song.restart();
+        }
     }
 
     public async play() {
@@ -61,6 +68,10 @@ export class BandService {
         return this.song.getTotalIterations();
     }
 
+    public getCurrentRepeat() {
+        return this.song.getCurrentIteration();
+    }
+
     public setSong(song: Song): void {
         this.song = song;
     }
@@ -89,6 +100,9 @@ export class BandService {
             if (!currentMeasure) {
                 self.pause();
                 return;
+            }
+            if (this.song.isOnFirstMeasureOfTune) {
+                this.newChorusCallback();
             }
             currentMeasure.style = this.style;
             self.musicians.forEach(musician => musician.play(currentMeasure));

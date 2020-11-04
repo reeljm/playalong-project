@@ -70,6 +70,10 @@ $(async () => {
         $(`#${measure.uniqueID}`).addClass("highlighted-measure");
     });
 
+    band.setNewChorusCallback(() => {
+        $("#repeat-text").html(`${band.getCurrentRepeat() + 1} of ${band.getRepeats()}`);
+    });
+
     createLeadSheet(songToPlay);
 
     function createLeadSheet(song: Song) {
