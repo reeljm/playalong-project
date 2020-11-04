@@ -97,16 +97,16 @@ export class BandService {
         new Loop(() => {
             this.setTransportBasedOnPreviousMeasure(previousMeasure);
             const currentMeasure: Measure = this.song.nextMeasure();
+            this.newMeasureCallback(previousMeasure);
+            if (this.song.isOnFirstMeasureOfTune) {
+                this.newChorusCallback();
+            }
             if (!currentMeasure) {
                 self.pause();
                 return;
             }
-            if (this.song.isOnFirstMeasureOfTune) {
-                this.newChorusCallback();
-            }
             currentMeasure.style = this.style;
             self.musicians.forEach(musician => musician.play(currentMeasure));
-            this.newMeasureCallback(previousMeasure);
             previousMeasure = currentMeasure;
         }, '1m').start(0);
     }

@@ -63,11 +63,10 @@ $(async () => {
 
     band = new Band(songToPlay, musicians);
     band.setNewMeasureCallback((measure: Measure) => {
-        if (!measure) {
-            return;
-        }
         $(".highlighted-measure").removeClass("highlighted-measure");
-        $(`#${measure.uniqueID}`).addClass("highlighted-measure");
+        if (measure && measure.nextMeasure) {
+            $(`#${measure.uniqueID}`).addClass("highlighted-measure");
+        }
     });
 
     band.setNewChorusCallback(() => {
