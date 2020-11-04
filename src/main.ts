@@ -14,9 +14,7 @@ import { Song } from "./playbackService/song/song";
 import { Section } from "./playbackService/song/section";
 import { Measure } from "./playbackService/song/measure";
 import { Chord } from "./playbackService/theory/chord";
-
 import $ from "jquery";
-import "bootstrap";
 
 // require instrument samples:
 function requireAll(r: any) { r.keys().forEach(r); }
@@ -51,8 +49,8 @@ $(async () => {
     const songToPlay: Song = new Song(theory);
 
     // get metadata for all songs:
-    const prodServer: string = "34.72.104.7";
-    const prodPort: string = "3000";
+    const prodServer: string = process.env.PLAYALONG_URL;
+    const prodPort: string = process.env.PLAYALONG_BACKEND_PORT;
     const songsURI: string = `http://${prodServer}:${prodPort}/songs`;
     const songsMetadata: any[] = await $.get(songsURI);
 
