@@ -14,7 +14,9 @@ export class Song {
     private previousMeasure: Measure;
     private measureNumber: number = 0;
     private arrangementMeasureNumber: number = 0;
-    public isOnFirstMeasureOfTune: boolean = false;
+    private isOnFirstMeasureOfTune: boolean = false;
+    private isLastMeasureOfTune: boolean = false;
+    public runNewChorusCallback: boolean = true;
 
     constructor(private theory: Theory) { }
 
@@ -68,7 +70,24 @@ export class Song {
 
     public nextMeasure(): Measure {
         this.measureNumber++;
-        this.isOnFirstMeasureOfTune = false;
+        if (this.isLastMeasureOfTune) {
+            this.isOnFirstMeasureOfTune = true;
+            this.isLastMeasureOfTune = false;
+            this.runNewChorusCallback = false;
+        } else if (this.isOnFirstMeasureOfTune) {
+            this.isOnFirstMeasureOfTune = false;
+            this.isLastMeasureOfTune = false;
+            this.runNewChorusCallback = true;
+        } else if (this.runNewChorusCallback) {
+            this.isOnFirstMeasureOfTune = false;
+            this.isLastMeasureOfTune = false;
+            this.runNewChorusCallback = false;
+        }
+        else {
+            this.isOnFirstMeasureOfTune = false;
+            this.isLastMeasureOfTune = false;
+            this.runNewChorusCallback = false;
+        }
         this.arrangementMeasureNumber++;
         if (!this.currentSection) {
             this.currentSection = this.sections[0];
@@ -96,7 +115,7 @@ export class Song {
                 this.measureNumber = 0;
                 this.currentIteration++;
                 this.repeatNumber = -1;
-                this.isOnFirstMeasureOfTune = true;
+                this.isLastMeasureOfTune = true;
             }
             this.currentSection = this.sections[this.sectionIndex];
 

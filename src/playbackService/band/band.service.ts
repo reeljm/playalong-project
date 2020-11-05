@@ -98,7 +98,7 @@ export class BandService {
             this.setTransportBasedOnPreviousMeasure(previousMeasure);
             const currentMeasure: Measure = this.song.nextMeasure();
             this.newMeasureCallback(previousMeasure);
-            if (this.song.isOnFirstMeasureOfTune) {
+            if (this.song.runNewChorusCallback) {
                 this.newChorusCallback();
             }
             if (!currentMeasure) {
