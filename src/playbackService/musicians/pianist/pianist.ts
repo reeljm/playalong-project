@@ -14,6 +14,10 @@ export class Pianist implements Musician {
 
     constructor(private piano: Piano, private theory: Theory) { }
 
+    public clearCache(): void {
+        this.previousChord = null;
+    }
+
     initialize(): Promise<void> {
         return this.piano.loadInstrument();
     }

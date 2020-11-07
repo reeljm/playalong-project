@@ -36,6 +36,10 @@ export class BandService {
             this.createScheduleLoop();
             this.song.restart();
         }
+        for (const entry of Array.from(this.musicians.entries())) {
+            const musician: Musician = entry[1];
+            musician.clearCache();
+        }
     }
 
     public async play() {

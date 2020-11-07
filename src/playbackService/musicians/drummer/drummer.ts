@@ -16,6 +16,11 @@ export class Drummer implements Musician {
 
     constructor(private drumSet: DrumSet) { }
 
+    clearCache(): void {
+        this.eventsToSchedule = [];
+        this.currentStyle = null;
+    }
+
     initialize(): Promise<void> {
         for (const styleName of Object.keys(library)) {
             const timeFeels =  library[styleName];

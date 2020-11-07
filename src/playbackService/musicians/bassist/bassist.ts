@@ -11,6 +11,10 @@ export class Bassist implements Musician {
 
     constructor(private bass: UprightBass, private basslineGeneratorMap: Map<string, BasslineGenerator>) { }
 
+    public clearCache(): void {
+        this.basslineCurrentState = new BasslineCurrentState();
+    }
+
     initialize(): Promise<void> {
         return this.bass.loadInstrument();
     }

@@ -4,5 +4,5 @@ export interface Musician {
 
     play(arrangementCurrentMeasure: Measure): void;
     initialize(): Promise<void>;
-
+    clearCache(): void;
 }
