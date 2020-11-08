@@ -44,9 +44,9 @@
 				</span>
 				<div id="tempo-dropdown" class="dropdown-content">
 					<div class="tempo-container">
-						<div id="tempo-decrease" class="tempo-control decrease">-</div>
+						<div id="tempo-decrease" class="button-control decrease">-</div>
 						<input id="tempo" class="number-input" type="number" value="120" min="40" max="400" pattern="\d*" required>
-						<div id="tempo-increase" class="tempo-control increase">+</div>
+						<div id="tempo-increase" class="button-control increase">+</div>
 					</div>
 				</div>
 			</div>
@@ -59,9 +59,9 @@
 				</span>
 				<div id="repeat-dropdown" class="dropdown-content">
 					<div class="tempo-container">
-						<div id="repeats-decrease" class="tempo-control decrease">-</div>
+						<div id="repeats-decrease" class="button-control decrease">-</div>
 						<input id="repeats" class="number-input" type="number" value="3" min="0" max="400" pattern="\d*" required>
-						<div id="repeats-increase" class="tempo-control increase">+</div>
+						<div id="repeats-increase" class="button-control increase">+</div>
 					</div>
 				</div>
 			</div>
@@ -70,6 +70,18 @@
 					<option selected value="fourFourTime">Swing</option>
 					<option value="bossa">Latin</option>
 				</select>
+			</div>
+			<div id="transpose-dropdown-container" class="dropdown">
+				<span title="Transpose" id="transpose-icon" class="control-icon" unselectable="on" onselectstart="return false;" onmousedown="return false;">
+					TRANSPOSE
+				</span>
+				<div id="transpose-dropdown" class="dropdown-content">
+					<div class="transpose-container">
+						<div id="transpose-Bb" class="button-control">Bb</div>
+						<div id="transpose-C" class="button-control"button-control>C</div>
+						<div id="transpose-Eb" class="button-control">Eb</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	<h1 class="song-name"></h2>

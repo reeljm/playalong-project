@@ -10,6 +10,7 @@ export class BandService {
     private tempo: number = 120;
     private newMeasureCallback: Function;
     private newChorusCallback: Function;
+    private instrumentTransposition: string = "C";
 
     constructor(private song: Song, private musicians: Musician[]) { }
 

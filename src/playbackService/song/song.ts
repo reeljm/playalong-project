@@ -1,9 +1,11 @@
 import { Chord } from '../theory/chord';
+import { Note } from '../theory/note';
 import { Theory } from '../theory/theory';
 import { Measure } from './measure';
 import { Section } from './section';
 
 export class Song {
+
     private name: string;
     private sectionIndex: number = 0;
     private currentSection: Section;
@@ -17,6 +19,7 @@ export class Song {
     private isOnFirstMeasureOfTune: boolean = false;
     private isLastMeasureOfTune: boolean = false;
     public runNewChorusCallback: boolean = true;
+    private displayedChordsKey: string = "C";
 
     constructor(private theory: Theory) { }
 
@@ -164,4 +167,63 @@ export class Song {
         return this.currentIteration;
     }
 
+    public transposeDisplayedChords(newKey: string) {
+        // add a step here that converts sharps to the flat enharmonic equivalent
+        const displayedChordsKeyAsNote: Note = this.theory.getNote(this.displayedChordsKey, 4);
+        const newDisplayedChordsKeyAsNote: Note = this.theory.getNoteInClosestOctave(newKey, displayedChordsKeyAsNote);
+        const transpositionDistance: number = this.theory.distanceTo(newDisplayedChordsKeyAsNote, displayedChordsKeyAsNote);
+
+        const sharpsToFlats: Map<string, string> = new Map<string, string>();
+        sharpsToFlats.set("C#", "Db");
+        sharpsToFlats.set("D#", "Eb");
+        sharpsToFlats.set("F#", "Gb");
+        sharpsToFlats.set("G#", "Ab");
+        sharpsToFlats.set("A#", "Bb");
+
+        this.sections.forEach((s: Section) => {
+            s.allMeasures.forEach((m: Measure) => {
+                m.chords.forEach((c: Chord) => {
+                    const writtenRootAsNote: Note = this.theory.getNoteInClosestOctave(c.writtenRoot, displayedChordsKeyAsNote);
+                    c.writtenRoot = this.theory.transpose(writtenRootAsNote, transpositionDistance).pitch;
+                    if (sharpsToFlats.has(c.writtenRoot)) {
+                        c.writtenRoot = sharpsToFlats.get(c.writtenRoot);
+                    }
+                });
+            });
+
+            s.allEndings.forEach((e: Measure[]) => {
+                e.forEach((m: Measure) => {
+                    const displayedChordsKeyAsNote: Note = this.theory.getNote(this.displayedChordsKey, 4);
+                    m.chords.forEach((c: Chord) => {
+                        const writtenRootAsNote: Note = this.theory.getNoteInClosestOctave(c.writtenRoot, displayedChordsKeyAsNote);
+                        c.writtenRoot = this.theory.transpose(writtenRootAsNote, transpositionDistance).pitch;
+                        if (sharpsToFlats.has(c.writtenRoot)) {
+                            c.writtenRoot = sharpsToFlats.get(c.writtenRoot);
+                        }
+                    });
+                });
+            });
+        });
+        this.displayedChordsKey = newKey;
+    }
+
+    public getMeasureByUUID(UUID: string): Measure {
+        let toReturn: Measure = null;
+        this.sections.forEach((s: Section) => {
+            s.allMeasures.forEach((m: Measure) => {
+                if (m.uniqueID === UUID) {
+                    toReturn = m;
+                }
+            });
+
+            s.allEndings.forEach((e: Measure[]) => {
+                e.forEach((m: Measure) => {
+                    if (m.uniqueID === UUID) {
+                        toReturn = m;
+                    }
+                });
+            });
+        });
+        return toReturn
+    }
 }

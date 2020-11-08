@@ -4,7 +4,6 @@
     font-size: 13px;
     height: 60px;
     margin-top: 5px;
-
 }
 
 body {
@@ -81,22 +80,7 @@ body {
     margin-left: -5px;
 }
 
-.tempo-control {
-    display: inline-block;
-    padding: 0;
-    width: 25px;
-    border-style: solid;
-    border-width: 1px;
-    height: 20px;
-    vertical-align: bottom;
-    border-color: lightgrey;
-    background-color: white;
-    color: grey;
-    padding: 0 3px 0 3px;
-    cursor: pointer;
-}
-
-.tempo-control {
+.button-control {
     display: inline-block;
     padding: 0;
     width: 25px;
@@ -118,7 +102,7 @@ body {
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
-  }
+}
 
 .increase {
     margin-left: -5px;
@@ -209,6 +193,10 @@ input[type=number] {
 }
 
 .highlighted-measure {
+    background: #9bc1ff;
+}
+
+.selected-transposing-key {
     background: #9bc1ff;
 }
 
