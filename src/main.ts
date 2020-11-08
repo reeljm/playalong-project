@@ -333,11 +333,18 @@ $(async () => {
 
     // tempo controller
     const parseTempoAndSetVal = (tempoNum: number) => {
-        if (isNaN(tempoNum) || tempoNum > 400 || tempoNum < 40) {
+        if (isNaN(tempoNum)) {
             $("#tempo").val(band.getTempo());
             return;
+        } else if (tempoNum > 400) {
+            band.setTempo(400);
+            tempoNum = 400;
+        } else if (tempoNum < 40) {
+            band.setTempo(40);
+            tempoNum = 40;
+        } else {
+            band.setTempo(tempoNum);
         }
-        band.setTempo(tempoNum);
         $("#tempo").val(tempoNum);
     };
 
@@ -435,11 +442,19 @@ $(async () => {
 
     // repeats controller
     const parseRepeatsAndSetVal = (repeatsNum: number) => {
-        if (isNaN(repeatsNum) || repeatsNum > 400 || repeatsNum < 1) {
+        if (isNaN(repeatsNum)) {
             $("#repeats").val(band.getRepeats());
             return;
+        } else if (repeatsNum > 400) {
+            band.setRepeats(400);
+            repeatsNum = 400;
+        } else if (repeatsNum < 1) {
+            band.setRepeats(1);
+            repeatsNum = 1;
+        } else {
+            band.setRepeats(repeatsNum);
         }
-        band.setRepeats(repeatsNum);
+
         $("#repeats").val(repeatsNum);
         if (band.getCurrentRepeat()+1 <= band.getRepeats()) {
             $("#current-repeat").html((band.getCurrentRepeat()+1).toString());
