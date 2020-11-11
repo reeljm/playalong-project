@@ -19,11 +19,16 @@ body {
     width: 85%;
 }
 
+#pause {
+    display: none;
+}
+
 .dropdown-content {
     position: absolute;
     background-color: #f1f1f1;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
     z-index: 1;
+    display: none;
 }
 
 .control-button {

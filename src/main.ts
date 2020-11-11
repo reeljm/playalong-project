@@ -265,6 +265,8 @@ $(async () => {
     $("#total-repeats").html(band.getRepeats().toString());
     $("#pause").hide();
     $(".dropdown-content").hide();
+    $("body").show();
+    $(".transpose-icon").show();
     $("#play").on("click", () => {
         $("#play").hide();
         $("#pause").show();
