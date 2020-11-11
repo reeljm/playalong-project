@@ -66,7 +66,7 @@ body {
 .style-container {
     display: inline-block;
     vertical-align: top;
-    margin: 0.5% 1% 0 1%;
+    margin: 0.5% 1% 0 0.5%;
 }
 
 .number-input {
@@ -198,6 +198,15 @@ input[type=number] {
 
 .selected-transposing-key {
     background: #9bc1ff;
+}
+
+.transpose-icon {
+    height: 44px;
+    margin-top: -10px;
+}
+
+.transpose-container {
+    width: 90px;
 }
 
 .section-header {
