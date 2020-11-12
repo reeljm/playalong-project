@@ -267,10 +267,12 @@ $(async () => {
     $(".dropdown-content").hide();
     $("body").show();
     $(".transpose-icon").show();
-    $("#play").on("click", () => {
+    $("#play").on("click", async () => {
         $("#play").hide();
         $("#pause").show();
-        band.play();
+        $(".lds-ellipsis").show();
+        await band.play();
+        $(".lds-ellipsis").hide();
     });
 
     $("#pause").on("click", () => {

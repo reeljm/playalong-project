@@ -16,7 +16,7 @@
 				<span title="Pause" id="pause" class="control-button">
 					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pause-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 						<path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
-						</svg>
+					</svg>
 				</span>
 				<span title="Stop" id=stop class="control-button">
 					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-stop" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +40,7 @@
 				<span title="Tempo" id="tempo-icon" class="control-icon" unselectable="on" onselectstart="return false;" onmousedown="return false;">
 					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-stopwatch" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 						<path fill-rule="evenodd" d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07A7.001 7.001 0 0 1 8 16 7 7 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3zm0 2.1a.5.5 0 0 1 .5.5V9a.5.5 0 0 1-.5.5H4.5a.5.5 0 0 1 0-1h3V5.6a.5.5 0 0 1 .5-.5z"/>
-					  </svg>
+					</svg>
 				</span>
 				<div id="tempo-dropdown" class="dropdown-content">
 					<div class="tempo-container">
@@ -84,18 +84,17 @@
 				</select>
 			</div>
 		</div>
-	<h1 class="song-name"></h2>
-	<div class="playback-info">
-		<div class="repeat-number"><b>Repeat Number:</b> <span id="current-repeat"></span> of <span id="total-repeats"></span></div>
-	</div>
-	<div class="lead-sheet"></div>
-
-	</body>
+		<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+		<h1 class="song-name"></h1>
+		<div class="playback-info">
+			<div class="repeat-number"><b>Repeat Number:</b> <span id="current-repeat"></span> of <span id="total-repeats"></span></div>
+		</div>
+		<div class="lead-sheet"></div>
+		</body>
 	<script src="./bundle.js"></script>
 	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 		crossorigin="anonymous">
-	<link rel="stylesheet"
-		href="./style.css">
+	<link rel="stylesheet" href="./style.css">
 </html>
