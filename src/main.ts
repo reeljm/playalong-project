@@ -9,6 +9,8 @@ import { BossaBasslineGenerator } from "./playbackService/musicians/bassist/boss
 import { BasslineGenerator } from "./playbackService/musicians/bassist/basslineGenerator";
 import { Piano } from "./playbackService/musicians/pianist/piano";
 import { Pianist } from "./playbackService/musicians/pianist/pianist";
+import { Metronome } from "./playbackService/musicians/metronome/metronome";
+import { MetronomeInstrument } from "./playbackService/musicians/metronome/metronomeInstrument";
 import { Musician } from "./playbackService/musicians/musician";
 import { Song } from "./playbackService/song/song";
 import { Section } from "./playbackService/song/section";
@@ -33,6 +35,7 @@ $(async () => {
     const bass: UprightBass = new UprightBass();
     const drumset: DrumSet = new DrumSet();
     const piano: Piano = new Piano();
+    const metronomeInstrument: MetronomeInstrument = new MetronomeInstrument();
     const theory: Theory = new Theory();
 
     // configure bassist
@@ -45,7 +48,9 @@ $(async () => {
 
     const drummer: Drummer = new Drummer(drumset);
     const pianist: Pianist = new Pianist(piano, theory);
-    const musicians: Musician[] = [pianist, drummer, bassist];
+    const countIn: Metronome = new Metronome(metronomeInstrument);
+    const musicians: Musician[] = [pianist, drummer, bassist, countIn];
+
 
     // get metadata for all songs:
     const prodServer: string = process.env.PLAYALONG_URL;
