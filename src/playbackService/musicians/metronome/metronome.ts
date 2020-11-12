@@ -17,7 +17,6 @@ export class Metronome implements Musician {
 
     play(currentMeasure: Measure) {
         for (let i = 0; i < currentMeasure.numberOfBeats; i++) {
-            console.log(i);
             EventBuilder.newEventBuilder()
                 .startTime(`0:${i}:0`)
                 .velocity(1)

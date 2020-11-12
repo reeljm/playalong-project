@@ -1,4 +1,5 @@
 import { Transport, Loop } from 'tone';
+import { Metronome } from '../musicians/metronome/metronome';
 import { Musician } from '../musicians/musician';
 import { Measure } from '../song/measure';
 import { Song } from '../song/song';
@@ -12,7 +13,7 @@ export class BandService {
     private newChorusCallback: Function;
     private instrumentTransposition: string = "C";
 
-    constructor(private song: Song, private musicians: Musician[]) { }
+    constructor(private song: Song, private musicians: Musician[], private metronome: Metronome) { }
 
     public setStyle(style: string) {
         this.style = style;
@@ -50,10 +51,9 @@ export class BandService {
         if (!this.initialized) {
             this.createScheduleLoop();
             await this.initialize();
-            Transport.start();
-        } else {
-            Transport.start();
         }
+        this.metronome.play(this.song.getFirstMeasure);
+        Transport.start();
     }
 
     public setTempo(tempo: number) {
@@ -85,6 +85,7 @@ export class BandService {
         for (let i = 0; i < this.musicians.length; i++) {
             await this.musicians[i].initialize();
         }
+        await this.metronome.initialize();
         this.initialized = true;
     }
 

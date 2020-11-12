@@ -49,7 +49,7 @@ $(async () => {
     const drummer: Drummer = new Drummer(drumset);
     const pianist: Pianist = new Pianist(piano, theory);
     const countIn: Metronome = new Metronome(metronomeInstrument);
-    const musicians: Musician[] = [pianist, drummer, bassist, countIn];
+    const musicians: Musician[] = [pianist, drummer, bassist];
 
 
     // get metadata for all songs:
@@ -69,7 +69,7 @@ $(async () => {
     createLeadSheet(songToPlay);
     $(`#transpose-${transposingKey}`).addClass("selected-transposing-key");
 
-    band = new Band(songToPlay, musicians);
+    band = new Band(songToPlay, musicians, countIn);
     band.setNewMeasureCallback((measure: Measure) => {
         $(".highlighted-measure").removeClass("highlighted-measure");
         if (measure && measure.nextMeasure) {

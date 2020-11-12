@@ -26,8 +26,7 @@ export class MetronomeInstrument extends Instrument {
     }
 
     play(soundName: string, startTime: number, duration?: string, velocity?: number): void {
-        console.log("click!");
-        this.sampler.triggerAttackRelease("A1", "4n");
+        this.sampler.triggerAttackRelease("A1", "4n", startTime);
     }
 
 }

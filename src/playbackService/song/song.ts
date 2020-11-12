@@ -226,4 +226,8 @@ export class Song {
         });
         return toReturn
     }
+
+    public get getFirstMeasure(): Measure {
+        return this.sections[0].allMeasures[0];
+    }
 }
