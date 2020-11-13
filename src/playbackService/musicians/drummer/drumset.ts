@@ -6,7 +6,8 @@ const fileConfig: {noteName: string} = (rawData as any);
 export enum KitPiece {
     RideCym = 'ride-cym',
     HatChick = 'hat-chick',
-    CrossStick = 'cross-stick'
+    CrossStick = 'cross-stick',
+    Bell = 'bell'
 }
 
 export class DrumSet extends Instrument {
@@ -21,6 +22,7 @@ export class DrumSet extends Instrument {
                 this.kitPiecesToNoteNames.set("rideCym", new Array() as string[]);
                 this.kitPiecesToNoteNames.set("hatChick", new Array() as string[]);
                 this.kitPiecesToNoteNames.set("crossStick", new Array() as string[]);
+                this.kitPiecesToNoteNames.set("bell", new Array() as string[]);
 
                 Object.entries(fileConfig).forEach(([noteName, path]) => {
                     if (path.includes("ride")) {
@@ -31,6 +33,9 @@ export class DrumSet extends Instrument {
                     }
                     else if (path.includes("crossStick")) {
                         this.kitPiecesToNoteNames.get("crossStick").push(noteName);
+                    }
+                    else if (path.includes("bell")) {
+                        this.kitPiecesToNoteNames.get("bell").push(noteName);
                     }
                 });
 

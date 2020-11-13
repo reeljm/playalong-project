@@ -43,6 +43,7 @@ $(async () => {
     const walkingBasslineGenerator: BasslineGenerator = new WalkingBasslineGenerator(theory);
     const bossaBasslineGenerator: BasslineGenerator = new BossaBasslineGenerator(theory);
     basslineGeneratorMap.set("bossa", bossaBasslineGenerator);
+    basslineGeneratorMap.set("mambo", bossaBasslineGenerator);
     basslineGeneratorMap.set("fourFourTime", walkingBasslineGenerator);
     const bassist: Bassist = new Bassist(bass, basslineGeneratorMap);
 
@@ -337,6 +338,11 @@ $(async () => {
 
     $("#latin").on("click", () => {
         style = "bossa";
+        band.setStyle(style);
+    });
+
+    $("#mambo").on("click", () => {
+        style = "mambo";
         band.setStyle(style);
     });
 
