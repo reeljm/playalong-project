@@ -28,8 +28,9 @@ export class Pianist implements Musician {
         for (let currentBeat = 0; currentBeat < currentMeasure.numberOfBeats; currentBeat++) {
             const currentChord: Chord = currentMeasure.chords[currentBeat];
             const isFirstBeatOfLastMeasure = !currentMeasure.nextMeasure && currentBeat === 0;
+            const isFirstBeatOfFirstMeasure = currentMeasure.originalMeasureNumber === 1 && currentBeat === 0;
             const isNewCurrentChord = !this.previousChord || !this.previousChord.equals(currentChord);
-            if (isFirstBeatOfLastMeasure || isNewCurrentChord) {
+            if (isFirstBeatOfFirstMeasure || isFirstBeatOfLastMeasure || isNewCurrentChord) {
                 const scale: Scale = this.theory.getScaleForChord(currentChord);
 
                 const voicing: Note[] = [];

@@ -1,4 +1,4 @@
-import { Panner, Sampler, Transport } from 'tone';
+import { Panner, Sampler } from 'tone';
 import { Instrument } from '../instrument';
 import rawData from '../../staticFiles/samples/metronome/config.json';
 const fileConfig = (rawData as any);
