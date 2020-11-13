@@ -17,13 +17,17 @@ export class Metronome implements Musician {
 
     play(currentMeasure: Measure) {
         for (let i = 0; i < currentMeasure.numberOfBeats; i++) {
+            let note: string = "A1";
+            if (i === 0) {
+                note = "E2";
+            }
             EventBuilder.newEventBuilder()
                 .startTime(`0:${i}:0`)
                 .velocity(1)
-                .duration("4n")
+                .duration("1n")
                 .velocityOffset(0)
                 .probability(1)
-                .note("A1")
+                .note(note)
                 .instrument(this.metronomeInstrument)
                 .create();
         }

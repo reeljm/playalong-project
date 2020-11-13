@@ -14,7 +14,7 @@ export class MetronomeInstrument extends Instrument {
                 self.sampler = new Sampler(fileConfig, () => {
                     self.sampler.volume.value = 6;
                     const panner: Panner = new Panner().toDestination();
-                    panner.pan.value = 0.75;
+                    panner.pan.value = 0;
                     self.sampler.connect(panner);
                     resolve();
                 });
@@ -26,7 +26,7 @@ export class MetronomeInstrument extends Instrument {
     }
 
     play(soundName: string, startTime: number, duration?: string, velocity?: number): void {
-        this.sampler.triggerAttackRelease("A1", "4n", startTime);
+        this.sampler.triggerAttackRelease(soundName, duration, startTime);
     }
 
 }
