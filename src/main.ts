@@ -184,6 +184,8 @@ $(async () => {
                 if (endingNumber !== 1) {
                     $(".lead-sheet").append(`<br>`)
                 }
+                let endingMeasureNumber: number = 1;
+                const endingLength: number = ending.length;
                 ending.forEach((m: Measure) => {
                     $(".lead-sheet").append(`<img class="bar-line" src="./assets/svgs/barLine.svg">`);
                     if (initialMeasure) {
@@ -251,6 +253,14 @@ $(async () => {
                     const uuid: string = createUUID();
                     m.uniqueID = uuid;
                     $(".lead-sheet").append(`<div id='${uuid}' class="measure">${chordHTML}</div>`);
+
+                    if (((measureIndex + 1) % 4) === 0 && endingMeasureNumber != endingLength) {
+                        $(".lead-sheet").append(`<img class="bar-line" src="./assets/svgs/barLine.svg">`);
+                        $(".lead-sheet").append(`<br>`);
+                    }
+                    measureIndex++;
+                    endingMeasureNumber++;
+
                 });
                 if (endingNumber !== endings.length) {
                     $(".lead-sheet").append(`<img class="bar-line" src="./assets/svgs/endRepeat.svg">`);

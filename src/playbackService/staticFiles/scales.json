@@ -539,6 +539,114 @@
         "G",
         "G#"
     ],
+    "C_halfWholeDiminished": [
+        "C",
+        "C#",
+        "D#",
+        "E",
+        "F#",
+        "G",
+        "A"
+    ],
+    "C#_halfWholeDiminished": [
+        "C#",
+        "D",
+        "E",
+        "F",
+        "G",
+        "G#",
+        "A#"
+    ],
+    "D_halfWholeDiminished": [
+        "D",
+        "D#",
+        "F",
+        "F#",
+        "G#",
+        "A",
+        "B"
+    ],
+    "D#_halfWholeDiminished": [
+        "D#",
+        "E",
+        "F#",
+        "G",
+        "A",
+        "A#",
+        "C"
+    ],
+    "E_halfWholeDiminished": [
+        "E",
+        "F",
+        "G",
+        "G#",
+        "A#",
+        "B",
+        "C#"
+    ],
+    "F_halfWholeDiminished": [
+        "F",
+        "F#",
+        "G#",
+        "A",
+        "B",
+        "C",
+        "D"
+    ],
+    "F#_halfWholeDiminished": [
+        "F#",
+        "G",
+        "A",
+        "A#",
+        "C",
+        "C#",
+        "D#"
+    ],
+    "G_halfWholeDiminished": [
+        "G",
+        "G#",
+        "A#",
+        "B",
+        "C#",
+        "D",
+        "E"
+    ],
+    "G#_halfWholeDiminished": [
+        "G#",
+        "A",
+        "B",
+        "C",
+        "D",
+        "D#",
+        "F"
+    ],
+    "A_halfWholeDiminished": [
+        "A",
+        "A#",
+        "C",
+        "C#",
+        "D#",
+        "E",
+        "F#"
+    ],
+    "A#_halfWholeDiminished": [
+        "A#",
+        "B",
+        "C#",
+        "D",
+        "E",
+        "F",
+        "G"
+    ],
+    "B_halfWholeDiminished": [
+        "B",
+        "C",
+        "D",
+        "D#",
+        "F",
+        "F#",
+        "G#"
+    ],
     "C_naturalMinor": [
         "C",
         "D",

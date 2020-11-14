@@ -7,6 +7,7 @@
         mixolydian: [2,2,1,2,2,1],
         locrian: [1,2,2,1,3,1], // used for min7b5 chords
         wholeHalfDiminished: [2,1,2,1,2,1], // used for 7b9 chords
+        halfWholeDiminished: [1,2,1,2,1,2], // used for 7#9 and dim chords
         naturalMinor: [2,1,2,2,1,2]
     };
 
