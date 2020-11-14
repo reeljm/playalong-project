@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Dynamic playalong generator written in TypeScript",
   "scripts": {
-    "createScales": "npx ts-node scripts/createScales.ts",
+    "create-scales": "npx ts-node scripts/createScales.ts",
     "build-dev": "npx webpack --config webpack.dev.js && tsc",
     "build-prod": "npx webpack --config webpack.prod.js && tsc",
     "lint": "tslint -c tslint.json -p tsconfig.json",

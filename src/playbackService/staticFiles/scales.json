@@ -107,6 +107,114 @@
         "G#",
         "A#"
     ],
+    "C_melodicMinor": [
+        "C",
+        "D",
+        "D#",
+        "F",
+        "G",
+        "G#",
+        "B"
+    ],
+    "C#_melodicMinor": [
+        "C#",
+        "D#",
+        "E",
+        "F#",
+        "G#",
+        "A",
+        "C"
+    ],
+    "D_melodicMinor": [
+        "D",
+        "E",
+        "F",
+        "G",
+        "A",
+        "A#",
+        "C#"
+    ],
+    "D#_melodicMinor": [
+        "D#",
+        "F",
+        "F#",
+        "G#",
+        "A#",
+        "B",
+        "D"
+    ],
+    "E_melodicMinor": [
+        "E",
+        "F#",
+        "G",
+        "A",
+        "B",
+        "C",
+        "D#"
+    ],
+    "F_melodicMinor": [
+        "F",
+        "G",
+        "G#",
+        "A#",
+        "C",
+        "C#",
+        "E"
+    ],
+    "F#_melodicMinor": [
+        "F#",
+        "G#",
+        "A",
+        "B",
+        "C#",
+        "D",
+        "F"
+    ],
+    "G_melodicMinor": [
+        "G",
+        "A",
+        "A#",
+        "C",
+        "D",
+        "D#",
+        "F#"
+    ],
+    "G#_melodicMinor": [
+        "G#",
+        "A#",
+        "B",
+        "C#",
+        "D#",
+        "E",
+        "G"
+    ],
+    "A_melodicMinor": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G#"
+    ],
+    "A#_melodicMinor": [
+        "A#",
+        "C",
+        "C#",
+        "D#",
+        "F",
+        "F#",
+        "A"
+    ],
+    "B_melodicMinor": [
+        "B",
+        "C#",
+        "D",
+        "E",
+        "F#",
+        "G",
+        "A#"
+    ],
     "C_dorian": [
         "C",
         "D",

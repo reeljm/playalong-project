@@ -135,6 +135,7 @@ $(async () => {
                             ["dim" ,"dim.svg"],
                             ["alt" ,"alt.svg"],
                             ["maj" ,"maj.svg"],
+                            ["Maj" ,"maj.svg"],
                             ["min" ,"min.svg"],
                             ["relative min" ,"min.svg"]
                         ]);

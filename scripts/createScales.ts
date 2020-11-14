@@ -3,6 +3,7 @@
 
     const scalesToSteps = {
         major: [2,2,1,2,2,2],
+        melodicMinor: [2,1,2,2,1,3],
         dorian: [2,1,2,2,2,1], // dorian
         mixolydian: [2,2,1,2,2,1],
         locrian: [1,2,2,1,3,1], // used for min7b5 chords
