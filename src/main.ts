@@ -356,6 +356,17 @@ $(async () => {
         band.setStyle(style);
     });
 
+    $("#style-override").on("click", function() {
+        if( $(this).is(':checked') ) {
+            $('.style-select').removeAttr('disabled');
+            band.styleOverride = true;
+        }
+        else {
+            $('.style-select').prop('disabled', 'disabled');
+            band.styleOverride = false;
+        }
+    });
+
     // tempo controller
     const parseTempoAndSetVal = (tempoNum: number) => {
         if (isNaN(tempoNum)) {

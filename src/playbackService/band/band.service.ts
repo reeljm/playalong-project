@@ -12,6 +12,7 @@ export class BandService {
     private newMeasureCallback: Function;
     private newChorusCallback: Function;
     private instrumentTransposition: string = "C";
+    public styleOverride: boolean = false;
 
     constructor(private song: Song, private musicians: Musician[], private metronome: Metronome) { }
 
@@ -111,7 +112,9 @@ export class BandService {
                 self.pause();
                 return;
             }
-            currentMeasure.style = this.style;
+            if (this.styleOverride) {
+                currentMeasure.style = this.style;
+            }
             self.musicians.forEach(musician => musician.play(currentMeasure));
             previousMeasure = currentMeasure;
         }, '1m').start(0);

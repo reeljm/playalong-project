@@ -52,7 +52,7 @@ body {
 .style-select {
     display: inline-block;
     border-color: lightgrey;
-    width: 120%;
+    width: 75px;
     height: 20px;
     border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -71,7 +71,11 @@ body {
 .style-container {
     display: inline-block;
     vertical-align: top;
-    margin: 0.5% 1% 0 0.5%;
+    width: 10%;
+}
+
+.style-override-checkbox {
+    margin: 0;
 }
 
 .number-input {
