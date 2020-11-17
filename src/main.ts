@@ -84,6 +84,8 @@ $(async () => {
 
 
     function createLeadSheet(song: Song) {
+        $("#lead-sheet").hide();
+        $(".lead-sheet").empty();
         $(".song-name").text(song.songName);
 
         function createUUID(): string {
@@ -276,6 +278,7 @@ $(async () => {
             }
             $(".lead-sheet").append(`<br>`)
         });
+        $("#lead-sheet").show();
     }
 
     $("#current-repeat").html((band.getCurrentRepeat() + 1).toString());
@@ -320,7 +323,6 @@ $(async () => {
         songToPlay.deserialize(songData);
         songToPlay.transposeDisplayedChords(transposingKey);
         band.setSong(songToPlay);
-        $(".lead-sheet").empty();
         createLeadSheet(songToPlay);
         parseRepeatsAndSetVal(band.getRepeats());
     });
@@ -337,7 +339,6 @@ $(async () => {
         songToPlay.deserialize(songData);
         songToPlay.transposeDisplayedChords(transposingKey);
         band.setSong(songToPlay);
-        $(".lead-sheet").empty();
         createLeadSheet(songToPlay);
         parseRepeatsAndSetVal(band.getRepeats());
     });
@@ -407,7 +408,6 @@ $(async () => {
         const currentMeasureUUID: string = $(".highlighted-measure").attr("id");
         const measureBeingPlayed: Measure = songToPlay.getMeasureByUUID(currentMeasureUUID);
         songToPlay.transposeDisplayedChords("Bb");
-        $(".lead-sheet").empty();
         createLeadSheet(songToPlay);
         if (measureBeingPlayed) {
             $(`#${measureBeingPlayed.uniqueID}`).addClass("highlighted-measure");
@@ -421,7 +421,6 @@ $(async () => {
         const currentMeasureUUID: string = $(".highlighted-measure").attr("id");
         const measureBeingPlayed: Measure = songToPlay.getMeasureByUUID(currentMeasureUUID);
         songToPlay.transposeDisplayedChords("C");
-        $(".lead-sheet").empty();
         createLeadSheet(songToPlay);
         if (measureBeingPlayed) {
             $(`#${measureBeingPlayed.uniqueID}`).addClass("highlighted-measure");
@@ -435,7 +434,6 @@ $(async () => {
         const currentMeasureUUID: string = $(".highlighted-measure").attr("id");
         const measureBeingPlayed: Measure = songToPlay.getMeasureByUUID(currentMeasureUUID);
         songToPlay.transposeDisplayedChords("Eb");
-        $(".lead-sheet").empty();
         createLeadSheet(songToPlay);
         if (measureBeingPlayed) {
             $(`#${measureBeingPlayed.uniqueID}`).addClass("highlighted-measure");
