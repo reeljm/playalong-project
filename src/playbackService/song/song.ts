@@ -7,6 +7,7 @@ import { Section } from './section';
 export class Song {
 
     private name: string;
+    private tempo: number;
     private sectionIndex: number = 0;
     private currentSection: Section;
     private repeatNumber: number = 0;
@@ -25,6 +26,7 @@ export class Song {
 
     public deserialize(data: any): Song {
         this.name = data.name;
+        this.tempo = data.tempo;
         this.sections = [];
         const t = this.theory;
 
@@ -152,7 +154,11 @@ export class Song {
     }
 
     public get songName(): string {
-        return this.name
+        return this.name;
+    }
+
+    public get songTempo(): number {
+        return this.tempo;
     }
 
     public setTotalIterations(iterations: number) {

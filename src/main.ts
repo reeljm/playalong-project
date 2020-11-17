@@ -66,11 +66,13 @@ $(async () => {
     let transposingKey: string = "C";
     let songToPlay: Song = new Song(theory);
     songToPlay.deserialize(songData);
+    $("#tempo").val(songToPlay.songTempo);
     songToPlay.transposeDisplayedChords(transposingKey);
     createLeadSheet(songToPlay);
     $(`#transpose-${transposingKey}`).addClass("selected-transposing-key");
 
     band = new Band(songToPlay, musicians, countIn);
+    band.setTempo(songToPlay.songTempo);
     band.setNewMeasureCallback((measure: Measure) => {
         $(".highlighted-measure").removeClass("highlighted-measure");
         if (measure && measure.nextMeasure) {
@@ -323,6 +325,8 @@ $(async () => {
         songToPlay.deserialize(songData);
         songToPlay.transposeDisplayedChords(transposingKey);
         band.setSong(songToPlay);
+        $("#tempo").val(songToPlay.songTempo);
+        band.setTempo(songToPlay.songTempo);
         createLeadSheet(songToPlay);
         parseRepeatsAndSetVal(band.getRepeats());
     });
@@ -339,6 +343,8 @@ $(async () => {
         songToPlay.deserialize(songData);
         songToPlay.transposeDisplayedChords(transposingKey);
         band.setSong(songToPlay);
+        $("#tempo").val(songToPlay.songTempo);
+        band.setTempo(songToPlay.songTempo);
         createLeadSheet(songToPlay);
         parseRepeatsAndSetVal(band.getRepeats());
     });
