@@ -114,6 +114,8 @@ export class BandService {
             }
             if (this.styleOverride) {
                 currentMeasure.style = this.style;
+            } else {
+                currentMeasure.style = currentMeasure.originalStyle;
             }
             self.musicians.forEach(musician => musician.play(currentMeasure));
             previousMeasure = currentMeasure;
