@@ -241,6 +241,7 @@ input[type=number] {
     top: 37px;
     left: 46%;
     display: none;
+    width: 0;
 }
 .lds-ellipsis div {
     position: absolute;
