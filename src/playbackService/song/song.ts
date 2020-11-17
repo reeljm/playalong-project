@@ -182,7 +182,6 @@ export class Song {
         const sharpsToFlats: Map<string, string> = new Map<string, string>();
         sharpsToFlats.set("C#", "Db");
         sharpsToFlats.set("D#", "Eb");
-        sharpsToFlats.set("F#", "Gb");
         sharpsToFlats.set("G#", "Ab");
         sharpsToFlats.set("A#", "Bb");
 

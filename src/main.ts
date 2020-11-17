@@ -70,7 +70,7 @@ $(async () => {
     songToPlay.transposeDisplayedChords(transposingKey);
     createLeadSheet(songToPlay);
     $(`#transpose-${transposingKey}`).addClass("selected-transposing-key");
-
+    $(".style-select").hide();
     band = new Band(songToPlay, musicians, countIn);
     band.setTempo(songToPlay.songTempo);
     band.setNewMeasureCallback((measure: Measure) => {
@@ -366,11 +366,11 @@ $(async () => {
 
     $("#style-override").on("click", function() {
         if( $(this).is(':checked') ) {
-            $('.style-select').removeAttr('disabled');
+            $(".style-select").show();
             band.styleOverride = true;
         }
         else {
-            $('.style-select').prop('disabled', 'disabled');
+            $(".style-select").hide();
             band.styleOverride = false;
         }
     });
