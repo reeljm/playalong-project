@@ -7,8 +7,7 @@ module.exports = merge(common, {
     devtool: 'inline-source-map',
     plugins: [
         new webpack.DefinePlugin({
-            "process.env.PLAYALONG_URL": JSON.stringify("localhost"),
-            "process.env.PLAYALONG_BACKEND_PORT": JSON.stringify("3000"),
+            "process.env.PLAYALONG_URL": JSON.stringify("localhost:3000"),
         })
     ]
 });

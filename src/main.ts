@@ -54,14 +54,13 @@ $(async () => {
 
 
     // get metadata for all songs:
-    const prodServer: string = process.env.PLAYALONG_URL;
-    const prodPort: string = process.env.PLAYALONG_BACKEND_PORT;
-    const songsURI: string = `http://${prodServer}:${prodPort}/songs`;
+    const server: string = process.env.PLAYALONG_URL;
+    const songsURI: string = `http://${server}/songs`;
     const songsMetadata: any[] = await $.get(songsURI);
 
     // get first song:
     let songIndex: number = 0;
-    const songDataURI: string = `http://${prodServer}:${prodPort}/songs/id/${songsMetadata[songIndex]._id}`;
+    const songDataURI: string = `http://${server}/songs/id/${songsMetadata[songIndex]._id}`;
     const songData: any = await $.get(songDataURI);
     let transposingKey: string = "C";
     let songToPlay: Song = new Song(theory);
@@ -319,7 +318,7 @@ $(async () => {
         if (songIndex < 0) {
             songIndex = songsMetadata.length-1;
         }
-        const songDataURI: string = `http://${prodServer}:${prodPort}/songs/id/${songsMetadata[songIndex]._id}`;
+        const songDataURI: string = `http://${server}/songs/id/${songsMetadata[songIndex]._id}`;
         const songData: any = await $.get(songDataURI);
         songToPlay = new Song(theory);
         songToPlay.deserialize(songData);
@@ -337,7 +336,7 @@ $(async () => {
         band.stop();
 
         songIndex = (songIndex + 1) % songsMetadata.length;
-        const songDataURI: string = `http://${prodServer}:${prodPort}/songs/id/${songsMetadata[songIndex]._id}`;
+        const songDataURI: string = `http://${server}/songs/id/${songsMetadata[songIndex]._id}`;
         const songData: any = await $.get(songDataURI);
         songToPlay = new Song(theory);
         songToPlay.deserialize(songData);
