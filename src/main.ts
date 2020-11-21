@@ -58,6 +58,28 @@ $(async () => {
     const songsURI: string = `${server}/songs`;
     const songsMetadata: any[] = await $.get(songsURI);
 
+    // populate sidebar:
+    songsMetadata.forEach((song: any) => {
+        $(".songs-list").append(`<span id="${song._id}">${song.name}</span>`);
+        $(`#${song._id}`).on("click", async () => {
+            $("#pause").hide();
+            $("#play").show();
+            band.stop();
+
+            songIndex = songsMetadata.indexOf(song);
+            const songDataURI: string = `${server}/songs/id/${songsMetadata[songIndex]._id}`;
+            const songData: any = await $.get(songDataURI);
+            songToPlay = new Song(theory);
+            songToPlay.deserialize(songData);
+            songToPlay.transposeDisplayedChords(transposingKey);
+            band.setSong(songToPlay);
+            $("#tempo").val(songToPlay.songTempo);
+            band.setTempo(songToPlay.songTempo);
+            createLeadSheet(songToPlay);
+            parseRepeatsAndSetVal(band.getRepeats());
+        });
+    });
+
     // get first song:
     let songIndex: number = 0;
     const songDataURI: string = `${server}/songs/id/${songsMetadata[songIndex]._id}`;
@@ -288,6 +310,11 @@ $(async () => {
     $(".dropdown-content").hide();
     $("body").show();
     $(".transpose-icon").show();
+
+    $("#songs").on("click", () => {
+        $(".songs-list").toggle();
+    });
+
     $("#play").on("click", async () => {
         $("#play").hide();
         $("#pause").show();
