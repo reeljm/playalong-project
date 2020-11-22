@@ -19,10 +19,6 @@ body {
     width: 85%;
 }
 
-#pause {
-    display: none;
-}
-
 .dropdown-content {
     position: absolute;
     background-color: #f1f1f1;
@@ -47,6 +43,17 @@ body {
 
 .control-button:hover {
     color: #77abff;
+}
+
+.vl {
+    border-left: 2px;
+    border-right: 0;
+    border-top: 0;
+    border-bottom: 0;
+    border-style: solid;
+    height: 30px;
+    display: inline-block;
+    border-color: lightgray;
 }
 
 .style-select {
