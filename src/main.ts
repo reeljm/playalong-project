@@ -372,6 +372,8 @@ $(async () => {
         band.setTempo(songToPlay.songTempo);
         createLeadSheet(songToPlay);
         parseRepeatsAndSetVal(band.getRepeats());
+        $(".songs-list span").css('color', "#818181");
+        $(`#${songsMetadata[songIndex]._id}`).css('color', "#77abff");
     });
 
     $("#skip-end").on("click", async () => {
@@ -390,6 +392,8 @@ $(async () => {
         band.setTempo(songToPlay.songTempo);
         createLeadSheet(songToPlay);
         parseRepeatsAndSetVal(band.getRepeats());
+        $(".songs-list span").css('color', "#818181");
+        $(`#${songsMetadata[songIndex]._id}`).css('color', "#77abff");
     });
 
     $("#swing").on("click", () => {
