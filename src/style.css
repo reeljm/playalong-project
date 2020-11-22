@@ -311,6 +311,12 @@ input[type=number] {
     font-size: 15px;
     color: #818181;
     display: block;
+    cursor: pointer;
+}
+
+.songs-header {
+    padding-left: 10px;
+    color: white;
 }
 
 /* When you mouse over the navigation links, change their color */

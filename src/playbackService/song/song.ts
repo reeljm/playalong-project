@@ -21,12 +21,14 @@ export class Song {
     private isLastMeasureOfTune: boolean = false;
     public runNewChorusCallback: boolean = true;
     private displayedChordsKey: string = "C";
+    public id: string;
 
     constructor(private theory: Theory) { }
 
     public deserialize(data: any): Song {
         this.name = data.name;
         this.tempo = data.tempo;
+        this.id = data._id;
         this.sections = [];
         const t = this.theory;
 

@@ -64,6 +64,8 @@ $(async () => {
         $(`#${song._id}`).on("click", async () => {
             $("#pause").hide();
             $("#play").show();
+            $(".songs-list span").css('color', "#818181");
+            $(`#${song._id}`).css('color', "#77abff");
             band.stop();
 
             songIndex = songsMetadata.indexOf(song);
@@ -78,7 +80,22 @@ $(async () => {
             createLeadSheet(songToPlay);
             parseRepeatsAndSetVal(band.getRepeats());
         });
+
+        $(`#${song._id}`).on("mouseenter", () => {
+            if (songToPlay.id !== song._id) {
+                $(`#${song._id}`).css('color', "white");
+            }
+        });
+
+        $(`#${song._id}`).on("mouseleave", () => {
+            if (songToPlay.id !== song._id) {
+                $(`#${song._id}`).css('color', "#818181");
+            }
+        });
     });
+
+    // select the first song:
+    $(`#${songsMetadata[0]._id}`).css('color', "#77abff");
 
     // get first song:
     let songIndex: number = 0;
