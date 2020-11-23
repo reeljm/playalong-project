@@ -54,7 +54,7 @@ $(async () => {
 
 
     // get metadata for all songs:
-    const server: string = process.env.PLAYALONG_URL;
+    const server: string = process.env.BACKEND_API;
     const songsURI: string = `${server}/songs`;
     const songsMetadata: any[] = await $.get(songsURI);
 
@@ -332,7 +332,7 @@ $(async () => {
 
 
 
-    $("#how-to").attr("src", `https://www.youtube.com/embed/NDnc1qKgGvo?origin=${process.env.FRONTEND_ORIGIN}`)
+    $("#how-to").attr("src", `${process.env.HOW_TO_VIDEO_URL}?origin=${process.env.PLAYALONG_URL}`)
     $("#videos").on("click", () => {
         $(".video-container").toggle();
     });

@@ -1,6 +1,7 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     plugins: [
@@ -12,6 +13,9 @@ module.exports = {
               { from: 'src/favicon.ico' },
             ],
         }),
+        new webpack.DefinePlugin({
+            "process.env.HOW_TO_VIDEO_URL": JSON.stringify("https://www.youtube.com/embed/NDnc1qKgGvo"),
+        })
     ],
     entry: './src/main.ts',
     module: {

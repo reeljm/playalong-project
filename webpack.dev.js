@@ -8,7 +8,7 @@ module.exports = merge(common, {
     plugins: [
         new webpack.DefinePlugin({
             "process.env.PLAYALONG_URL": JSON.stringify("http://localhost:3000"),
-            "process.env.FRONTEND_ORIGIN": JSON.stringify("http://localhost"),
+            "process.env.BACKEND_API": JSON.stringify("http://localhost:3000"),
         })
     ]
 });
