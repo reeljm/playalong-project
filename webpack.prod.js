@@ -7,7 +7,7 @@ module.exports = merge(common, {
     plugins: [
         new webpack.DefinePlugin({
             "process.env.PLAYALONG_URL": JSON.stringify("https://www.playalong-project.com/api"),
-            "process.env.FRONTEND_ORIGIN": JSON.stringify("https://www.playalong-project.com"),
+            "process.env.FRONTEND_ORIGIN": JSON.stringify("https://playalong-project.com"),
         })
     ]
 });
