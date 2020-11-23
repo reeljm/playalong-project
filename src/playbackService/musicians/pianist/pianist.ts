@@ -36,7 +36,7 @@ export class Pianist implements Musician {
                 const voicing: Note[] = [];
                 voicing.push(this.theory.getNote(scale.pitches[2], this.currentOctave));
                 voicing.push(this.theory.getNote(scale.pitches[4], this.currentOctave));
-                voicing.push(this.theory.getNote(scale.pitches[6], this.currentOctave));
+                voicing.push(this.theory.getNote(scale.pitches[scale.pitches.length - 1], this.currentOctave));
 
                 let noteDuration: string = "2n";
                 if (isFirstBeatOfLastMeasure) {

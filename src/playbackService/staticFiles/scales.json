@@ -970,5 +970,317 @@
         "F",
         "G",
         "A"
+    ],
+    "C_wholeTone": [
+        "C",
+        "D",
+        "E",
+        "F#",
+        "G#",
+        "A#"
+    ],
+    "C#_wholeTone": [
+        "C#",
+        "D#",
+        "F",
+        "G",
+        "A",
+        "B"
+    ],
+    "D_wholeTone": [
+        "D",
+        "E",
+        "F#",
+        "G#",
+        "A#",
+        "C"
+    ],
+    "D#_wholeTone": [
+        "D#",
+        "F",
+        "G",
+        "A",
+        "B",
+        "C#"
+    ],
+    "E_wholeTone": [
+        "E",
+        "F#",
+        "G#",
+        "A#",
+        "C",
+        "D"
+    ],
+    "F_wholeTone": [
+        "F",
+        "G",
+        "A",
+        "B",
+        "C#",
+        "D#"
+    ],
+    "F#_wholeTone": [
+        "F#",
+        "G#",
+        "A#",
+        "C",
+        "D",
+        "E"
+    ],
+    "G_wholeTone": [
+        "G",
+        "A",
+        "B",
+        "C#",
+        "D#",
+        "F"
+    ],
+    "G#_wholeTone": [
+        "G#",
+        "A#",
+        "C",
+        "D",
+        "E",
+        "F#"
+    ],
+    "A_wholeTone": [
+        "A",
+        "B",
+        "C#",
+        "D#",
+        "F",
+        "G"
+    ],
+    "A#_wholeTone": [
+        "A#",
+        "C",
+        "D",
+        "E",
+        "F#",
+        "G#"
+    ],
+    "B_wholeTone": [
+        "B",
+        "C#",
+        "D#",
+        "F",
+        "G",
+        "A"
+    ],
+    "C_lydianAugmented": [
+        "C",
+        "D",
+        "E",
+        "F#",
+        "G#",
+        "A",
+        "B"
+    ],
+    "C#_lydianAugmented": [
+        "C#",
+        "D#",
+        "F",
+        "G",
+        "A",
+        "A#",
+        "C"
+    ],
+    "D_lydianAugmented": [
+        "D",
+        "E",
+        "F#",
+        "G#",
+        "A#",
+        "B",
+        "C#"
+    ],
+    "D#_lydianAugmented": [
+        "D#",
+        "F",
+        "G",
+        "A",
+        "B",
+        "C",
+        "D"
+    ],
+    "E_lydianAugmented": [
+        "E",
+        "F#",
+        "G#",
+        "A#",
+        "C",
+        "C#",
+        "D#"
+    ],
+    "F_lydianAugmented": [
+        "F",
+        "G",
+        "A",
+        "B",
+        "C#",
+        "D",
+        "E"
+    ],
+    "F#_lydianAugmented": [
+        "F#",
+        "G#",
+        "A#",
+        "C",
+        "D",
+        "D#",
+        "F"
+    ],
+    "G_lydianAugmented": [
+        "G",
+        "A",
+        "B",
+        "C#",
+        "D#",
+        "E",
+        "F#"
+    ],
+    "G#_lydianAugmented": [
+        "G#",
+        "A#",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G"
+    ],
+    "A_lydianAugmented": [
+        "A",
+        "B",
+        "C#",
+        "D#",
+        "F",
+        "F#",
+        "G#"
+    ],
+    "A#_lydianAugmented": [
+        "A#",
+        "C",
+        "D",
+        "E",
+        "F#",
+        "G",
+        "A"
+    ],
+    "B_lydianAugmented": [
+        "B",
+        "C#",
+        "D#",
+        "F",
+        "G",
+        "G#",
+        "A#"
+    ],
+    "C_lydian": [
+        "C",
+        "D",
+        "E",
+        "F#",
+        "G",
+        "A",
+        "B"
+    ],
+    "C#_lydian": [
+        "C#",
+        "D#",
+        "F",
+        "G",
+        "G#",
+        "A#",
+        "C"
+    ],
+    "D_lydian": [
+        "D",
+        "E",
+        "F#",
+        "G#",
+        "A",
+        "B",
+        "C#"
+    ],
+    "D#_lydian": [
+        "D#",
+        "F",
+        "G",
+        "A",
+        "A#",
+        "C",
+        "D"
+    ],
+    "E_lydian": [
+        "E",
+        "F#",
+        "G#",
+        "A#",
+        "B",
+        "C#",
+        "D#"
+    ],
+    "F_lydian": [
+        "F",
+        "G",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+    ],
+    "F#_lydian": [
+        "F#",
+        "G#",
+        "A#",
+        "C",
+        "C#",
+        "D#",
+        "F"
+    ],
+    "G_lydian": [
+        "G",
+        "A",
+        "B",
+        "C#",
+        "D",
+        "E",
+        "F#"
+    ],
+    "G#_lydian": [
+        "G#",
+        "A#",
+        "C",
+        "D",
+        "D#",
+        "F",
+        "G"
+    ],
+    "A_lydian": [
+        "A",
+        "B",
+        "C#",
+        "D#",
+        "E",
+        "F#",
+        "G#"
+    ],
+    "A#_lydian": [
+        "A#",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "A"
+    ],
+    "B_lydian": [
+        "B",
+        "C#",
+        "D#",
+        "F",
+        "F#",
+        "G#",
+        "A#"
     ]
 }
