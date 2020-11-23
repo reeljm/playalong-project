@@ -14,6 +14,7 @@
         wholeTone:              [2,2,2,2,2],    // used for 7#5
         lydianAugmented:        [2,2,2,2,1,2],  // used for maj7#5
         lydian:                 [2,2,2,1,2,2],  // used for maj7#11
+        lydianDominant:         [2,2,2,1,2,1],  // used for 7#11
     };
 
     const notes = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];

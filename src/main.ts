@@ -172,6 +172,7 @@ $(async () => {
                             ["G", "G.svg"],
                             ["#", "sharp.svg"],
                             ["b", "flat.svg"],
+                            ["1", "1.svg"],
                             ["5" ,"5.svg"],
                             ["7" ,"7.svg"],
                             ["9" ,"9.svg"],
@@ -193,15 +194,20 @@ $(async () => {
 
                         let type = c.type;
                         while (type.length > 0) {
+                            let replaced: boolean = false;
                             for (const entry of Array.from(svgMap.entries())) {
                                 const key: string = entry[0];
                                 const value: string = entry[1];
 
-                                if (type.indexOf(key) === 0) {
+                                if (type.startsWith(key)) {
                                     chordHTML += `<img class="chord-symbol" src="./assets/svgs/${value}">`;
                                     type = type.replace(key, "");
-                                    continue;
+                                    replaced = true;
                                 }
+                                }
+                            if (!replaced) {
+                                console.log("unable to find symbol for chord", c.type);
+                                break;
                             }
                         }
                         chordHTML +=`</div>`
@@ -259,6 +265,7 @@ $(async () => {
                                 ["G", "G.svg"],
                                 ["#", "sharp.svg"],
                                 ["b", "flat.svg"],
+                                ["1" ,"1.svg"],
                                 ["5" ,"5.svg"],
                                 ["7" ,"7.svg"],
                                 ["9" ,"9.svg"],
@@ -279,15 +286,20 @@ $(async () => {
 
                             let type = c.type;
                             while (type.length > 0) {
+                                let replaced: boolean = false;
                                 for (const entry of Array.from(svgMap.entries())) {
                                     const key: string = entry[0];
                                     const value: string = entry[1];
 
-                                    if (type.indexOf(key) === 0) {
+                                    if (type.startsWith(key)) {
                                         chordHTML += `<img class="chord-symbol" src="./assets/svgs/${value}">`;
                                         type = type.replace(key, "");
-                                        continue;
+                                        replaced = true;
                                     }
+                                    }
+                                if (!replaced) {
+                                    console.log("unable to find symbol for chord", c.type);
+                                    break;
                                 }
                             }
                             chordHTML+=`</div>`

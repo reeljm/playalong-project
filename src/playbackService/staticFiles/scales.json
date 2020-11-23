@@ -1282,5 +1282,113 @@
         "F#",
         "G#",
         "A#"
+    ],
+    "C_lydianDominant": [
+        "C",
+        "D",
+        "E",
+        "F#",
+        "G",
+        "A",
+        "A#"
+    ],
+    "C#_lydianDominant": [
+        "C#",
+        "D#",
+        "F",
+        "G",
+        "G#",
+        "A#",
+        "B"
+    ],
+    "D_lydianDominant": [
+        "D",
+        "E",
+        "F#",
+        "G#",
+        "A",
+        "B",
+        "C"
+    ],
+    "D#_lydianDominant": [
+        "D#",
+        "F",
+        "G",
+        "A",
+        "A#",
+        "C",
+        "C#"
+    ],
+    "E_lydianDominant": [
+        "E",
+        "F#",
+        "G#",
+        "A#",
+        "B",
+        "C#",
+        "D"
+    ],
+    "F_lydianDominant": [
+        "F",
+        "G",
+        "A",
+        "B",
+        "C",
+        "D",
+        "D#"
+    ],
+    "F#_lydianDominant": [
+        "F#",
+        "G#",
+        "A#",
+        "C",
+        "C#",
+        "D#",
+        "E"
+    ],
+    "G_lydianDominant": [
+        "G",
+        "A",
+        "B",
+        "C#",
+        "D",
+        "E",
+        "F"
+    ],
+    "G#_lydianDominant": [
+        "G#",
+        "A#",
+        "C",
+        "D",
+        "D#",
+        "F",
+        "F#"
+    ],
+    "A_lydianDominant": [
+        "A",
+        "B",
+        "C#",
+        "D#",
+        "E",
+        "F#",
+        "G"
+    ],
+    "A#_lydianDominant": [
+        "A#",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "G#"
+    ],
+    "B_lydianDominant": [
+        "B",
+        "C#",
+        "D#",
+        "F",
+        "F#",
+        "G#",
+        "A"
     ]
 }
