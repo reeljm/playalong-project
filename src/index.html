@@ -11,6 +11,12 @@
 		</div>
 		<div id="header">
 			<div class="playback-container" unselectable="on" onselectstart="return false;" onmousedown="return false;">
+				<span title="Videos" id="videos" class="control-button">
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z"/>
+						<circle cx="8" cy="4.5" r="1"/>
+					</svg>
+				</span>
 				<span title="List of Songs" id="songs" class="control-button">
 					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 						<path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
@@ -99,16 +105,19 @@
 				</select>
 			</div>
 		</div>
+		<div class="video-container">
+			<iframe id="how-to" width="560" height="315" src="https://www.youtube.com/embed/NDnc1qKgGvo?origin=http://localhost" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div>
 		<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 		<h1 class="song-name"></h1>
 		<div class="playback-info">
 			<div class="repeat-number"><b>Repeat Number:</b> <span id="current-repeat"></span> of <span id="total-repeats"></span></div>
 		</div>
 		<div class="lead-sheet"></div>
-		</body>
+	</body>
 	<script src="./bundle.js"></script>
 	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 		crossorigin="anonymous">
 	<link rel="stylesheet" href="./style.css">

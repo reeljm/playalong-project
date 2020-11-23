@@ -238,6 +238,15 @@ input[type=number] {
     height: 80px;
 }
 
+.video-container {
+    text-align: center;
+}
+
+.video-container iframe {
+    display: inline-block;
+    margin: 20px 40px 50px 40px;
+}
+
 /* spinner */
 .lds-ellipsis {
     position: relative;

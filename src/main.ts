@@ -109,6 +109,7 @@ $(async () => {
     createLeadSheet(songToPlay);
     $(`#transpose-${transposingKey}`).addClass("selected-transposing-key");
     $(".style-select").hide();
+    $(".video-container").hide();
     band = new Band(songToPlay, musicians, countIn);
     band.setTempo(songToPlay.songTempo);
     band.setNewMeasureCallback((measure: Measure) => {
@@ -327,6 +328,14 @@ $(async () => {
     $(".dropdown-content").hide();
     $("body").show();
     $(".transpose-icon").show();
+
+
+
+
+    $("#how-to").attr("src", `https://www.youtube.com/embed/NDnc1qKgGvo?origin=${process.env.FRONTEND_ORIGIN}`)
+    $("#videos").on("click", () => {
+        $(".video-container").toggle();
+    });
 
     $("#songs").on("click", () => {
         $(".songs-list").toggle();
