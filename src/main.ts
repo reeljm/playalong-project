@@ -94,6 +94,12 @@ $(async () => {
         });
     });
 
+    // show info suggestion if user has not visited the site before:
+    const viewedVideos: boolean = localStorage.getItem("viewedVideos")==="true";
+    if (viewedVideos) {
+        $("#info-dropdown-message").hide();
+    }
+
     // select the first song:
     $(`#${songsMetadata[0]._id}`).css('color', "#77abff");
 
@@ -347,6 +353,8 @@ $(async () => {
     $("#how-to").attr("src", `${process.env.HOW_TO_VIDEO_URL}?origin=${process.env.PLAYALONG_URL}`)
     $("#videos").on("click", () => {
         $(".video-container").toggle();
+        localStorage.setItem("viewedVideos", "true");
+        $("#info-dropdown-message").hide();
     });
 
     $("#songs").on("click", () => {
