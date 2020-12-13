@@ -200,9 +200,9 @@ export class Song {
 
             s.allEndings.forEach((e: Measure[]) => {
                 e.forEach((m: Measure) => {
-                    const displayedChordsKeyAsNote: Note = this.theory.getNote(this.displayedChordsKey, 4);
+                    const updatedDisplayedChordsKeyAsNote: Note = this.theory.getNote(this.displayedChordsKey, 4);
                     m.chords.forEach((c: Chord) => {
-                        const writtenRootAsNote: Note = this.theory.getNoteInClosestOctave(c.writtenRoot, displayedChordsKeyAsNote);
+                        const writtenRootAsNote: Note = this.theory.getNoteInClosestOctave(c.writtenRoot, updatedDisplayedChordsKeyAsNote);
                         c.writtenRoot = this.theory.transpose(writtenRootAsNote, transpositionDistance).pitch;
                         if (sharpsToFlats.has(c.writtenRoot)) {
                             c.writtenRoot = sharpsToFlats.get(c.writtenRoot);

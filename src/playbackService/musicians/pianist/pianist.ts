@@ -27,10 +27,21 @@ export class Pianist implements Musician {
 
         for (let currentBeat = 0; currentBeat < currentMeasure.numberOfBeats; currentBeat++) {
             const currentChord: Chord = currentMeasure.chords[currentBeat];
-            const isFirstBeatOfLastMeasure = !currentMeasure.nextMeasure && currentBeat === 0;
-            const isFirstBeatOfFirstMeasure = currentMeasure.originalMeasureNumber === 1 && currentBeat === 0;
-            const isNewCurrentChord = !this.previousChord || !this.previousChord.equals(currentChord);
-            if (isFirstBeatOfFirstMeasure || isFirstBeatOfLastMeasure || isNewCurrentChord) {
+            const isFirstBeatOfLastMeasure: boolean = !currentMeasure.nextMeasure && currentBeat === 0;
+            const isNewCurrentChord: boolean = currentBeat === 0 || !this.previousChord || !this.previousChord.equals(currentChord);
+            let currentChordDuration: number = 0;
+            let lookaheadIndex: number = currentBeat;
+            while (isNewCurrentChord && lookaheadIndex < currentMeasure.numberOfBeats) {
+                const currentLookaheadChord: Chord = currentMeasure.chords[currentBeat];
+                const isDifferentChord: boolean = !currentChord.equals(currentLookaheadChord);
+                if (isDifferentChord) {
+                    break;
+                } else {
+                    currentChordDuration++;
+                }
+                lookaheadIndex++;
+            }
+            if (isFirstBeatOfLastMeasure || isNewCurrentChord) {
                 const scale: Scale = this.theory.getScaleForChord(currentChord);
 
                 const voicing: Note[] = [];
@@ -39,6 +50,16 @@ export class Pianist implements Musician {
                 voicing.push(this.theory.getNote(scale.pitches[scale.pitches.length - 1], this.currentOctave));
 
                 let noteDuration: string = "2n";
+                if (currentChordDuration === 4) {
+                    noteDuration = "1m";
+                } else if (currentChordDuration === 3) {
+                    noteDuration = "2n.";
+                } else if (currentChordDuration === 2) {
+                    noteDuration = "2n";
+                } else if (currentChordDuration === 1) {
+                    noteDuration = "4n";
+                }
+
                 if (isFirstBeatOfLastMeasure) {
                     noteDuration = "4m"
                 }

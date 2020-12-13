@@ -9,8 +9,8 @@ export class BandService {
     private style: string = 'fourFourTime';
     private initialized: boolean = false;
     private tempo: number = 120;
-    private newMeasureCallback: Function;
-    private newChorusCallback: Function;
+    private newMeasureCallback: (measure: Measure) => void;
+    private newChorusCallback: () => void;
     private instrumentTransposition: string = "C";
     public styleOverride: boolean = false;
 
@@ -20,11 +20,11 @@ export class BandService {
         this.style = style;
     }
 
-    public setNewMeasureCallback(fn: Function) {
+    public setNewMeasureCallback(fn: (measure: Measure) => void) {
         this.newMeasureCallback = fn;
     }
 
-    public setNewChorusCallback(fn: Function) {
+    public setNewChorusCallback(fn: () => void) {
         this.newChorusCallback = fn;
     }
 

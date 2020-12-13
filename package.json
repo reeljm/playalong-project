@@ -4,8 +4,8 @@
   "description": "Dynamic playalong generator written in TypeScript",
   "scripts": {
     "create-scales": "npx ts-node scripts/createScales.ts",
-    "build-dev": "npx webpack --config webpack.dev.js && tsc",
-    "build-prod": "npx webpack --config webpack.prod.js && tsc",
+    "build-dev": " rm -rf dist && npx webpack --config webpack.dev.js && tsc",
+    "build-prod": "rm -rf dist && npx webpack --config webpack.prod.js && tsc",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "start": "node src/server.js",
     "test": "nyc --reporter=html mocha -r ts-node/register test/**/*.ts"
