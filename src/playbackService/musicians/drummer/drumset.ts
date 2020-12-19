@@ -7,7 +7,10 @@ export enum KitPiece {
     RideCym = 'ride-cym',
     HatChick = 'hat-chick',
     CrossStick = 'cross-stick',
-    Bell = 'bell'
+    Bell = 'bell',
+    Snare = 'snare',
+    Kick = 'kick',
+    HighTom = 'highTom'
 }
 
 export class DrumSet extends Instrument {
@@ -23,6 +26,9 @@ export class DrumSet extends Instrument {
                 this.kitPiecesToNoteNames.set("hatChick", new Array() as string[]);
                 this.kitPiecesToNoteNames.set("crossStick", new Array() as string[]);
                 this.kitPiecesToNoteNames.set("bell", new Array() as string[]);
+                this.kitPiecesToNoteNames.set("kick", new Array() as string[]);
+                this.kitPiecesToNoteNames.set("snare", new Array() as string[]);
+                this.kitPiecesToNoteNames.set("highTom", new Array() as string[]);
 
                 Object.entries(fileConfig).forEach(([noteName, path]) => {
                     if (path.includes("ride")) {
@@ -36,6 +42,15 @@ export class DrumSet extends Instrument {
                     }
                     else if (path.includes("bell")) {
                         this.kitPiecesToNoteNames.get("bell").push(noteName);
+                    }
+                    else if (path.includes("highTom")) {
+                        this.kitPiecesToNoteNames.get("highTom").push(noteName);
+                    }
+                    else if (path.includes("snare")) {
+                        this.kitPiecesToNoteNames.get("snare").push(noteName);
+                    }
+                    else if (path.includes("kick")) {
+                        this.kitPiecesToNoteNames.get("kick").push(noteName);
                     }
                 });
 

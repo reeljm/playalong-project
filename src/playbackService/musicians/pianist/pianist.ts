@@ -6,6 +6,9 @@ import { Theory } from '../../../../src/playbackService/theory/theory';
 import { Chord } from '../../../../src/playbackService/theory/chord';
 import { Scale } from '../../../../src/playbackService/theory/scale';
 import { Note } from '../../../../src/playbackService/theory/note';
+import rawData from '../../staticFiles/patterns/piano-comping.json';
+
+const library: any[] = (rawData as any);
 
 export class Pianist implements Musician {
 
@@ -23,8 +26,6 @@ export class Pianist implements Musician {
     }
 
     play(currentMeasure: Measure) {
-        const eventParamArray: any[] = [];
-
         for (let currentBeat = 0; currentBeat < currentMeasure.numberOfBeats; currentBeat++) {
             const currentChord: Chord = currentMeasure.chords[currentBeat];
             const isFirstBeatOfLastMeasure: boolean = !currentMeasure.nextMeasure && currentBeat === 0;
@@ -32,7 +33,7 @@ export class Pianist implements Musician {
             let currentChordDuration: number = 0;
             let lookaheadIndex: number = currentBeat;
             while (isNewCurrentChord && lookaheadIndex < currentMeasure.numberOfBeats) {
-                const currentLookaheadChord: Chord = currentMeasure.chords[currentBeat];
+                const currentLookaheadChord: Chord = currentMeasure.chords[lookaheadIndex];
                 const isDifferentChord: boolean = !currentChord.equals(currentLookaheadChord);
                 if (isDifferentChord) {
                     break;
@@ -44,49 +45,31 @@ export class Pianist implements Musician {
             if (isFirstBeatOfLastMeasure || isNewCurrentChord) {
                 const scale: Scale = this.theory.getScaleForChord(currentChord);
 
-                const voicing: Note[] = [];
-                voicing.push(this.theory.getNote(scale.pitches[2], this.currentOctave));
-                voicing.push(this.theory.getNote(scale.pitches[4], this.currentOctave));
-                voicing.push(this.theory.getNote(scale.pitches[scale.pitches.length - 1], this.currentOctave));
+                const voicingNotes: Note[] = [];
+                voicingNotes.push(this.theory.getNote(scale.pitches[2], this.currentOctave));
+                voicingNotes.push(this.theory.getNote(scale.pitches[4], this.currentOctave));
+                voicingNotes.push(this.theory.getNote(scale.pitches[scale.pitches.length - 1], this.currentOctave));
 
-                let noteDuration: string = "2n";
-                if (currentChordDuration === 4) {
-                    noteDuration = "1m";
-                } else if (currentChordDuration === 3) {
-                    noteDuration = "2n.";
-                } else if (currentChordDuration === 2) {
-                    noteDuration = "2n";
-                } else if (currentChordDuration === 1) {
-                    noteDuration = "4n";
-                }
+                const filteredLibrary: any[] = library.filter(e => e.durationInBeats === currentChordDuration);
+                const compingRhythm: any[] = filteredLibrary[Math.floor(Math.random() * filteredLibrary.length)].events;
 
-                if (isFirstBeatOfLastMeasure) {
-                    noteDuration = "4m"
-                }
-                voicing.forEach(note => {
-                    eventParamArray.push({
-                        startTime: `${currentMeasure.arrangementMeasureNumber}:${currentBeat}:0`,
-                        velocity: 0.7,
-                        duration: noteDuration,
-                        velocityOffset: 0,
-                        probability: 1,
-                        note: note.toPlayableString()
+                voicingNotes.forEach((note: Note) => {
+                    compingRhythm.forEach((eventParam: any) => {
+                        let eventParamStart: number = currentBeat + Number.parseInt(eventParam.start.split(":")[0]);
+                        const secondHalf: string = eventParam.start.substring(eventParam.start.indexOf(":") + 1);
+                        EventBuilder.newEventBuilder()
+                        .startTime(`${currentMeasure.arrangementMeasureNumber}:${eventParamStart}:${secondHalf}`)
+                        .velocity(eventParam.velocity)
+                        .duration(eventParam.duration)
+                        .velocityOffset(eventParam.velocityOffset ? eventParam.velocityOffset : 0)
+                        .probability(eventParam.probability)
+                        .note(note.toPlayableString())
+                        .instrument(this.piano)
+                        .create();
                     });
                 });
             }
             this.previousChord = currentChord;
         }
-
-        eventParamArray.forEach((event: any) => {
-            EventBuilder.newEventBuilder()
-                .startTime(event.startTime)
-                .velocity(event.velocity)
-                .duration(event.duration)
-                .velocityOffset(event.velocityOffset)
-                .probability(event.probability)
-                .note(event.note)
-                .instrument(this.piano)
-                .create();
-        });
     }
 }

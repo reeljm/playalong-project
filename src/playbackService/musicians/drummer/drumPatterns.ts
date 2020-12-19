@@ -8,6 +8,9 @@ export class Parts {
     rideCym?: EventParams[];
     hatChick?: EventParams[];
     crossStick?: EventParams[];
+    highTom?: EventParams[];
+    snare?: EventParams[];
+    kick?: EventParams[];
 }
 
 export class EventParams {

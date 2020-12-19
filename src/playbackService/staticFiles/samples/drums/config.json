@@ -9,5 +9,10 @@
     "C2": "./assets/drums/crossStick_3.mp3",
     "D2": "./assets/drums/bell_1.mp3",
     "E2": "./assets/drums/bell_2.mp3",
-    "F2": "./assets/drums/bell_3.mp3"
+    "F2": "./assets/drums/bell_3.mp3",
+    "G2": "./assets/drums/kick_1.mp3",
+    "A2": "./assets/drums/snare_1.mp3",
+    "B2": "./assets/drums/snare_2.mp3",
+    "C3": "./assets/drums/highTom_1.mp3",
+    "D3": "./assets/drums/highTom_2.mp3"
 }

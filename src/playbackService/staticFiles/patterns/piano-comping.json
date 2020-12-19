@@ -1,0 +1,57 @@
+[
+    {
+        "durationInBeats": 1,
+        "events": [
+            {
+                "start": "0:0",
+                "velocity": 0.9,
+                "duration": "4n",
+                "velocityOffset":  0.1,
+                "probability": 1
+            }
+        ]
+    },
+    {
+        "durationInBeats": 4,
+        "events": [
+            {
+                "start": "0:0",
+                "velocity": 0.9,
+                "duration": "1m",
+                "velocityOffset":  0.1,
+                "probability": 1
+            }
+        ]
+    },
+    {
+        "durationInBeats": 2,
+        "events": [
+            {
+                "start": "0:0",
+                "velocity": 0.9,
+                "duration": "2n",
+                "velocityOffset":  0.1,
+                "probability": 1
+            }
+        ]
+    },
+    {
+        "durationInBeats": 2,
+        "events": [
+            {
+                "start": "0:0",
+                "velocity": 0.7,
+                "duration": "4n",
+                "velocityOffset":  0.1,
+                "probability": 1
+            },
+            {
+                "start": "0:2",
+                "velocity": 0.5,
+                "duration": "4n.",
+                "velocityOffset":  0.1,
+                "probability": 1
+            }
+        ]
+    }
+]
