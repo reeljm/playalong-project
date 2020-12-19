@@ -8,8 +8,6 @@ import { BasslineCurrentState } from './basslineCurrentState';
 
 export class WalkingBasslineGenerator extends BasslineGenerator {
 
-    private static DIFFICULT_CHORD_TYPES: string[] = ["min7b5", "dim7", "7b9"];
-
     constructor(theory: Theory) {
         super(theory);
     }
@@ -65,8 +63,6 @@ export class WalkingBasslineGenerator extends BasslineGenerator {
         params.isLastBeatOfCurrentChord = !currentChord.equals(nextChord);
         params.requireRoot = false;
 
-        const isDifficultChord = WalkingBasslineGenerator.DIFFICULT_CHORD_TYPES.includes(currentChord.type);
-
         // see if this is a special case:
         if (!basslineCurrentState.previousNoteScheduled || !nextChord) {
             // if we are starting or ending, schedule the root:
@@ -79,11 +75,6 @@ export class WalkingBasslineGenerator extends BasslineGenerator {
         } else if (currentBeat % currentMeasure.numberOfBeats === 0) {
             // this is a downbeat, schedule the root:
             params.requireRoot = true;
-        } else if (isDifficultChord) {
-            const scaleDegrees: number[] = [0, 2, 4];
-            const randomDegree = scaleDegrees[Math.floor(Math.random() * scaleDegrees.length)];
-            params.desiredScaleDegree = randomDegree;
-            params.desiredOctave = basslineCurrentState.currentOctave;
         }
     }
 }
