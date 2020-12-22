@@ -199,6 +199,12 @@
                             "probability": 1
                         },
                         {
+                            "start": "0:1",
+                            "velocity": 0.7,
+                            "velocityOffset":  0.03,
+                            "probability": 0.2
+                        },
+                        {
                             "start": "0:2",
                             "velocity": 0.8,
                             "velocityOffset":  0.03,
@@ -245,6 +251,12 @@
                             "velocity": 0.8,
                             "velocityOffset":  0.03,
                             "probability": 1
+                        },
+                        {
+                            "start": "4:1",
+                            "velocity": 0.7,
+                            "velocityOffset":  0.03,
+                            "probability": 0.2
                         },
                         {
                             "start": "4:2",
@@ -315,6 +327,50 @@
                         {
                             "start": "0:0",
                             "velocity": 1,
+                            "velocityOffset": 0.03,
+                            "probability": 0.8
+                        },
+                        {
+                            "start": "1:2",
+                            "velocity": 1,
+                            "velocityOffset": 0.03,
+                            "probability": 0.8
+                        },
+                        {
+                            "start": "2:2",
+                            "velocity": 1,
+                            "velocityOffset": 0.03,
+                            "probability": 0.3
+                        },
+                        {
+                            "start": "3:0",
+                            "velocity": 1,
+                            "velocityOffset": 0.03,
+                            "probability": 0.8
+                        },
+                        {
+                            "start": "5:0",
+                            "velocity": 1,
+                            "velocityOffset": 0.03,
+                            "probability": 0.8
+                        },
+                        {
+                            "start": "6:0",
+                            "velocity": 1,
+                            "velocityOffset": 0.03,
+                            "probability": 0.8
+                        },
+                        {
+                            "start": "7:2",
+                            "velocity": 1,
+                            "velocityOffset": 0.03,
+                            "probability": 0.8
+                        }
+                    ],
+                    "kick": [
+                        {
+                            "start": "0:0",
+                            "velocity": 1,
                             "velocityOffset": 0
                         },
                         {
@@ -323,17 +379,32 @@
                             "velocityOffset": 0
                         },
                         {
-                            "start": "3:0",
+                            "start": "2:0",
                             "velocity": 1,
                             "velocityOffset": 0
                         },
                         {
-                            "start": "5:0",
+                            "start": "3:2",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "4:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "5:2",
                             "velocity": 1,
                             "velocityOffset": 0
                         },
                         {
                             "start": "6:0",
+                            "velocity": 1,
+                            "velocityOffset": 0
+                        },
+                        {
+                            "start": "7:2",
                             "velocity": 1,
                             "velocityOffset": 0
                         }
