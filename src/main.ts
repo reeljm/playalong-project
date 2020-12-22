@@ -549,10 +549,12 @@ $(async () => {
 
     $("#tempo-icon").on("click", () =>  {
         $("#tempo-dropdown").toggle();
+        $("#tempo").trigger("focus");
     });
 
     $("#repeat-icon").on("click", () =>  {
         $("#repeat-dropdown").toggle();
+        $("#repeats").trigger("focus");
     });
 
     $("#transpose-icon").on("click", () =>  {

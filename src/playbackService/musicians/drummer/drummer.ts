@@ -53,7 +53,7 @@ export class Drummer implements Musician {
         const partsForCompingPattern: Parts = compingPatternLibrary[Math.floor(Math.random() * compingPatternLibrary.length)].parts;
 
         this.scheduleEvents(partsForCurrentStyle, currentMeasure);
-        const scheduleCompingRhythm: boolean = Math.random() < 0.6;
+        const scheduleCompingRhythm: boolean = Math.random() < 0.8;
         if (this.pattern.allowsComping && scheduleCompingRhythm) {
             this.scheduleEvents(partsForCompingPattern, currentMeasure);
         }
