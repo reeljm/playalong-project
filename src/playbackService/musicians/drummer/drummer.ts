@@ -1,11 +1,13 @@
 import { Musician } from '../musician';
-import rawData from '../../staticFiles/patterns/drums.json';
+import styleRawData from '../../staticFiles/patterns/drum-styles.json';
+import compingRawData from '../../staticFiles/patterns/drum-comping.json';
 import { DrumPattern, Parts, EventParams } from './drumPatterns';
 import { Measure } from '../../song/measure';
 import { EventBuilder } from '../../eventBuilder/eventBuilder';
 import { DrumSet } from './drumset';
 
-const library = (rawData as any);
+const styleLibrary = (styleRawData as any);
+const compingPatternLibrary = (compingRawData as any);
 
 export class Drummer implements Musician {
 
@@ -22,8 +24,8 @@ export class Drummer implements Musician {
     }
 
     initialize(): Promise<void> {
-        for (const styleName of Object.keys(library)) {
-            const timeFeels =  library[styleName];
+        for (const styleName of Object.keys(styleLibrary)) {
+            const timeFeels =  styleLibrary[styleName];
             for (const timeFeelName of Object.keys(timeFeels)) {
                 this.patternNameToPatternArray.set(timeFeelName, timeFeels[timeFeelName]);
             }
@@ -32,10 +34,6 @@ export class Drummer implements Musician {
     }
 
     public play(currentMeasure: Measure): void {
-        this.playTime(currentMeasure);
-    }
-
-    private playTime(currentMeasure: Measure): void {
         let style: string = currentMeasure.style;
         if (!currentMeasure.nextMeasure) {
             // if last measure, play a single note on beat 1
@@ -51,8 +49,19 @@ export class Drummer implements Musician {
         this.eventsToSchedule = [];
 
         this.pattern = this.getDrumPatternForStyle(style);
-        const parts: Parts = this.pattern.parts;
+        const partsForCurrentStyle: Parts = this.pattern.parts;
+        const partsForCompingPattern: Parts = compingPatternLibrary[Math.floor(Math.random() * compingPatternLibrary.length)].parts;
 
+        this.scheduleEvents(partsForCurrentStyle, currentMeasure);
+        const scheduleCompingRhythm: boolean = Math.random() < 0.6;
+        if (this.pattern.allowsComping && scheduleCompingRhythm) {
+            this.scheduleEvents(partsForCompingPattern, currentMeasure);
+        }
+
+        this.currentStyle = currentMeasure.style;
+    }
+
+    private scheduleEvents(parts: Parts, currentMeasure: Measure) {
         Object.entries(parts).forEach(([partName, eventParamsList]) => {
             eventParamsList.forEach((eventParams: EventParams) => {
                 const beatOfEvent: number = Number.parseInt(eventParams.start.split(":")[0], 0x0);
@@ -73,7 +82,6 @@ export class Drummer implements Musician {
                 }
             });
         });
-        this.currentStyle = currentMeasure.style;
     }
 
     private getDrumPatternForStyle(style: string): DrumPattern {

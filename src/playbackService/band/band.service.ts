@@ -46,7 +46,6 @@ export class BandService {
     }
 
     public async play() {
-        Transport.swing = 0.5;
         Transport.bpm.value = this.tempo;
         Transport.context.resume();
         if (!this.initialized) {

@@ -1,0 +1,113 @@
+[
+    {
+        "numberOfMeasures": 1,
+        "parts": {
+            "snare": [
+                {
+                    "start": "1:2",
+                    "velocity": 0.8,
+                    "probability": 0.8,
+                    "velocityOffset": 0.1
+                },
+                {
+                    "start": "2:2",
+                    "velocity": 0.2,
+                    "probability": 1,
+                    "velocityOffset": 0.1
+                },
+                {
+                    "start": "3:0",
+                    "velocity": 1,
+                    "probability": 1,
+                    "velocityOffset": 0.1
+                }
+            ],
+            "kick": [
+                {
+                    "start": "0:0",
+                    "velocity": 0.8,
+                    "probability": 1,
+                    "velocityOffset": 0.1
+                }
+            ]
+        }
+    },
+    {
+        "numberOfMeasures": 1,
+        "parts": {
+            "snare": [
+                {
+                    "start": "1:2",
+                    "velocity": 0.8,
+                    "probability": 1,
+                    "velocityOffset": 0.1
+                },
+                {
+                    "start": "2:2",
+                    "velocity": 0.3,
+                    "probability": 1,
+                    "velocityOffset": 0.1
+                },
+                {
+                    "start": "3:0",
+                    "velocity": 1,
+                    "probability": 1,
+                    "velocityOffset": 0.1
+                }
+            ],
+            "kick": [
+                {
+                    "start": "0:0",
+                    "velocity": 0.8,
+                    "probability": 1,
+                    "velocityOffset": 0.1
+                }
+            ]
+        }
+    },
+    {
+        "numberOfMeasures": 1,
+        "parts": {
+            "snare": [
+                {
+                    "start": "0:0",
+                    "velocity": 0.8,
+                    "probability": 1,
+                    "velocityOffset": 0.1
+                }
+            ]
+        }
+    },
+    {
+        "numberOfMeasures": 1,
+        "parts": {
+            "snare": [
+                {
+                    "start": "3:0",
+                    "velocity": 0.8,
+                    "probability": 1,
+                    "velocityOffset": 0.1
+                }
+            ]
+        }
+    },
+    {
+        "numberOfMeasures": 1,
+        "parts": {
+            "snare": [
+                {
+                    "start": "1:0",
+                    "velocity": 0.9,
+                    "probability": 0.8,
+                    "velocityOffset": 0.1
+                },
+                {
+                    "start": "1:2",
+                    "velocity": 1,
+                    "probability": 1,
+                    "velocityOffset": 0.04
+                }
+            ]
+        }
+    }
+]

@@ -59,7 +59,7 @@
             },
             {
                 "start": "0:2",
-                "velocity": 0.5,
+                "velocity": 0.65,
                 "duration": "4n.",
                 "velocityOffset":  0.1,
                 "probability": 1
