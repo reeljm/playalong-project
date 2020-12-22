@@ -39,7 +39,7 @@ export class WalkingBasslineGenerator extends BasslineGenerator {
         const down: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Down;
         if (currentBeat === 1) {
             // randomly choose to change direction:
-            const dirSwitch = Math.random() >= 0.9;
+            const dirSwitch: boolean = Math.random() >= 0.9;
             if (dirSwitch) {
                 basslineCurrentState.direction = basslineCurrentState.direction === up ? down : up;
             }

@@ -1,4 +1,3 @@
-
 import { Note } from '../../theory/note';
 import { BasslineRequestParams } from './basslineRequestParams';
 

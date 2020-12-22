@@ -15,8 +15,8 @@ export class ClosestScaleDegreeBasslineRule implements BasslineRule {
 
         let nextNote: Note = null;
         // use lastNoteScheduled, chordTone, scale, and desiredDirection to get the next note:
-        const currentOctave = params.previousNoteScheduled.octave;
-        const lastNote = params.previousNoteScheduled;
+        const currentOctave: number = params.previousNoteScheduled.octave;
+        const lastNote: Note = params.previousNoteScheduled;
 
         let possibleIntervals: number[] = null
         if (params.requireRoot) {

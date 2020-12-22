@@ -17,7 +17,7 @@ export class LastBeatOfCurrentChordBasslineRule implements BasslineRule {
             let nextNote: Note = null;
             const scale: Scale = this.theory.getScaleForChord(params.currentChord);
             const nextScale: Scale = this.theory.getScaleForChord(params.nextChord);
-            let nextDir = params.desiredDirection;
+            let nextDir: BasslineRequestParams.Dir = params.desiredDirection;
             const up: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Up;
             const down: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Down;
 
