@@ -8,27 +8,25 @@ export class BandService {
 
     private style: string = 'fourFourTime';
     private initialized: boolean = false;
-    private tempo: number = 120;
     private newMeasureCallback: (measure: Measure) => void;
     private newChorusCallback: () => void;
-    private instrumentTransposition: string = "C";
     public styleOverride: boolean = false;
 
     constructor(private song: Song, private musicians: Musician[], private metronome: Metronome) { }
 
-    public setStyle(style: string) {
+    public setStyle(style: string): void {;
         this.style = style;
     }
 
-    public setNewMeasureCallback(fn: (measure: Measure) => void) {
+    public setNewMeasureCallback(fn: (measure: Measure) => void): void {
         this.newMeasureCallback = fn;
     }
 
-    public setNewChorusCallback(fn: () => void) {
+    public setNewChorusCallback(fn: () => void): void {
         this.newChorusCallback = fn;
     }
 
-    public pause() {
+    public pause(): void {
         Transport.pause('+0');
     }
 
@@ -44,7 +42,7 @@ export class BandService {
         return Transport.state === "stopped";
     }
 
-    public stop() {
+    public stop(): void {
         Transport.stop();
         Transport.cancel(0);
         if (this.initialized) {
@@ -57,7 +55,7 @@ export class BandService {
         }
     }
 
-    public async play() {
+    public async play(): Promise<void> {
         Transport.bpm.value = this.tempo;
         Transport.context.resume();
         if (!this.initialized) {
@@ -68,24 +66,23 @@ export class BandService {
         Transport.start();
     }
 
-    public setTempo(tempo: number) {
-        this.tempo = tempo;
-        Transport.bpm.value = this.tempo;
+    public set tempo(tempo: number) {
+        Transport.bpm.value = tempo;
     }
 
-    public getTempo() {
-        return this.tempo;
+    public get tempo(): number {
+        return Math.round(Transport.bpm.value);
     }
 
     public setRepeats(tempo: number) {
         this.song.setTotalIterations(tempo);
     }
 
-    public getRepeats() {
+    public get repeats(): number {
         return this.song.getTotalIterations();
     }
 
-    public getCurrentRepeat() {
+    public get currentRepeat(): number {
         return this.song.getCurrentIteration();
     }
 
@@ -101,7 +98,7 @@ export class BandService {
         this.initialized = true;
     }
 
-    private setTransportBasedOnPreviousMeasure(previousMeasure: Measure) {
+    private setTransportBasedOnPreviousMeasure(previousMeasure: Measure): void {
         if (previousMeasure && previousMeasure.style === 'fourFourTime') {
             Transport.swing = 0.5;
         } else {
@@ -109,7 +106,7 @@ export class BandService {
         }
     }
 
-    private createScheduleLoop() {
+    private createScheduleLoop(): void {
         const self = this;
         let previousMeasure: Measure = null;
         new Loop(() => {

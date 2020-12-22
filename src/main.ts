@@ -76,9 +76,9 @@ $(async () => {
             songToPlay.transposeDisplayedChords(transposingKey);
             band.setSong(songToPlay);
             $("#tempo").val(songToPlay.songTempo);
-            band.setTempo(songToPlay.songTempo);
+            band.tempo = songToPlay.songTempo;
             createLeadSheet(songToPlay);
-            parseRepeatsAndSetVal(band.getRepeats());
+            parseRepeatsAndSetVal(band.repeats);
         });
 
         $(`#${song._id}`).on("mouseenter", () => {
@@ -117,7 +117,7 @@ $(async () => {
     $(".style-select").hide();
     $(".video-container").hide();
     band = new Band(songToPlay, musicians, countIn);
-    band.setTempo(songToPlay.songTempo);
+    band.tempo = songToPlay.songTempo;
     band.setNewMeasureCallback((measure: Measure) => {
         $(".highlighted-measure").removeClass("highlighted-measure");
         if (measure && measure.nextMeasure) {
@@ -126,7 +126,7 @@ $(async () => {
     });
 
     band.setNewChorusCallback(() => {
-        parseRepeatsAndSetVal(band.getRepeats());
+        parseRepeatsAndSetVal(band.repeats);
     });
 
 
@@ -340,8 +340,8 @@ $(async () => {
         $("#lead-sheet").show();
     }
 
-    $("#current-repeat").html((band.getCurrentRepeat() + 1).toString());
-    $("#total-repeats").html(band.getRepeats().toString());
+    $("#current-repeat").html((band.currentRepeat + 1).toString());
+    $("#total-repeats").html(band.repeats.toString());
     $("#pause").hide();
     $(".dropdown-content").hide();
     $("body").show();
@@ -418,9 +418,9 @@ $(async () => {
         songToPlay.transposeDisplayedChords(transposingKey);
         band.setSong(songToPlay);
         $("#tempo").val(songToPlay.songTempo);
-        band.setTempo(songToPlay.songTempo);
+        band.tempo = songToPlay.songTempo;
         createLeadSheet(songToPlay);
-        parseRepeatsAndSetVal(band.getRepeats());
+        parseRepeatsAndSetVal(band.repeats);
         $(".songs-list span").css('color', "#818181");
         $(`#${songsMetadata[songIndex]._id}`).css('color', "#77abff");
     });
@@ -438,9 +438,9 @@ $(async () => {
         songToPlay.transposeDisplayedChords(transposingKey);
         band.setSong(songToPlay);
         $("#tempo").val(songToPlay.songTempo);
-        band.setTempo(songToPlay.songTempo);
+        band.tempo = songToPlay.songTempo;
         createLeadSheet(songToPlay);
-        parseRepeatsAndSetVal(band.getRepeats());
+        parseRepeatsAndSetVal(band.repeats);
         $(".songs-list span").css('color', "#818181");
         $(`#${songsMetadata[songIndex]._id}`).css('color', "#77abff");
     });
@@ -474,16 +474,16 @@ $(async () => {
     // tempo controller
     const parseTempoAndSetVal = (tempoNum: number) => {
         if (isNaN(tempoNum)) {
-            $("#tempo").val(band.getTempo());
+            $("#tempo").val(band.tempo);
             return;
         } else if (tempoNum > 400) {
-            band.setTempo(400);
+            band.tempo = 400;
             tempoNum = 400;
         } else if (tempoNum < 40) {
-            band.setTempo(40);
+            band.tempo = 40;
             tempoNum = 40;
         } else {
-            band.setTempo(tempoNum);
+            band.tempo = tempoNum;
         }
         $("#tempo").val(tempoNum);
     };
@@ -494,13 +494,11 @@ $(async () => {
     });
 
     $("#tempo-increase").on("click", () => {
-        band.getTempo()
-        parseTempoAndSetVal(band.getTempo() + 1);
+        parseTempoAndSetVal(band.tempo + 1);
     });
 
     $("#tempo-decrease").on("click", () => {
-        band.getTempo()
-        parseTempoAndSetVal(band.getTempo() - 1);
+        parseTempoAndSetVal(band.tempo - 1);
     });
 
     $("#transpose-Bb").on("click", () => {
@@ -582,7 +580,7 @@ $(async () => {
     // repeats controller
     const parseRepeatsAndSetVal = (repeatsNum: number) => {
         if (isNaN(repeatsNum)) {
-            $("#repeats").val(band.getRepeats());
+            $("#repeats").val(band.repeats);
             return;
         } else if (repeatsNum > 400) {
             band.setRepeats(400);
@@ -595,10 +593,10 @@ $(async () => {
         }
 
         $("#repeats").val(repeatsNum);
-        if (band.getCurrentRepeat()+1 <= band.getRepeats()) {
-            $("#current-repeat").html((band.getCurrentRepeat()+1).toString());
+        if (band.currentRepeat + 1 <= band.repeats) {
+            $("#current-repeat").html((band.currentRepeat + 1).toString());
         }
-        $("#total-repeats").html(band.getRepeats().toString());
+        $("#total-repeats").html(band.repeats.toString());
     };
 
     $("#repeats").on("change", function() {
@@ -607,10 +605,10 @@ $(async () => {
     });
 
     $("#repeats-increase").on("click", () => {
-        parseRepeatsAndSetVal(band.getRepeats() + 1);
+        parseRepeatsAndSetVal(band.repeats + 1);
     });
 
     $("#repeats-decrease").on("click", () => {
-        parseRepeatsAndSetVal(band.getRepeats() - 1);
+        parseRepeatsAndSetVal(band.repeats - 1);
     });
 });
