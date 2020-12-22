@@ -32,6 +32,18 @@ export class BandService {
         Transport.pause('+0');
     }
 
+    public get isPlaying(): boolean {
+        return Transport.state === "started";
+    }
+
+    public get isPaused(): boolean {
+        return Transport.state === "paused";
+    }
+
+    public get isStopped(): boolean {
+        return Transport.state === "stopped";
+    }
+
     public stop() {
         Transport.stop();
         Transport.cancel(0);

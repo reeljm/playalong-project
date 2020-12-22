@@ -348,8 +348,6 @@ $(async () => {
     $(".transpose-icon").show();
 
 
-
-
     $("#how-to").attr("src", `${process.env.HOW_TO_VIDEO_URL}?origin=${process.env.PLAYALONG_URL}`)
     $("#videos").on("click", () => {
         $(".video-container").toggle();
@@ -373,6 +371,28 @@ $(async () => {
         $("#pause").hide();
         $("#play").show();
         band.pause();
+    });
+
+    $('body').on("keyup", async (e) => {
+        if(e.key === ' ') {
+            e.preventDefault();
+            if (band.isPaused || band.isStopped) {
+                $("#play").hide();
+                $("#pause").show();
+                $(".lds-ellipsis").show();
+                await band.play();
+                $(".lds-ellipsis").hide();
+            } else {
+                $("#pause").hide();
+                $("#play").show();
+                band.pause();
+            }
+        }
+    });
+    $('body').on("keydown", (e) => {
+        if(e.key === ' ') {
+            e.preventDefault();
+        }
     });
 
     $("#stop").on("click", () => {
