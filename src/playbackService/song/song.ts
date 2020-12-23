@@ -13,7 +13,7 @@ export class Song {
     private repeatNumber: number = 0;
     private currentIteration: number = 0;
     private totalIterations: number = 3;
-    private sections: Section[] = [];
+    private internalSections: Section[] = [];
     private previousMeasure: Measure;
     private measureNumber: number = 0;
     private arrangementMeasureNumber: number = 0;
@@ -29,8 +29,8 @@ export class Song {
         this.name = data.name;
         this.tempo = data.tempo;
         this.id = data._id;
-        this.sections = [];
-        const t = this.theory;
+        this.internalSections = [];
+        const t: Theory = this.theory;
 
         data.sections.forEach((s: any) => {
             const measures: Measure[] = [];
@@ -39,13 +39,12 @@ export class Song {
                 m.chords.forEach((c: any) => {
                     chords.push(t.getChord(c[0], c[1]));
                 });
-                const measure: Measure =
-                new Measure(
+                const measure: Measure = new Measure(
                     m.originalMeasureNumber,
                     m.style,
                     chords,
                     m.numberOfBeats
-                    );
+                );
                 measures.push(measure);
             });
 
@@ -58,19 +57,18 @@ export class Song {
                     m.chords.forEach((c: any) => {
                         chords.push(t.getChord(c[0], c[1]));
                     });
-                    const measure: Measure =
-                    new Measure(
+                    const measure: Measure = new Measure(
                         m.originalMeasureNumber,
                         m.style,
                         chords,
                         m.numberOfBeats
-                        );
+                    );
                     ending.push(measure);
                 });
                 endings.push(ending);
             });
             const section: Section = new Section(s.name, measures, s.repeat, s.numRepeats, endings);
-            this.sections.push(section);
+            this.internalSections.push(section);
         });
         return this;
     }
@@ -97,7 +95,7 @@ export class Song {
         }
         this.arrangementMeasureNumber++;
         if (!this.currentSection) {
-            this.currentSection = this.sections[0];
+            this.currentSection = this.internalSections[0];
             if (this.currentSection.isRepeated) {
                 this.repeatNumber = 0;
             }
@@ -117,14 +115,14 @@ export class Song {
         // if next measure is blank, set up next section:
         else if (!measure.nextMeasure) {
             this.repeatNumber = 0;
-            this.sectionIndex = (this.sectionIndex + 1) % this.sections.length;
+            this.sectionIndex = (this.sectionIndex + 1) % this.internalSections.length;
             if (this.sectionIndex === 0) {
                 this.measureNumber = 0;
                 this.currentIteration++;
                 this.repeatNumber = -1;
                 this.isLastMeasureOfTune = true;
             }
-            this.currentSection = this.sections[this.sectionIndex];
+            this.currentSection = this.internalSections[this.sectionIndex];
 
             // get next measure for the measure we are currently on:
             const nextMeasure: Measure = this.currentSection.getMeasure(this.measureNumber + 1, this.repeatNumber);
@@ -140,8 +138,8 @@ export class Song {
         return measure;
     }
 
-    public get allSections(): Section[] {
-        return this.sections;
+    public get sections(): Section[] {
+        return this.internalSections;
     }
 
     public restart(): void {
@@ -167,16 +165,15 @@ export class Song {
         this.totalIterations = iterations;
     }
 
-    public getTotalIterations() {
+    public getTotalIterations(): number {
         return this.totalIterations;
     }
 
-    public getCurrentIteration() {
+    public getCurrentIteration(): number {
         return this.currentIteration;
     }
 
-    public transposeDisplayedChords(newKey: string) {
-        // add a step here that converts sharps to the flat enharmonic equivalent
+    public transposeDisplayedChords(newKey: string): void {
         const displayedChordsKeyAsNote: Note = this.theory.getNote(this.displayedChordsKey, 4);
         const newDisplayedChordsKeyAsNote: Note = this.theory.getNoteInClosestOctave(newKey, displayedChordsKeyAsNote);
         const transpositionDistance: number = this.theory.distanceTo(newDisplayedChordsKeyAsNote, displayedChordsKeyAsNote);
@@ -187,27 +184,23 @@ export class Song {
         sharpsToFlats.set("G#", "Ab");
         sharpsToFlats.set("A#", "Bb");
 
-        this.sections.forEach((s: Section) => {
+        const transposeDisplayedChord: (c: Chord) => void = (c: Chord) => {
+            const root: Note = Note.getNote(this.theory.parseEnharmonicPitch(c.writtenRoot), 2);
+            console.log(root, c);
+            c.writtenRoot = this.theory.transpose(root, transpositionDistance).pitch;
+            if (sharpsToFlats.has(c.writtenRoot)) {
+                c.writtenRoot = sharpsToFlats.get(c.writtenRoot);
+            }
+        };
+
+        this.internalSections.forEach((s: Section) => {
             s.allMeasures.forEach((m: Measure) => {
-                m.chords.forEach((c: Chord) => {
-                    const writtenRootAsNote: Note = this.theory.getNoteInClosestOctave(c.writtenRoot, displayedChordsKeyAsNote);
-                    c.writtenRoot = this.theory.transpose(writtenRootAsNote, transpositionDistance).pitch;
-                    if (sharpsToFlats.has(c.writtenRoot)) {
-                        c.writtenRoot = sharpsToFlats.get(c.writtenRoot);
-                    }
-                });
+                m.chords.forEach(transposeDisplayedChord);
             });
 
             s.allEndings.forEach((e: Measure[]) => {
                 e.forEach((m: Measure) => {
-                    const updatedDisplayedChordsKeyAsNote: Note = this.theory.getNote(this.displayedChordsKey, 4);
-                    m.chords.forEach((c: Chord) => {
-                        const writtenRootAsNote: Note = this.theory.getNoteInClosestOctave(c.writtenRoot, updatedDisplayedChordsKeyAsNote);
-                        c.writtenRoot = this.theory.transpose(writtenRootAsNote, transpositionDistance).pitch;
-                        if (sharpsToFlats.has(c.writtenRoot)) {
-                            c.writtenRoot = sharpsToFlats.get(c.writtenRoot);
-                        }
-                    });
+                    m.chords.forEach(transposeDisplayedChord);
                 });
             });
         });
@@ -216,7 +209,7 @@ export class Song {
 
     public getMeasureByUUID(UUID: string): Measure {
         let toReturn: Measure = null;
-        this.sections.forEach((s: Section) => {
+        this.internalSections.forEach((s: Section) => {
             s.allMeasures.forEach((m: Measure) => {
                 if (m.uniqueID === UUID) {
                     toReturn = m;
@@ -235,6 +228,6 @@ export class Song {
     }
 
     public get getFirstMeasure(): Measure {
-        return this.sections[0].allMeasures[0];
+        return this.internalSections[0].allMeasures[0];
     }
 }

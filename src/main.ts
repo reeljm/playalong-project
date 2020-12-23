@@ -142,7 +142,7 @@ $(async () => {
             });
         }
 
-        const sections: Section[] = song.allSections;
+        const sections: Section[] = song.sections;
         sections.forEach((s: Section) => {
             $(".lead-sheet").append(`<h2 class="section-header">${s.sectionName}</h2>`)
             // create bar lines:

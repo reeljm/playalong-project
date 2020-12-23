@@ -9,9 +9,6 @@ export class Scale {
     root: string;
     type: string;
 
-    // no octave information is used in this class. that information is handled
-    // by the theory service.
-
     private constructor(pitches: string[], root: string, type: string) {
         this.pitches = pitches;
         this.root = root;

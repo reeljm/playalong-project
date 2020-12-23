@@ -13,7 +13,7 @@ const library: any[] = (rawData as any);
 export class Pianist implements Musician {
 
     private currentOctave: number = 3;
-    private previousChord: any;
+    private previousChord: Chord;
 
     constructor(private piano: Piano, private theory: Theory) { }
 
@@ -21,11 +21,11 @@ export class Pianist implements Musician {
         this.previousChord = null;
     }
 
-    initialize(): Promise<void> {
+    public initialize(): Promise<void> {
         return this.piano.loadInstrument();
     }
 
-    play(currentMeasure: Measure) {
+    public play(currentMeasure: Measure): void {
         for (let currentBeat = 0; currentBeat < currentMeasure.numberOfBeats; currentBeat++) {
             const currentChord: Chord = currentMeasure.chords[currentBeat];
             const isFirstBeatOfLastMeasure: boolean = !currentMeasure.nextMeasure && currentBeat === 0;
