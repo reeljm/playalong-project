@@ -1,4 +1,4 @@
-import { Parts } from "./Parts";
+import { Parts } from "./parts";
 
 export class DrumPattern {
     numberOfMeasures = 1;
