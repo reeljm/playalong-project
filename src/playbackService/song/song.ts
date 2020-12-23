@@ -186,7 +186,6 @@ export class Song {
 
         const transposeDisplayedChord: (c: Chord) => void = (c: Chord) => {
             const root: Note = Note.getNote(this.theory.parseEnharmonicPitch(c.writtenRoot), 2);
-            console.log(root, c);
             c.writtenRoot = this.theory.transpose(root, transpositionDistance).pitch;
             if (sharpsToFlats.has(c.writtenRoot)) {
                 c.writtenRoot = sharpsToFlats.get(c.writtenRoot);

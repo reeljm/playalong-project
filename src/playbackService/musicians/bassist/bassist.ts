@@ -4,6 +4,7 @@ import { UprightBass } from './uprightBass';
 import { EventBuilder } from '../../eventBuilder/eventBuilder';
 import { BasslineGenerator } from './basslineGenerator';
 import { BasslineCurrentState } from './basslineCurrentState';
+import { EventParams } from '../drummer/eventParams';
 
 export class Bassist implements Musician {
 
@@ -21,10 +22,10 @@ export class Bassist implements Musician {
 
     play(currentMeasure: Measure) {
         const generator: BasslineGenerator = this.basslineGeneratorMap.get(currentMeasure.style);
-        const bassline: any[] = generator.gerenateBasslineEventParams(currentMeasure, this.basslineCurrentState);
-        bassline.forEach((event: any) => {
+        const bassline: EventParams[] = generator.gerenateBasslineEventParams(currentMeasure, this.basslineCurrentState);
+        bassline.forEach((event: EventParams) => {
             EventBuilder.newEventBuilder()
-                .startTime(event.startTime)
+                .startTime(event.start)
                 .velocity(event.velocity)
                 .duration(event.duration)
                 .velocityOffset(event.velocityOffset)

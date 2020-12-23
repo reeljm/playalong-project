@@ -8,6 +8,7 @@ import { BasslineRule } from './basslineRule';
 import { DesiredScaleDegreeBasslineRule } from './desiredScaleDegreeBasslineRule';
 import { ClosestScaleDegreeBasslineRule } from './closestScaleDegreeBasslineRule';
 import { LastBeatOfCurrentChordBasslineRule } from './lastBeatOfCurrentChordBasslineRule';
+import { EventParams } from '../drummer/eventParams';
 
 export abstract class BasslineGenerator {
 
@@ -16,7 +17,7 @@ export abstract class BasslineGenerator {
 
     constructor(protected theory: Theory) { }
 
-    public gerenateBasslineEventParams(currentMeasure: Measure, basslineCurrentState: BasslineCurrentState): any[] {
+    public gerenateBasslineEventParams(currentMeasure: Measure, basslineCurrentState: BasslineCurrentState): EventParams[] {
         if (!basslineCurrentState.currentOctave) {
             basslineCurrentState.currentOctave = BasslineGenerator.DEFAULT_STARTING_OCTAVE;
         }
@@ -24,7 +25,7 @@ export abstract class BasslineGenerator {
             basslineCurrentState.direction = BasslineGenerator.DEFAULT_STARTING_DIRECTION;
         }
 
-        const eventParamArray: any[] = [];
+        const eventParamArray: EventParams[] = [];
 
         for (let currentBeat = 0; currentBeat < currentMeasure.numberOfBeats; currentBeat++) {
             const isLastNoteOfTune: boolean = !currentMeasure.nextMeasure;
@@ -56,7 +57,7 @@ export abstract class BasslineGenerator {
     protected abstract scheduleEventsForNote(
         currentMeasure: Measure,
         currentBeat: number,
-        eventParamArray: any[],
+        eventParamArray: EventParams[],
         noteToSchedule: Note
     ): void;
 

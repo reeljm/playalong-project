@@ -5,6 +5,7 @@ import { BasslineRequestParams } from './basslineRequestParams';
 import { Chord } from '../../theory/chord';
 import { BasslineGenerator } from './basslineGenerator';
 import { BasslineCurrentState } from './basslineCurrentState';
+import { EventParams } from '../drummer/eventParams';
 
 export class WalkingBasslineGenerator extends BasslineGenerator {
 
@@ -15,12 +16,12 @@ export class WalkingBasslineGenerator extends BasslineGenerator {
     protected scheduleEventsForNote(
         currentMeasure: Measure,
         currentBeat: number,
-        eventParamArray: any[],
+        eventParamArray: EventParams[],
         noteToSchedule: Note
     ): void {
         const noteDuration: string = "4n";
         eventParamArray.push({
-            startTime: `${currentMeasure.arrangementMeasureNumber}:${currentBeat}:0`,
+            start: `${currentMeasure.arrangementMeasureNumber}:${currentBeat}:0`,
             velocity: 0.8,
             duration: noteDuration,
             velocityOffset: 0,

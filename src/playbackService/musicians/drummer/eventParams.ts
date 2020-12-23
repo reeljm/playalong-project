@@ -4,4 +4,5 @@ export class EventParams {
     velocityOffset?: number;
     probability?: number;
     duration?: string;
+    note?: string;
 }

@@ -5,6 +5,7 @@ import { BasslineRequestParams } from './basslineRequestParams';
 import { Chord } from '../../theory/chord';
 import { BasslineGenerator } from './basslineGenerator';
 import { BasslineCurrentState } from './basslineCurrentState';
+import { EventParams } from '../drummer/eventParams';
 
 export class BossaBasslineGenerator extends BasslineGenerator {
     private playNextSkipBeat: boolean = true;
@@ -17,7 +18,7 @@ export class BossaBasslineGenerator extends BasslineGenerator {
     protected scheduleEventsForNote(
         currentMeasure: Measure,
         currentBeat: number,
-        eventParamArray: any[],
+        eventParamArray: EventParams[],
         noteToSchedule: Note
     ): void {
         const playCurrentSkipBeat: boolean = this.playNextSkipBeat;
@@ -31,7 +32,7 @@ export class BossaBasslineGenerator extends BasslineGenerator {
             const skipBeatDuration: string = "8n";
             if (this.lastMeasureUtilized && currentBeat === 0) {
                 eventParamArray.push({
-                    startTime: `${currentMeasure.arrangementMeasureNumber - 1}:${currentMeasure.numberOfBeats - 1}:2`,
+                    start: `${currentMeasure.arrangementMeasureNumber - 1}:${currentMeasure.numberOfBeats - 1}:2`,
                     velocity: 0.65,
                     duration: skipBeatDuration,
                     velocityOffset: 0,
@@ -40,7 +41,7 @@ export class BossaBasslineGenerator extends BasslineGenerator {
                 });
             } else if (currentBeat === 2) {
                 eventParamArray.push({
-                    startTime: `${currentMeasure.arrangementMeasureNumber}:${currentBeat - 1}:2`,
+                    start: `${currentMeasure.arrangementMeasureNumber}:${currentBeat - 1}:2`,
                     velocity: 0.65,
                     duration: skipBeatDuration,
                     velocityOffset: 0,
@@ -51,7 +52,7 @@ export class BossaBasslineGenerator extends BasslineGenerator {
         }
 
         eventParamArray.push({
-            startTime: `${currentMeasure.arrangementMeasureNumber}:${currentBeat}:0`,
+            start: `${currentMeasure.arrangementMeasureNumber}:${currentBeat}:0`,
             velocity: 0.8,
             duration: noteDuration,
             velocityOffset: 0,
