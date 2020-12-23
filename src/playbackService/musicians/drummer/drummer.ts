@@ -1,7 +1,9 @@
 import { Musician } from '../musician';
 import styleRawData from '../../staticFiles/patterns/drum-styles.json';
 import compingRawData from '../../staticFiles/patterns/drum-comping.json';
-import { DrumPattern, Parts, EventParams } from './drumPatterns';
+import { DrumPattern } from './drumPattern';
+import { Parts } from './parts';
+import { EventParams } from './eventParams';
 import { Measure } from '../../song/measure';
 import { EventBuilder } from '../../eventBuilder/eventBuilder';
 import { DrumSet } from './drumset';
