@@ -17,11 +17,16 @@ module.exports = {
             "process.env.HOW_TO_VIDEO_URL": JSON.stringify("https://www.youtube.com/embed/NDnc1qKgGvo"),
         })
     ],
-    entry: './src/main.ts',
+    entry: './src/main.tsx',
     module: {
         rules: [
         {
-            test: /\.tsx?$/,
+            test: /\.ts(x?)$/,
+            use: 'babel-loader',
+            exclude: /node_modules/,
+        },
+        {
+            test: /\.ts(x?)$/,
             use: 'ts-loader',
             exclude: /node_modules/,
         },

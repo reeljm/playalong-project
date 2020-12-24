@@ -17,6 +17,8 @@ import { Section } from "./playbackService/song/section";
 import { Measure } from "./playbackService/song/measure";
 import { Chord } from "./playbackService/theory/chord";
 import $ from "jquery";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 // require instrument samples:
 function requireAll(r: any) { r.keys().forEach(r); }
@@ -29,6 +31,13 @@ requireAll(require.context('./playbackService/staticFiles/svgs', true, /\.svg$/)
 
 let band: BandService = null;
 let style: string = "fourFourTime";
+
+
+const title = 'Testing React in this app...';
+ReactDOM.render(
+  <div>{title}</div>,
+  document.getElementById('app')
+);
 
 $(async () => {
     // initialize player
