@@ -19,28 +19,19 @@ import { Chord } from "./playbackService/theory/chord";
 import $ from "jquery";
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Toolbar from "./toolbar";
 
 // require instrument samples:
 function requireAll(r: any) { r.keys().forEach(r); }
 requireAll(require.context('./playbackService/staticFiles/samples/upright-bass', true, /\.mp3$/));
 requireAll(require.context('./playbackService/staticFiles/samples/piano', true, /\.mp3$/));
 requireAll(require.context('./playbackService/staticFiles/samples/drums', true, /\.mp3$/));
-
-// require svgs:
 requireAll(require.context('./playbackService/staticFiles/svgs', true, /\.svg$/));
 
-let band: BandService = null;
-let style: string = "fourFourTime";
-
-
-const title = 'Testing React in this app...';
-ReactDOM.render(
-  <div>{title}</div>,
-  document.getElementById('app')
-);
-
 $(async () => {
-    // initialize player
+    // initialize band
+    let band: BandService = null;
+    let style: string = "fourFourTime";
     const bass: UprightBass = new UprightBass();
     const drumset: DrumSet = new DrumSet();
     const piano: Piano = new Piano();
@@ -84,7 +75,6 @@ $(async () => {
             songToPlay.deserialize(songData);
             songToPlay.transposeDisplayedChords(transposingKey);
             band.setSong(songToPlay);
-            $("#tempo").val(songToPlay.songTempo);
             band.tempo = songToPlay.songTempo;
             createLeadSheet(songToPlay);
             parseRepeatsAndSetVal(band.repeats);
@@ -102,15 +92,18 @@ $(async () => {
             }
         });
     });
+    // highlight 1st song:
+    $(`#${songsMetadata[0]._id}`).css('color', "#77abff");
+
+
+
+
 
     // show info suggestion if user has not visited the site before:
     const viewedVideos: boolean = localStorage.getItem("viewedVideos")==="true";
     if (viewedVideos) {
         $("#info-dropdown-message").hide();
     }
-
-    // select the first song:
-    $(`#${songsMetadata[0]._id}`).css('color', "#77abff");
 
     // get first song:
     let songIndex: number = 0;
@@ -119,7 +112,6 @@ $(async () => {
     let transposingKey: string = "C";
     let songToPlay: Song = new Song(theory);
     songToPlay.deserialize(songData);
-    $("#tempo").val(songToPlay.songTempo);
     songToPlay.transposeDisplayedChords(transposingKey);
     createLeadSheet(songToPlay);
     $(`#transpose-${transposingKey}`).addClass("selected-transposing-key");
@@ -133,6 +125,11 @@ $(async () => {
             $(`#${measure.uniqueID}`).addClass("highlighted-measure");
         }
     });
+
+    ReactDOM.render(
+        <Toolbar band={band}/>,
+        document.getElementById('app')
+    );
 
     band.setNewChorusCallback(() => {
         parseRepeatsAndSetVal(band.repeats);
@@ -352,7 +349,7 @@ $(async () => {
     $("#current-repeat").html((band.currentRepeat + 1).toString());
     $("#total-repeats").html(band.repeats.toString());
     $("#pause").hide();
-    $(".dropdown-content").hide();
+    $("#repeat-dropdown").hide();
     $("body").show();
     $(".transpose-icon").show();
 
@@ -426,7 +423,6 @@ $(async () => {
         songToPlay.deserialize(songData);
         songToPlay.transposeDisplayedChords(transposingKey);
         band.setSong(songToPlay);
-        $("#tempo").val(songToPlay.songTempo);
         band.tempo = songToPlay.songTempo;
         createLeadSheet(songToPlay);
         parseRepeatsAndSetVal(band.repeats);
@@ -446,7 +442,6 @@ $(async () => {
         songToPlay.deserialize(songData);
         songToPlay.transposeDisplayedChords(transposingKey);
         band.setSong(songToPlay);
-        $("#tempo").val(songToPlay.songTempo);
         band.tempo = songToPlay.songTempo;
         createLeadSheet(songToPlay);
         parseRepeatsAndSetVal(band.repeats);
@@ -478,36 +473,6 @@ $(async () => {
             $(".style-select").hide();
             band.styleOverride = false;
         }
-    });
-
-    // tempo controller
-    const parseTempoAndSetVal = (tempoNum: number) => {
-        if (isNaN(tempoNum)) {
-            $("#tempo").val(band.tempo);
-            return;
-        } else if (tempoNum > 400) {
-            band.tempo = 400;
-            tempoNum = 400;
-        } else if (tempoNum < 40) {
-            band.tempo = 40;
-            tempoNum = 40;
-        } else {
-            band.tempo = tempoNum;
-        }
-        $("#tempo").val(tempoNum);
-    };
-
-    $("#tempo").on("change", function() {
-        const tempoNum: number = parseInt($(this).val().toString(), 0x0);
-        parseTempoAndSetVal(tempoNum);
-    });
-
-    $("#tempo-increase").on("click", () => {
-        parseTempoAndSetVal(band.tempo + 1);
-    });
-
-    $("#tempo-decrease").on("click", () => {
-        parseTempoAndSetVal(band.tempo - 1);
     });
 
     $("#transpose-Bb").on("click", () => {
@@ -554,11 +519,6 @@ $(async () => {
         band.setStyle(styleInput);
     });
 
-    $("#tempo-icon").on("click", () =>  {
-        $("#tempo-dropdown").toggle();
-        $("#tempo").trigger("focus");
-    });
-
     $("#repeat-icon").on("click", () =>  {
         $("#repeat-dropdown").toggle();
         $("#repeats").trigger("focus");
@@ -573,11 +533,6 @@ $(async () => {
         if(!$target.closest('#repeat-dropdown-container').length &&
         $('#repeat-dropdown').is(":visible")) {
             $('#repeat-dropdown').hide();
-        }
-
-        if(!$target.closest('#tempo-dropdown-container').length &&
-        $('#tempo-dropdown').is(":visible")) {
-            $('#tempo-dropdown').hide();
         }
 
         if(!$target.closest('#transpose-dropdown-container').length &&
