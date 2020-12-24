@@ -77,7 +77,6 @@ $(async () => {
             band.setSong(songToPlay);
             band.tempo = songToPlay.songTempo;
             createLeadSheet(songToPlay);
-            parseRepeatsAndSetVal(band.repeats);
         });
 
         $(`#${song._id}`).on("mouseenter", () => {
@@ -99,11 +98,9 @@ $(async () => {
 
 
 
-    // show info suggestion if user has not visited the site before:
-    const viewedVideos: boolean = localStorage.getItem("viewedVideos")==="true";
-    if (viewedVideos) {
-        $("#info-dropdown-message").hide();
-    }
+
+
+
 
     // get first song:
     let songIndex: number = 0;
@@ -115,8 +112,6 @@ $(async () => {
     songToPlay.transposeDisplayedChords(transposingKey);
     createLeadSheet(songToPlay);
     $(`#transpose-${transposingKey}`).addClass("selected-transposing-key");
-    $(".style-select").hide();
-    $(".video-container").hide();
     band = new Band(songToPlay, musicians, countIn);
     band.tempo = songToPlay.songTempo;
     band.setNewMeasureCallback((measure: Measure) => {
@@ -130,11 +125,6 @@ $(async () => {
         <Toolbar band={band}/>,
         document.getElementById('app')
     );
-
-    band.setNewChorusCallback(() => {
-        parseRepeatsAndSetVal(band.repeats);
-    });
-
 
     function createLeadSheet(song: Song) {
         $("#lead-sheet").hide();
@@ -346,38 +336,10 @@ $(async () => {
         $("#lead-sheet").show();
     }
 
-    $("#current-repeat").html((band.currentRepeat + 1).toString());
-    $("#total-repeats").html(band.repeats.toString());
-    $("#pause").hide();
-    $("#repeat-dropdown").hide();
-    $("body").show();
-    $(".transpose-icon").show();
-
-
-    $("#how-to").attr("src", `${process.env.HOW_TO_VIDEO_URL}?origin=${process.env.PLAYALONG_URL}`)
-    $("#videos").on("click", () => {
-        $(".video-container").toggle();
-        localStorage.setItem("viewedVideos", "true");
-        $("#info-dropdown-message").hide();
-    });
-
     $("#songs").on("click", () => {
         $(".songs-list").toggle();
     });
 
-    $("#play").on("click", async () => {
-        $("#play").hide();
-        $("#pause").show();
-        $(".lds-ellipsis").show();
-        await band.play();
-        $(".lds-ellipsis").hide();
-    });
-
-    $("#pause").on("click", () => {
-        $("#pause").hide();
-        $("#play").show();
-        band.pause();
-    });
 
     $('body').on("keyup", async (e) => {
         if(e.key === ' ') {
@@ -395,17 +357,11 @@ $(async () => {
             }
         }
     });
+
     $('body').on("keydown", (e) => {
         if(e.key === ' ') {
             e.preventDefault();
         }
-    });
-
-    $("#stop").on("click", () => {
-        $("#pause").hide();
-        $("#play").show();
-        band.stop();
-        $(".highlighted-measure").removeClass("highlighted-measure");
     });
 
     $("#skip-start").on("click", async () => {
@@ -425,7 +381,6 @@ $(async () => {
         band.setSong(songToPlay);
         band.tempo = songToPlay.songTempo;
         createLeadSheet(songToPlay);
-        parseRepeatsAndSetVal(band.repeats);
         $(".songs-list span").css('color', "#818181");
         $(`#${songsMetadata[songIndex]._id}`).css('color', "#77abff");
     });
@@ -444,35 +399,8 @@ $(async () => {
         band.setSong(songToPlay);
         band.tempo = songToPlay.songTempo;
         createLeadSheet(songToPlay);
-        parseRepeatsAndSetVal(band.repeats);
         $(".songs-list span").css('color', "#818181");
         $(`#${songsMetadata[songIndex]._id}`).css('color', "#77abff");
-    });
-
-    $("#swing").on("click", () => {
-        style = "fourFourTime";
-        band.setStyle(style);
-    });
-
-    $("#latin").on("click", () => {
-        style = "bossa";
-        band.setStyle(style);
-    });
-
-    $("#mambo").on("click", () => {
-        style = "mambo";
-        band.setStyle(style);
-    });
-
-    $("#style-override").on("click", function() {
-        if( $(this).is(':checked') ) {
-            $(".style-select").show();
-            band.styleOverride = true;
-        }
-        else {
-            $(".style-select").hide();
-            band.styleOverride = false;
-        }
     });
 
     $("#transpose-Bb").on("click", () => {
@@ -514,65 +442,4 @@ $(async () => {
         }
     });
 
-    $("#style").on("change", function() {
-        const styleInput: string = $(this).val().toString()
-        band.setStyle(styleInput);
-    });
-
-    $("#repeat-icon").on("click", () =>  {
-        $("#repeat-dropdown").toggle();
-        $("#repeats").trigger("focus");
-    });
-
-    $("#transpose-icon").on("click", () =>  {
-        $("#transpose-dropdown").toggle();
-    });
-
-    $(document).on("click", (event) => {
-        const $target = $(event.target);
-        if(!$target.closest('#repeat-dropdown-container').length &&
-        $('#repeat-dropdown').is(":visible")) {
-            $('#repeat-dropdown').hide();
-        }
-
-        if(!$target.closest('#transpose-dropdown-container').length &&
-        $('#transpose-dropdown').is(":visible")) {
-            $('#transpose-dropdown').hide();
-        }
-    });
-
-    // repeats controller
-    const parseRepeatsAndSetVal = (repeatsNum: number) => {
-        if (isNaN(repeatsNum)) {
-            $("#repeats").val(band.repeats);
-            return;
-        } else if (repeatsNum > 400) {
-            band.setRepeats(400);
-            repeatsNum = 400;
-        } else if (repeatsNum < 1) {
-            band.setRepeats(1);
-            repeatsNum = 1;
-        } else {
-            band.setRepeats(repeatsNum);
-        }
-
-        $("#repeats").val(repeatsNum);
-        if (band.currentRepeat + 1 <= band.repeats) {
-            $("#current-repeat").html((band.currentRepeat + 1).toString());
-        }
-        $("#total-repeats").html(band.repeats.toString());
-    };
-
-    $("#repeats").on("change", function() {
-        const repeatsNum: number = parseInt($(this).val().toString(), 0x0);
-        parseRepeatsAndSetVal(repeatsNum);
-    });
-
-    $("#repeats-increase").on("click", () => {
-        parseRepeatsAndSetVal(band.repeats + 1);
-    });
-
-    $("#repeats-decrease").on("click", () => {
-        parseRepeatsAndSetVal(band.repeats - 1);
-    });
 });
