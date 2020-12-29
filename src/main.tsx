@@ -94,10 +94,9 @@ $(async () => {
     // highlight 1st song:
     $(`#${songsMetadata[0]._id}`).css('color', "#77abff");
 
-
-
-
-
+    $("#songs").on("click", () => {
+        $(".songs-list").toggle();
+    });
 
 
 
@@ -122,7 +121,18 @@ $(async () => {
     });
 
     ReactDOM.render(
-        <Toolbar band={band}/>,
+        <Toolbar
+            theory={theory}
+            songsMetadata={songsMetadata}
+            band={band}
+            onSongChangeCallback={
+                async (updatedSong: Song) => {
+                    createLeadSheet(updatedSong);
+                    $(".songs-list span").css('color', "#818181");
+                    $(`#${updatedSong.id}`).css('color', "#77abff");
+                }
+            }
+        />,
         document.getElementById('app')
     );
 
@@ -336,10 +346,6 @@ $(async () => {
         $("#lead-sheet").show();
     }
 
-    $("#songs").on("click", () => {
-        $(".songs-list").toggle();
-    });
-
 
     $('body').on("keyup", async (e) => {
         if(e.key === ' ') {
@@ -362,45 +368,6 @@ $(async () => {
         if(e.key === ' ') {
             e.preventDefault();
         }
-    });
-
-    $("#skip-start").on("click", async () => {
-        $("#pause").hide();
-        $("#play").show();
-        band.stop();
-
-        songIndex = (songIndex - 1) % songsMetadata.length;
-        if (songIndex < 0) {
-            songIndex = songsMetadata.length-1;
-        }
-        const songDataURI: string = `${server}/songs/id/${songsMetadata[songIndex]._id}`;
-        const songData: any = await $.get(songDataURI);
-        songToPlay = new Song(theory);
-        songToPlay.deserialize(songData);
-        songToPlay.transposeDisplayedChords(transposingKey);
-        band.setSong(songToPlay);
-        band.tempo = songToPlay.songTempo;
-        createLeadSheet(songToPlay);
-        $(".songs-list span").css('color', "#818181");
-        $(`#${songsMetadata[songIndex]._id}`).css('color', "#77abff");
-    });
-
-    $("#skip-end").on("click", async () => {
-        $("#pause").hide();
-        $("#play").show();
-        band.stop();
-
-        songIndex = (songIndex + 1) % songsMetadata.length;
-        const songDataURI: string = `${server}/songs/id/${songsMetadata[songIndex]._id}`;
-        const songData: any = await $.get(songDataURI);
-        songToPlay = new Song(theory);
-        songToPlay.deserialize(songData);
-        songToPlay.transposeDisplayedChords(transposingKey);
-        band.setSong(songToPlay);
-        band.tempo = songToPlay.songTempo;
-        createLeadSheet(songToPlay);
-        $(".songs-list span").css('color', "#818181");
-        $(`#${songsMetadata[songIndex]._id}`).css('color', "#77abff");
     });
 
     $("#transpose-Bb").on("click", () => {

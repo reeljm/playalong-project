@@ -1,8 +1,14 @@
 import React, { ChangeEvent, Component } from 'react'
+import { BaseAudioContextSubset } from 'tone';
 import { BandService } from './playbackService/band/band.service'
+import { Song } from './playbackService/song/song';
+import { Theory } from './playbackService/theory/theory';
 
 interface IToolbarProps {
     band?: BandService;
+    onSongChangeCallback?: (song: Song) => Promise<void>;
+    songsMetadata?: any[];
+    theory?: Theory;
 }
 
 interface IToolbarState {
@@ -17,6 +23,9 @@ interface IToolbarState {
 }
 
 export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
+
+    songIndex: number = 0;
+
     constructor(props:any) {
         super(props);
         this.state = {
@@ -67,13 +76,13 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
                                 <path fillRule="evenodd" d="M3.5 5A1.5 1.5 0 0 1 5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5zM5 4.5a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 .5-.5V5a.5.5 0 0 0-.5-.5H5z"/>
                             </svg>
                         </span>
-                        <span title="Previous" id="skip-start" className="control-button">
+                        <span title="Previous" id="skip-start" className="control-button" onClick={(e) => {this.onClickSkipSong(-1)}}>
                             <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-skip-start-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fillRule="evenodd" d="M4.5 3.5A.5.5 0 0 0 4 4v8a.5.5 0 0 0 1 0V4a.5.5 0 0 0-.5-.5z"/>
                                 <path d="M4.903 8.697l6.364 3.692c.54.313 1.232-.066 1.232-.697V4.308c0-.63-.692-1.01-1.232-.696L4.903 7.304a.802.802 0 0 0 0 1.393z"/>
                             </svg>
                         </span>
-                        <span title="Next" id="skip-end" className="control-button">
+                        <span title="Next" id="skip-end" className="control-button" onClick={(e) => {this.onClickSkipSong(1)}}>
                             <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-skip-end-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fillRule="evenodd" d="M12 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
                                 <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
@@ -222,13 +231,11 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
             let updatedTempo: number = state.band.tempo;
             updatedTempo+=delta;
 
-            console.log('b', updatedTempo);
             if (!updatedTempo || updatedTempo < 0) {
                 updatedTempo = 0;
             } else if (updatedTempo > 400) {
                 updatedTempo = 400;
             }
-            console.log('a', updatedTempo);
 
             const updatedBand: BandService = state.band;
             updatedBand.tempo = updatedTempo;
@@ -286,6 +293,31 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
         this.state.band.stop();
         this.setState((state: IToolbarState) => {
             return {band: state.band};
+        });
+    }
+
+    async onClickSkipSong(delta: number) {
+        this.state.band.stop();
+        this.songIndex = (this.songIndex + delta) % this.props.songsMetadata.length;
+        if (this.songIndex < 0) {
+            this.songIndex = this.props.songsMetadata.length-1;
+        } else if (this.songIndex >= this.props.songsMetadata.length) {
+            this.songIndex = 0;
+        }
+
+        const songDataURI: string = `${process.env.BACKEND_API}/songs/id/${this.props.songsMetadata[this.songIndex]._id}`;
+        const res: Response = await fetch(songDataURI);
+        const songData: any = await res.json();
+        const songToPlay: Song = new Song(this.props.theory);
+        songToPlay.deserialize(songData);
+        songToPlay.transposeDisplayedChords("C");
+
+        this.setState((state:IToolbarState) => {
+            const band: BandService = state.band;
+            band.setSong(songToPlay);
+            band.tempo = songToPlay.songTempo;
+            this.props.onSongChangeCallback(songToPlay);
+            return {band: band};
         });
     }
 }
