@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { BandService } from './playbackService/band/band.service';
-import { Song } from './playbackService/song/song';
-import { Theory } from './playbackService/theory/theory';
+import { BandService } from '../playbackService/band/band.service';
+import { Song } from '../playbackService/song/song';
+import { Theory } from '../playbackService/theory/theory';
+import LeadSheet from './leadSheet';
 import Toolbar from "./toolbar";
 
 interface IAppProps {
@@ -81,6 +82,7 @@ export default class App extends Component<IAppProps, IAppState> {
                         <b>Repeat Number:</b>{ `${this.state.song.getCurrentIteration() + 1} of ${this.state.song.getTotalIterations()}` }
                     </div>
                 </div>
+                <LeadSheet song={this.state.song}></LeadSheet>
             </>
         )
     }
