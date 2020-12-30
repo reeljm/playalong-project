@@ -1,18 +1,26 @@
 import React, { ChangeEvent, Component } from 'react'
-import { BaseAudioContextSubset } from 'tone';
-import { BandService } from './playbackService/band/band.service'
-import { Song } from './playbackService/song/song';
-import { Theory } from './playbackService/theory/theory';
 
 interface IToolbarProps {
-    band?: BandService;
-    onSongChangeCallback?: (song: Song) => Promise<void>;
     songsMetadata?: any[];
-    theory?: Theory;
+    tempo?: number;
+    repeats?: number;
+    currentRepeat?: number;
+    transposingKey?: string;
+    isPaused?: boolean
+    isStopped?: boolean
+    onTempoChange?: (tempo: number) => void;
+    onRepeatChange?: (repeat: number) => void;
+    onPlay?: () => Promise<void>;
+    onPause?: () => void;
+    onStop?: () => void;
+    onToggleStyleOverride?: (performStyleOverride: boolean, style: string) => void;
+    onChangeStyleOverride?: (style: string) => void;
+    onSkipSong?: (delta: number) => Promise<void>;
+    onChangeTransposition?: (key: string) => void;
+    onClickSongsList?: () => void;
 }
 
 interface IToolbarState {
-    band?: BandService;
     showTempo?: boolean;
     showVideo?: boolean;
     showVideoSuggestion?: boolean;
@@ -20,23 +28,24 @@ interface IToolbarState {
     showStyleOverrideDropdown?: boolean;
     styleOverrideValue?: string;
     showRepeats?: boolean;
+    isPaused?: boolean;
+    isStopped?: boolean;
 }
 
 export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
 
-    songIndex: number = 0;
-
     constructor(props:any) {
         super(props);
         this.state = {
-            band: this.props.band,
             showTempo: false,
             showVideo: false,
             showVideoSuggestion: localStorage.getItem("viewedVideos")!="true",
             showTransposition: false,
             showStyleOverrideDropdown: false,
             styleOverrideValue: "fourFourTime",
-            showRepeats: false
+            showRepeats: false,
+            isPaused: this.props.isPaused,
+            isStopped: this.props.isStopped
         };
     }
 
@@ -55,18 +64,18 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
                                 <span className="info-dropdown-inner-content">First time here? Click above to learn more about the playalong project!</span>
                             </div>
                         </span>
-                        <span title="List of Songs" id="songs" className="control-button">
+                        <span title="List of Songs" id="songs" className="control-button" onClick={(e) => {this.onClickSongsList()}}>
                             <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fillRule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                             </svg>
                         </span>
                         <div className="vl"></div>
-                        <span title="Play" id="play" className={this.state.band.isPaused || this.state.band.isStopped ? "control-button" : "hidden"} onClick={(e) => {this.onClickPlay()}}>
+                        <span title="Play" id="play" className={this.props.isPaused || this.props.isStopped ? "control-button" : "hidden"} onClick={(e) => {this.onClickPlay()}}>
                             <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-play-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"></path>
                             </svg>
                         </span>
-                        <span title="Pause" id="pause" className={this.state.band.isPlaying ? "control-button" : "hidden"} onClick={(e) => {this.onClickPause()}}>
+                        <span title="Pause" id="pause" className={!(this.props.isPaused || this.props.isStopped) ? "control-button" : "hidden"} onClick={(e) => {this.onClickPause()}}>
                             <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-pause-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
                             </svg>
@@ -99,7 +108,7 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
                         <div id="tempo-dropdown" className={ this.state.showTempo ? "dropdown-content" : "hide" }>
                             <div className="tempo-container">
                                 <div id="tempo-decrease" className="button-control decrease" onClick={ (e)=>this.onTempoButtonClick(-1) }>-</div>
-                                <input id="tempo" className="number-input" type="number" value={ this.state.band.tempo } onChange={ (e)=>this.onTempoInputChange(e) } pattern="\d*"/>
+                                <input id="tempo" className="number-input" type="number" value={ this.props.tempo } onChange={ (e)=>this.onTempoInputChange(e) } pattern="\d*"/>
                                 <div id="tempo-increase" className="button-control increase" onClick={ (e)=>this.onTempoButtonClick(1) }>+</div>
                             </div>
                         </div>
@@ -114,7 +123,7 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
                         <div id="repeat-dropdown" className={this.state.showRepeats ? "dropdown-content" : "hide"}>
                             <div className="tempo-container">
                                 <div id="repeats-decrease" className="button-control decrease" onClick={ (e)=>this.onRepeatButtonClick(-1) }>-</div>
-                                <input id="repeats" className="number-input" type="number" value={ this.state.band.repeats } onChange={ (e)=>this.onRepeatInputChange(e) } min="0" max="400" pattern="\d*" required/>
+                                <input id="repeats" className="number-input" type="number" value={ this.props.repeats } onChange={ (e)=>this.onRepeatInputChange(e) } min="0" max="400" pattern="\d*" required/>
                                 <div id="repeats-increase" className="button-control increase" onClick={ (e)=>this.onRepeatButtonClick(1) }>+</div>
                             </div>
                         </div>
@@ -125,9 +134,9 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
                         </span>
                         <div id="transpose-dropdown" className={this.state.showTransposition ? "dropdown-content" : "hide"}>
                             <div className="transpose-container">
-                                <div id="transpose-Bb" className="button-control">Bb</div>
-                                <div id="transpose-C" className="button-control">C</div>
-                                <div id="transpose-Eb" className="button-control">Eb</div>
+                                <div id="transpose-Bb" className={this.props.transposingKey==="Bb" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("Bb")}>Bb</div>
+                                <div id="transpose-C" className={this.props.transposingKey==="C" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("C")}>C</div>
+                                <div id="transpose-Eb" className={this.props.transposingKey==="Eb" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("Eb")}>Eb</div>
                             </div>
                         </div>
                     </div>
@@ -160,28 +169,16 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
     }
 
     onRepeatButtonClick(delta: number) {
-        this.setState((state:IToolbarState) => {
-            let updatedRepeats: number = state.band.repeats;
-            updatedRepeats += delta;
-            updatedRepeats = Math.max(1, updatedRepeats, state.band.currentRepeat + 1);
-            updatedRepeats = Math.min(updatedRepeats, 400);
-
-            const band: BandService = state.band;
-            band.repeats = updatedRepeats;
-            return { band: band };
-        });
+            let updatedRepeat: number = this.props.repeats;
+            updatedRepeat += delta;
+            this.props.onRepeatChange(updatedRepeat);
     }
 
     onRepeatInputChange(e: ChangeEvent<HTMLInputElement>) {
-        this.setState((state:IToolbarState) => {
-            let updatedRepeat: number = e.target.valueAsNumber ? e.target.valueAsNumber : 0;
-            updatedRepeat = Math.max(1, updatedRepeat, state.band.currentRepeat + 1);
-            updatedRepeat = Math.min(updatedRepeat, 400);
-            const updatedBand: BandService = state.band;
-            updatedBand.repeats = updatedRepeat;
-            return { band: updatedBand };
-        });
+        let updatedRepeat: number = e.target.valueAsNumber ? e.target.valueAsNumber : 0;
+        this.props.onRepeatChange(updatedRepeat);
     }
+
 
     // Transposition handlers:
     onClickTransposition() {
@@ -190,6 +187,10 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
                 showTransposition: !state.showTransposition
             }
         });
+    }
+
+    onClickTranspositionValue(key: string) {
+        this.props.onChangeTransposition(key);
     }
 
     // Video handlers:
@@ -213,111 +214,66 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
     }
 
     onTempoInputChange(e: ChangeEvent<HTMLInputElement>) {
-        this.setState((state:IToolbarState) => {
-            let updatedTempo: number = e.target.valueAsNumber
-            if (!updatedTempo || updatedTempo < 0) {
-                updatedTempo = 0;
-            } else if (updatedTempo > 400) {
-                updatedTempo = 400;
-            }
-            const updatedBand: BandService = state.band;
-            updatedBand.tempo = updatedTempo;
-            return { band: updatedBand };
-        });
+        let updatedTempo: number = e.target.valueAsNumber
+        this.props.onTempoChange(updatedTempo);
     }
 
     onTempoButtonClick(delta: number) {
-        this.setState((state:IToolbarState) => {
-            let updatedTempo: number = state.band.tempo;
-            updatedTempo+=delta;
-
-            if (!updatedTempo || updatedTempo < 0) {
-                updatedTempo = 0;
-            } else if (updatedTempo > 400) {
-                updatedTempo = 400;
-            }
-
-            const updatedBand: BandService = state.band;
-            updatedBand.tempo = updatedTempo;
-            return { band: updatedBand };
-        });
+        let updatedTempo: number = this.props.tempo;
+        updatedTempo+=delta;
+        this.props.onTempoChange(updatedTempo);
     }
 
     // Style override handlers:
     onClickStyleOverride(e: ChangeEvent<HTMLInputElement>) {
         this.setState((state:IToolbarState) => {
-            const styleOverride: boolean = !state.showStyleOverrideDropdown;
-            const band: BandService = state.band;
-            band.styleOverride = styleOverride;
-            if (styleOverride) {
-                band.setStyle(this.state.styleOverrideValue);
-            } else {
-                band.styleOverride = false
-            }
-            return {
-                showStyleOverrideDropdown: styleOverride,
-                band: band
-            };
+            const show: boolean = !state.showStyleOverrideDropdown;
+            this.props.onToggleStyleOverride(show, state.styleOverrideValue);
+            return { showStyleOverrideDropdown: show };
         });
     }
 
     onChangeStyleOverrideSelect(e: ChangeEvent<HTMLSelectElement>) {
         if (this.state.showStyleOverrideDropdown) {
-            this.setState((state: IToolbarState) => {
-                const band: BandService = state.band;
-                band.setStyle(e.target.value);
-                return {
-                    styleOverrideValue: e.target.value,
-                    band: band
-                };
-            });
+            this.setState({ styleOverrideValue: e.target.value });
+            this.props.onChangeStyleOverride(e.target.value);
         }
     }
 
     // Player control handlers:
     async onClickPlay() {
-        await this.state.band.play();
-        this.setState((state: IToolbarState) => {
-            return {band: state.band};
-        });
+        this.setState({
+            isPaused: false,
+            isStopped: false,
+        })
+        this.props.onPlay();
     }
 
     onClickPause() {
-        this.state.band.pause();
-        this.setState((state: IToolbarState) => {
-            return {band: state.band};
-        });
+        this.setState({
+            isPaused: true,
+            isStopped: false,
+        })
+        this.props.onPause();
     }
 
     onClickStop() {
-        this.state.band.stop();
-        this.setState((state: IToolbarState) => {
-            return {band: state.band};
-        });
+        this.setState({
+            isPaused: false,
+            isStopped: true,
+        })
+        this.props.onStop();
     }
 
     async onClickSkipSong(delta: number) {
-        this.state.band.stop();
-        this.songIndex = (this.songIndex + delta) % this.props.songsMetadata.length;
-        if (this.songIndex < 0) {
-            this.songIndex = this.props.songsMetadata.length-1;
-        } else if (this.songIndex >= this.props.songsMetadata.length) {
-            this.songIndex = 0;
-        }
-
-        const songDataURI: string = `${process.env.BACKEND_API}/songs/id/${this.props.songsMetadata[this.songIndex]._id}`;
-        const res: Response = await fetch(songDataURI);
-        const songData: any = await res.json();
-        const songToPlay: Song = new Song(this.props.theory);
-        songToPlay.deserialize(songData);
-        songToPlay.transposeDisplayedChords("C");
-
-        this.setState((state:IToolbarState) => {
-            const band: BandService = state.band;
-            band.setSong(songToPlay);
-            band.tempo = songToPlay.songTempo;
-            this.props.onSongChangeCallback(songToPlay);
-            return {band: band};
+        this.props.onSkipSong(delta);
+        this.setState({
+            isPaused: false,
+            isStopped: true
         });
+    }
+
+    onClickSongsList() {
+        this.props.onClickSongsList();
     }
 }

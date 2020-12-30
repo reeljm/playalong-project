@@ -19,7 +19,7 @@ import { Chord } from "./playbackService/theory/chord";
 import $ from "jquery";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Toolbar from "./toolbar";
+import App from "./app";
 
 // require instrument samples:
 function requireAll(r: any) { r.keys().forEach(r); }
@@ -31,7 +31,6 @@ requireAll(require.context('./playbackService/staticFiles/svgs', true, /\.svg$/)
 $(async () => {
     // initialize band
     let band: BandService = null;
-    let style: string = "fourFourTime";
     const bass: UprightBass = new UprightBass();
     const drumset: DrumSet = new DrumSet();
     const piano: Piano = new Piano();
@@ -52,94 +51,52 @@ $(async () => {
     const countIn: Metronome = new Metronome(metronomeInstrument);
     const musicians: Musician[] = [pianist, drummer, bassist];
 
-
     // get metadata for all songs:
     const server: string = process.env.BACKEND_API;
     const songsURI: string = `${server}/songs`;
-    const songsMetadata: any[] = await $.get(songsURI);
-
-    // populate sidebar:
-    songsMetadata.forEach((song: any) => {
-        $(".songs-list").append(`<span id="${song._id}">${song.name}</span>`);
-        $(`#${song._id}`).on("click", async () => {
-            $("#pause").hide();
-            $("#play").show();
-            $(".songs-list span").css('color', "#818181");
-            $(`#${song._id}`).css('color', "#77abff");
-            band.stop();
-
-            songIndex = songsMetadata.indexOf(song);
-            const songDataURI: string = `${server}/songs/id/${songsMetadata[songIndex]._id}`;
-            const songData: any = await $.get(songDataURI);
-            songToPlay = new Song(theory);
-            songToPlay.deserialize(songData);
-            songToPlay.transposeDisplayedChords(transposingKey);
-            band.setSong(songToPlay);
-            band.tempo = songToPlay.songTempo;
-            createLeadSheet(songToPlay);
-        });
-
-        $(`#${song._id}`).on("mouseenter", () => {
-            if (songToPlay.id !== song._id) {
-                $(`#${song._id}`).css('color', "white");
-            }
-        });
-
-        $(`#${song._id}`).on("mouseleave", () => {
-            if (songToPlay.id !== song._id) {
-                $(`#${song._id}`).css('color', "#818181");
-            }
-        });
-    });
-    // highlight 1st song:
-    $(`#${songsMetadata[0]._id}`).css('color', "#77abff");
-
-    $("#songs").on("click", () => {
-        $(".songs-list").toggle();
-    });
-
-
-
+    const metadataRes: Response = await fetch(songsURI);
+    const songsMetadata: any = await metadataRes.json();
 
     // get first song:
-    let songIndex: number = 0;
-    const songDataURI: string = `${server}/songs/id/${songsMetadata[songIndex]._id}`;
-    const songData: any = await $.get(songDataURI);
-    let transposingKey: string = "C";
-    let songToPlay: Song = new Song(theory);
+    const songDataURI: string = `${process.env.BACKEND_API}/songs/id/${songsMetadata[0]._id}`;
+    const res: Response = await fetch(songDataURI);
+    const songData: any = await res.json();
+    const songToPlay: Song = new Song(theory);
     songToPlay.deserialize(songData);
-    songToPlay.transposeDisplayedChords(transposingKey);
+    songToPlay.transposeDisplayedChords("C");
     createLeadSheet(songToPlay);
-    $(`#transpose-${transposingKey}`).addClass("selected-transposing-key");
     band = new Band(songToPlay, musicians, countIn);
     band.tempo = songToPlay.songTempo;
-    band.setNewMeasureCallback((measure: Measure) => {
-        $(".highlighted-measure").removeClass("highlighted-measure");
-        if (measure && measure.nextMeasure) {
-            $(`#${measure.uniqueID}`).addClass("highlighted-measure");
-        }
-    });
+
 
     ReactDOM.render(
-        <Toolbar
+        <App
             theory={theory}
-            songsMetadata={songsMetadata}
             band={band}
+            song={songToPlay}
+            songsMetadata={songsMetadata}
             onSongChangeCallback={
-                async (updatedSong: Song) => {
+                (updatedSong: Song) => {
                     createLeadSheet(updatedSong);
-                    $(".songs-list span").css('color', "#818181");
-                    $(`#${updatedSong.id}`).css('color', "#77abff");
                 }
             }
+            transposeLeadSheet={(song: Song, key: string) => {
+                const currentMeasureUUID: string = $(".highlighted-measure").attr("id");
+                const measureBeingPlayed: Measure = song.getMeasureByUUID(currentMeasureUUID);
+                song.transposeDisplayedChords(key);
+                createLeadSheet(song);
+                if (measureBeingPlayed) {
+                    $(`#${measureBeingPlayed.uniqueID}`).addClass("highlighted-measure");
+                }
+            }}
         />,
         document.getElementById('app')
     );
 
+    // lead sheet:
     function createLeadSheet(song: Song) {
         $("#lead-sheet").hide();
         $(".lead-sheet").empty();
-        $(".song-name").text(song.songName);
 
         function createUUID(): string {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
@@ -345,67 +302,10 @@ $(async () => {
         });
         $("#lead-sheet").show();
     }
-
-
-    $('body').on("keyup", async (e) => {
-        if(e.key === ' ') {
-            e.preventDefault();
-            if (band.isPaused || band.isStopped) {
-                $("#play").hide();
-                $("#pause").show();
-                $(".lds-ellipsis").show();
-                await band.play();
-                $(".lds-ellipsis").hide();
-            } else {
-                $("#pause").hide();
-                $("#play").show();
-                band.pause();
-            }
-        }
-    });
-
-    $('body').on("keydown", (e) => {
-        if(e.key === ' ') {
-            e.preventDefault();
-        }
-    });
-
-    $("#transpose-Bb").on("click", () => {
-        $(".button-control").removeClass("selected-transposing-key");
-        $("#transpose-Bb").addClass("selected-transposing-key");
-        transposingKey = "Bb";
-        const currentMeasureUUID: string = $(".highlighted-measure").attr("id");
-        const measureBeingPlayed: Measure = songToPlay.getMeasureByUUID(currentMeasureUUID);
-        songToPlay.transposeDisplayedChords("Bb");
-        createLeadSheet(songToPlay);
-        if (measureBeingPlayed) {
-            $(`#${measureBeingPlayed.uniqueID}`).addClass("highlighted-measure");
-        }
-    });
-
-    $("#transpose-C").on("click", () => {
-        $(".button-control").removeClass("selected-transposing-key");
-        $("#transpose-C").addClass("selected-transposing-key");
-        transposingKey = "C";
-        const currentMeasureUUID: string = $(".highlighted-measure").attr("id");
-        const measureBeingPlayed: Measure = songToPlay.getMeasureByUUID(currentMeasureUUID);
-        songToPlay.transposeDisplayedChords("C");
-        createLeadSheet(songToPlay);
-        if (measureBeingPlayed) {
-            $(`#${measureBeingPlayed.uniqueID}`).addClass("highlighted-measure");
-        }
-    });
-
-    $("#transpose-Eb").on("click", () => {
-        $(".button-control").removeClass("selected-transposing-key");
-        $("#transpose-Eb").addClass("selected-transposing-key");
-        transposingKey = "Eb";
-        const currentMeasureUUID: string = $(".highlighted-measure").attr("id");
-        const measureBeingPlayed: Measure = songToPlay.getMeasureByUUID(currentMeasureUUID);
-        songToPlay.transposeDisplayedChords("Eb");
-        createLeadSheet(songToPlay);
-        if (measureBeingPlayed) {
-            $(`#${measureBeingPlayed.uniqueID}`).addClass("highlighted-measure");
+    band.setNewMeasureCallback((measure: Measure) => {
+        $(".highlighted-measure").removeClass("highlighted-measure");
+        if (measure && measure.nextMeasure) {
+            $(`#${measure.uniqueID}`).addClass("highlighted-measure");
         }
     });
 
