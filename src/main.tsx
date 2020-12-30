@@ -19,28 +19,18 @@ import { Chord } from "./playbackService/theory/chord";
 import $ from "jquery";
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from "./app";
 
 // require instrument samples:
 function requireAll(r: any) { r.keys().forEach(r); }
 requireAll(require.context('./playbackService/staticFiles/samples/upright-bass', true, /\.mp3$/));
 requireAll(require.context('./playbackService/staticFiles/samples/piano', true, /\.mp3$/));
 requireAll(require.context('./playbackService/staticFiles/samples/drums', true, /\.mp3$/));
-
-// require svgs:
 requireAll(require.context('./playbackService/staticFiles/svgs', true, /\.svg$/));
 
-let band: BandService = null;
-let style: string = "fourFourTime";
-
-
-const title = 'Testing React in this app...';
-ReactDOM.render(
-  <div>{title}</div>,
-  document.getElementById('app')
-);
-
 $(async () => {
-    // initialize player
+    // initialize band
+    let band: BandService = null;
     const bass: UprightBass = new UprightBass();
     const drumset: DrumSet = new DrumSet();
     const piano: Piano = new Piano();
@@ -61,88 +51,52 @@ $(async () => {
     const countIn: Metronome = new Metronome(metronomeInstrument);
     const musicians: Musician[] = [pianist, drummer, bassist];
 
-
     // get metadata for all songs:
     const server: string = process.env.BACKEND_API;
     const songsURI: string = `${server}/songs`;
-    const songsMetadata: any[] = await $.get(songsURI);
-
-    // populate sidebar:
-    songsMetadata.forEach((song: any) => {
-        $(".songs-list").append(`<span id="${song._id}">${song.name}</span>`);
-        $(`#${song._id}`).on("click", async () => {
-            $("#pause").hide();
-            $("#play").show();
-            $(".songs-list span").css('color', "#818181");
-            $(`#${song._id}`).css('color', "#77abff");
-            band.stop();
-
-            songIndex = songsMetadata.indexOf(song);
-            const songDataURI: string = `${server}/songs/id/${songsMetadata[songIndex]._id}`;
-            const songData: any = await $.get(songDataURI);
-            songToPlay = new Song(theory);
-            songToPlay.deserialize(songData);
-            songToPlay.transposeDisplayedChords(transposingKey);
-            band.setSong(songToPlay);
-            $("#tempo").val(songToPlay.songTempo);
-            band.tempo = songToPlay.songTempo;
-            createLeadSheet(songToPlay);
-            parseRepeatsAndSetVal(band.repeats);
-        });
-
-        $(`#${song._id}`).on("mouseenter", () => {
-            if (songToPlay.id !== song._id) {
-                $(`#${song._id}`).css('color', "white");
-            }
-        });
-
-        $(`#${song._id}`).on("mouseleave", () => {
-            if (songToPlay.id !== song._id) {
-                $(`#${song._id}`).css('color', "#818181");
-            }
-        });
-    });
-
-    // show info suggestion if user has not visited the site before:
-    const viewedVideos: boolean = localStorage.getItem("viewedVideos")==="true";
-    if (viewedVideos) {
-        $("#info-dropdown-message").hide();
-    }
-
-    // select the first song:
-    $(`#${songsMetadata[0]._id}`).css('color', "#77abff");
+    const metadataRes: Response = await fetch(songsURI);
+    const songsMetadata: any = await metadataRes.json();
 
     // get first song:
-    let songIndex: number = 0;
-    const songDataURI: string = `${server}/songs/id/${songsMetadata[songIndex]._id}`;
-    const songData: any = await $.get(songDataURI);
-    let transposingKey: string = "C";
-    let songToPlay: Song = new Song(theory);
+    const songDataURI: string = `${process.env.BACKEND_API}/songs/id/${songsMetadata[0]._id}`;
+    const res: Response = await fetch(songDataURI);
+    const songData: any = await res.json();
+    const songToPlay: Song = new Song(theory);
     songToPlay.deserialize(songData);
-    $("#tempo").val(songToPlay.songTempo);
-    songToPlay.transposeDisplayedChords(transposingKey);
+    songToPlay.transposeDisplayedChords("C");
     createLeadSheet(songToPlay);
-    $(`#transpose-${transposingKey}`).addClass("selected-transposing-key");
-    $(".style-select").hide();
-    $(".video-container").hide();
     band = new Band(songToPlay, musicians, countIn);
     band.tempo = songToPlay.songTempo;
-    band.setNewMeasureCallback((measure: Measure) => {
-        $(".highlighted-measure").removeClass("highlighted-measure");
-        if (measure && measure.nextMeasure) {
-            $(`#${measure.uniqueID}`).addClass("highlighted-measure");
-        }
-    });
-
-    band.setNewChorusCallback(() => {
-        parseRepeatsAndSetVal(band.repeats);
-    });
 
 
+    ReactDOM.render(
+        <App
+            theory={theory}
+            band={band}
+            song={songToPlay}
+            songsMetadata={songsMetadata}
+            onSongChangeCallback={
+                (updatedSong: Song) => {
+                    createLeadSheet(updatedSong);
+                }
+            }
+            transposeLeadSheet={(song: Song, key: string) => {
+                const currentMeasureUUID: string = $(".highlighted-measure").attr("id");
+                const measureBeingPlayed: Measure = song.getMeasureByUUID(currentMeasureUUID);
+                song.transposeDisplayedChords(key);
+                createLeadSheet(song);
+                if (measureBeingPlayed) {
+                    $(`#${measureBeingPlayed.uniqueID}`).addClass("highlighted-measure");
+                }
+            }}
+        />,
+        document.getElementById('app')
+    );
+
+    // lead sheet:
     function createLeadSheet(song: Song) {
         $("#lead-sheet").hide();
         $(".lead-sheet").empty();
-        $(".song-name").text(song.songName);
 
         function createUUID(): string {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
@@ -348,276 +302,11 @@ $(async () => {
         });
         $("#lead-sheet").show();
     }
-
-    $("#current-repeat").html((band.currentRepeat + 1).toString());
-    $("#total-repeats").html(band.repeats.toString());
-    $("#pause").hide();
-    $(".dropdown-content").hide();
-    $("body").show();
-    $(".transpose-icon").show();
-
-
-    $("#how-to").attr("src", `${process.env.HOW_TO_VIDEO_URL}?origin=${process.env.PLAYALONG_URL}`)
-    $("#videos").on("click", () => {
-        $(".video-container").toggle();
-        localStorage.setItem("viewedVideos", "true");
-        $("#info-dropdown-message").hide();
-    });
-
-    $("#songs").on("click", () => {
-        $(".songs-list").toggle();
-    });
-
-    $("#play").on("click", async () => {
-        $("#play").hide();
-        $("#pause").show();
-        $(".lds-ellipsis").show();
-        await band.play();
-        $(".lds-ellipsis").hide();
-    });
-
-    $("#pause").on("click", () => {
-        $("#pause").hide();
-        $("#play").show();
-        band.pause();
-    });
-
-    $('body').on("keyup", async (e) => {
-        if(e.key === ' ') {
-            e.preventDefault();
-            if (band.isPaused || band.isStopped) {
-                $("#play").hide();
-                $("#pause").show();
-                $(".lds-ellipsis").show();
-                await band.play();
-                $(".lds-ellipsis").hide();
-            } else {
-                $("#pause").hide();
-                $("#play").show();
-                band.pause();
-            }
-        }
-    });
-    $('body').on("keydown", (e) => {
-        if(e.key === ' ') {
-            e.preventDefault();
-        }
-    });
-
-    $("#stop").on("click", () => {
-        $("#pause").hide();
-        $("#play").show();
-        band.stop();
+    band.setNewMeasureCallback((measure: Measure) => {
         $(".highlighted-measure").removeClass("highlighted-measure");
-    });
-
-    $("#skip-start").on("click", async () => {
-        $("#pause").hide();
-        $("#play").show();
-        band.stop();
-
-        songIndex = (songIndex - 1) % songsMetadata.length;
-        if (songIndex < 0) {
-            songIndex = songsMetadata.length-1;
-        }
-        const songDataURI: string = `${server}/songs/id/${songsMetadata[songIndex]._id}`;
-        const songData: any = await $.get(songDataURI);
-        songToPlay = new Song(theory);
-        songToPlay.deserialize(songData);
-        songToPlay.transposeDisplayedChords(transposingKey);
-        band.setSong(songToPlay);
-        $("#tempo").val(songToPlay.songTempo);
-        band.tempo = songToPlay.songTempo;
-        createLeadSheet(songToPlay);
-        parseRepeatsAndSetVal(band.repeats);
-        $(".songs-list span").css('color', "#818181");
-        $(`#${songsMetadata[songIndex]._id}`).css('color', "#77abff");
-    });
-
-    $("#skip-end").on("click", async () => {
-        $("#pause").hide();
-        $("#play").show();
-        band.stop();
-
-        songIndex = (songIndex + 1) % songsMetadata.length;
-        const songDataURI: string = `${server}/songs/id/${songsMetadata[songIndex]._id}`;
-        const songData: any = await $.get(songDataURI);
-        songToPlay = new Song(theory);
-        songToPlay.deserialize(songData);
-        songToPlay.transposeDisplayedChords(transposingKey);
-        band.setSong(songToPlay);
-        $("#tempo").val(songToPlay.songTempo);
-        band.tempo = songToPlay.songTempo;
-        createLeadSheet(songToPlay);
-        parseRepeatsAndSetVal(band.repeats);
-        $(".songs-list span").css('color', "#818181");
-        $(`#${songsMetadata[songIndex]._id}`).css('color', "#77abff");
-    });
-
-    $("#swing").on("click", () => {
-        style = "fourFourTime";
-        band.setStyle(style);
-    });
-
-    $("#latin").on("click", () => {
-        style = "bossa";
-        band.setStyle(style);
-    });
-
-    $("#mambo").on("click", () => {
-        style = "mambo";
-        band.setStyle(style);
-    });
-
-    $("#style-override").on("click", function() {
-        if( $(this).is(':checked') ) {
-            $(".style-select").show();
-            band.styleOverride = true;
-        }
-        else {
-            $(".style-select").hide();
-            band.styleOverride = false;
+        if (measure && measure.nextMeasure) {
+            $(`#${measure.uniqueID}`).addClass("highlighted-measure");
         }
     });
 
-    // tempo controller
-    const parseTempoAndSetVal = (tempoNum: number) => {
-        if (isNaN(tempoNum)) {
-            $("#tempo").val(band.tempo);
-            return;
-        } else if (tempoNum > 400) {
-            band.tempo = 400;
-            tempoNum = 400;
-        } else if (tempoNum < 40) {
-            band.tempo = 40;
-            tempoNum = 40;
-        } else {
-            band.tempo = tempoNum;
-        }
-        $("#tempo").val(tempoNum);
-    };
-
-    $("#tempo").on("change", function() {
-        const tempoNum: number = parseInt($(this).val().toString(), 0x0);
-        parseTempoAndSetVal(tempoNum);
-    });
-
-    $("#tempo-increase").on("click", () => {
-        parseTempoAndSetVal(band.tempo + 1);
-    });
-
-    $("#tempo-decrease").on("click", () => {
-        parseTempoAndSetVal(band.tempo - 1);
-    });
-
-    $("#transpose-Bb").on("click", () => {
-        $(".button-control").removeClass("selected-transposing-key");
-        $("#transpose-Bb").addClass("selected-transposing-key");
-        transposingKey = "Bb";
-        const currentMeasureUUID: string = $(".highlighted-measure").attr("id");
-        const measureBeingPlayed: Measure = songToPlay.getMeasureByUUID(currentMeasureUUID);
-        songToPlay.transposeDisplayedChords("Bb");
-        createLeadSheet(songToPlay);
-        if (measureBeingPlayed) {
-            $(`#${measureBeingPlayed.uniqueID}`).addClass("highlighted-measure");
-        }
-    });
-
-    $("#transpose-C").on("click", () => {
-        $(".button-control").removeClass("selected-transposing-key");
-        $("#transpose-C").addClass("selected-transposing-key");
-        transposingKey = "C";
-        const currentMeasureUUID: string = $(".highlighted-measure").attr("id");
-        const measureBeingPlayed: Measure = songToPlay.getMeasureByUUID(currentMeasureUUID);
-        songToPlay.transposeDisplayedChords("C");
-        createLeadSheet(songToPlay);
-        if (measureBeingPlayed) {
-            $(`#${measureBeingPlayed.uniqueID}`).addClass("highlighted-measure");
-        }
-    });
-
-    $("#transpose-Eb").on("click", () => {
-        $(".button-control").removeClass("selected-transposing-key");
-        $("#transpose-Eb").addClass("selected-transposing-key");
-        transposingKey = "Eb";
-        const currentMeasureUUID: string = $(".highlighted-measure").attr("id");
-        const measureBeingPlayed: Measure = songToPlay.getMeasureByUUID(currentMeasureUUID);
-        songToPlay.transposeDisplayedChords("Eb");
-        createLeadSheet(songToPlay);
-        if (measureBeingPlayed) {
-            $(`#${measureBeingPlayed.uniqueID}`).addClass("highlighted-measure");
-        }
-    });
-
-    $("#style").on("change", function() {
-        const styleInput: string = $(this).val().toString()
-        band.setStyle(styleInput);
-    });
-
-    $("#tempo-icon").on("click", () =>  {
-        $("#tempo-dropdown").toggle();
-        $("#tempo").trigger("focus");
-    });
-
-    $("#repeat-icon").on("click", () =>  {
-        $("#repeat-dropdown").toggle();
-        $("#repeats").trigger("focus");
-    });
-
-    $("#transpose-icon").on("click", () =>  {
-        $("#transpose-dropdown").toggle();
-    });
-
-    $(document).on("click", (event) => {
-        const $target = $(event.target);
-        if(!$target.closest('#repeat-dropdown-container').length &&
-        $('#repeat-dropdown').is(":visible")) {
-            $('#repeat-dropdown').hide();
-        }
-
-        if(!$target.closest('#tempo-dropdown-container').length &&
-        $('#tempo-dropdown').is(":visible")) {
-            $('#tempo-dropdown').hide();
-        }
-
-        if(!$target.closest('#transpose-dropdown-container').length &&
-        $('#transpose-dropdown').is(":visible")) {
-            $('#transpose-dropdown').hide();
-        }
-    });
-
-    // repeats controller
-    const parseRepeatsAndSetVal = (repeatsNum: number) => {
-        if (isNaN(repeatsNum)) {
-            $("#repeats").val(band.repeats);
-            return;
-        } else if (repeatsNum > 400) {
-            band.setRepeats(400);
-            repeatsNum = 400;
-        } else if (repeatsNum < 1) {
-            band.setRepeats(1);
-            repeatsNum = 1;
-        } else {
-            band.setRepeats(repeatsNum);
-        }
-
-        $("#repeats").val(repeatsNum);
-        if (band.currentRepeat + 1 <= band.repeats) {
-            $("#current-repeat").html((band.currentRepeat + 1).toString());
-        }
-        $("#total-repeats").html(band.repeats.toString());
-    };
-
-    $("#repeats").on("change", function() {
-        const repeatsNum: number = parseInt($(this).val().toString(), 0x0);
-        parseRepeatsAndSetVal(repeatsNum);
-    });
-
-    $("#repeats-increase").on("click", () => {
-        parseRepeatsAndSetVal(band.repeats + 1);
-    });
-
-    $("#repeats-decrease").on("click", () => {
-        parseRepeatsAndSetVal(band.repeats - 1);
-    });
 });

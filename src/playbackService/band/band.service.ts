@@ -74,7 +74,7 @@ export class BandService {
         return Math.round(Transport.bpm.value);
     }
 
-    public setRepeats(tempo: number) {
+    public set repeats(tempo: number) {
         this.song.setTotalIterations(tempo);
     }
 
@@ -112,10 +112,8 @@ export class BandService {
         new Loop(() => {
             this.setTransportBasedOnPreviousMeasure(previousMeasure);
             const currentMeasure: Measure = this.song.nextMeasure();
-            this.newMeasureCallback(previousMeasure);
-            if (this.song.runNewChorusCallback) {
-                this.newChorusCallback();
-            }
+            this.newMeasureCallback ? this.newMeasureCallback(previousMeasure) : null;
+            this.newChorusCallback && this.song.runNewChorusCallback ? this.newChorusCallback() : null;
             if (!currentMeasure) {
                 self.pause();
                 return;
