@@ -9,8 +9,6 @@ interface IAppProps {
     band?: BandService;
     songsMetadata?: any[]
     theory?: Theory;
-    onSongChangeCallback?: (song: Song) => void;
-    transposeLeadSheet?: (song: Song, key: string) => void;
     song?: Song;
 }
 
@@ -186,7 +184,6 @@ export default class App extends Component<IAppProps, IAppState> {
             const band: BandService = state.band;
             band.setSong(songToPlay);
             band.tempo = songToPlay.songTempo;
-            this.props.onSongChangeCallback(songToPlay);
             return {
                 song: songToPlay,
                 band: band
@@ -195,8 +192,13 @@ export default class App extends Component<IAppProps, IAppState> {
     }
 
     transpose(key: string) {
-        this.props.transposeLeadSheet(this.state.song, key);
-        this.setState({transposingKey: key});
+        this.setState((state: IAppState) => {
+            state.song.transposeDisplayedChords(key);
+            return {
+                song: state.song,
+                transposingKey: key
+            };
+        });
     }
 
     toggleSongsList() {

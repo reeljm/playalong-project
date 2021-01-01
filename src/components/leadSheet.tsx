@@ -22,39 +22,90 @@ export default class LeadSheet extends Component<ILeadSheetProps> {
             } else {
                 toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/doubleBarLine.svg`}/>);
             }
+            let measureIndex: number = 0;
             section.allMeasures.forEach((measure: MeasureData) => {
-                toRender = toRender.concat(this.createMeasure(measure));
+                toRender.push(<Measure measure={measure}></Measure>);
+                this.numMeasuresOnLine++;
+
+                const lastMeasure: boolean = measureIndex + 1 === section.allMeasures.length;
+                const fullLine: boolean = this.numMeasuresOnLine >= 4;
+                const sectionHasEndings: boolean = section.allEndings.length > 0;
+
+                // bar line:
+                if (!lastMeasure || sectionHasEndings) {
+                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
+                }
+
+                // bar line:
+                if (lastMeasure && sectionHasEndings && fullLine) {
+                    toRender.push(<br/>);
+                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
+                    this.numMeasuresOnLine = 0;
+                }
+
+                // new line:
+                if (!lastMeasure && fullLine) {
+                    toRender.push(<br/>);
+                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
+                    this.numMeasuresOnLine = 0;
+                }
+
+                measureIndex++;
             });
             if (!section.isRepeated) {
-                toRender.pop();
                 toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/doubleBarLine.svg`}/>);
+                toRender.push(<br/>);
+                this.numMeasuresOnLine = 0;
             }
 
-            let endingMarkerNumber: number = 1;
+            let endingIndex: number = 0;
             section.allEndings.forEach((ending: MeasureData[]) => {
                 let isFirstMeasure: boolean = true;
+                measureIndex = 0;
                 ending.forEach((measure: MeasureData) => {
                     let markerVal: number = null;
-                    if (isFirstMeasure) markerVal = endingMarkerNumber;
-                    toRender = toRender.concat(this.createMeasure(measure, markerVal));
+                    if (isFirstMeasure) markerVal = endingIndex + 1;
+                    toRender.push(<Measure measure={measure} endingMarkerNumber={markerVal}></Measure>);
+                    this.numMeasuresOnLine++;
+
+                    const lastMeasure: boolean = measureIndex + 1 === section.allEndings[endingIndex].length;
+                    const fullLine: boolean = this.numMeasuresOnLine >= 4;
+
+                    // bar line:
+                    if (!lastMeasure) {
+                        toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
+                    }
+
+                    // new line:
+                    if (!lastMeasure && fullLine) {
+                        toRender.push(<br/>);
+                        toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
+                        this.numMeasuresOnLine = 0;
+                    }
+
+                    measureIndex++;
                     isFirstMeasure = false;
                 });
-                endingMarkerNumber++;
+
+                if (!section.isRepeated) {
+                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/doubleBarLine.svg`}/>);
+                    toRender.push(<br/>);
+                    this.numMeasuresOnLine = 0;
+                }
+
+                if (endingIndex + 1 >= section.allEndings.length) {
+                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/doubleBarLine.svg`}/>);
+                    toRender.push(<br/>);
+                } else {
+                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/endRepeat.svg`}/>);
+                    toRender.push(<br/>);
+                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
+                }
+                this.numMeasuresOnLine = 0;
+
+                endingIndex++;
             });
         });
         return <div className="lead-sheet"> { toRender } </div>;
-    }
-
-    createMeasure(measure: MeasureData, endingMarkerNumber?: number):JSX.Element[] {
-        const toReturn: JSX.Element[] = [];
-        toReturn.push(<Measure measure={measure} endingMarkerNumber={endingMarkerNumber}></Measure>);
-        toReturn.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
-        this.numMeasuresOnLine++;
-        if (this.numMeasuresOnLine >= 4) {
-            toReturn.push(<br/>);
-            toReturn.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
-            this.numMeasuresOnLine = 0;
-        }
-        return toReturn;
     }
 }
