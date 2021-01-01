@@ -9,7 +9,6 @@ export class BandService {
     private style: string = 'fourFourTime';
     private initialized: boolean = false;
     private newMeasureCallback: () => void;
-    private newChorusCallback: () => void;
     public styleOverride: boolean = false;
 
     constructor(private song: Song, private musicians: Musician[], private metronome: Metronome) { }
@@ -20,10 +19,6 @@ export class BandService {
 
     public setNewMeasureCallback(fn: () => void): void {
         this.newMeasureCallback = fn;
-    }
-
-    public setNewChorusCallback(fn: () => void): void {
-        this.newChorusCallback = fn;
     }
 
     public pause(): void {
