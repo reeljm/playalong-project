@@ -2,6 +2,7 @@ import { Transport, Loop } from 'tone';
 import { Metronome } from '../musicians/metronome/metronome';
 import { Musician } from '../musicians/musician';
 import { Measure } from '../song/measure';
+import { Section } from '../song/section';
 import { Song } from '../song/song';
 
 export class BandService {
@@ -48,6 +49,16 @@ export class BandService {
             const musician: Musician = entry[1];
             musician.clearCache();
         }
+        this.song.sections.forEach((s: Section) => {
+            s.allMeasures.forEach((m: Measure) => {
+                m.currentlyPlayingMeasure = false;
+            });
+            s.allEndings.forEach((e: Measure[]) => {
+                e.forEach((m: Measure) => {
+                    m.currentlyPlayingMeasure = false;
+                })
+            });
+        });
     }
 
     public async play(): Promise<void> {
