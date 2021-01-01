@@ -17,7 +17,7 @@ module.exports = {
             "process.env.HOW_TO_VIDEO_URL": JSON.stringify("https://www.youtube.com/embed/NDnc1qKgGvo"),
         })
     ],
-    entry: './src/main.tsx',
+    entry: './src/components/main.tsx',
     module: {
         rules: [
         {

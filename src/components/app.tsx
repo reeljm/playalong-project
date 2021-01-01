@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
-import { BandService } from './playbackService/band/band.service';
-import { Song } from './playbackService/song/song';
-import { Theory } from './playbackService/theory/theory';
+import { BandService } from '../playbackService/band/band.service';
+import { Song } from '../playbackService/song/song';
+import { Theory } from '../playbackService/theory/theory';
+import LeadSheet from './leadSheet';
 import Toolbar from "./toolbar";
 
 interface IAppProps {
     band?: BandService;
     songsMetadata?: any[]
     theory?: Theory;
-    onSongChangeCallback?: (song: Song) => void;
-    transposeLeadSheet?: (song: Song, key: string) => void;
     song?: Song;
 }
 
@@ -32,14 +31,15 @@ export default class App extends Component<IAppProps, IAppState> {
             isLoading: false,
             showSongsList: false
         };
-        this.state.band.setNewChorusCallback(() => {
+
+        this.state.band.setNewMeasureCallback(() => {
             this.setState((state: IAppState) => {
                 return {
                     song: state.song,
                     band: state.band
                 };
             })
-        })
+        });
     }
 
     render() {
@@ -81,6 +81,7 @@ export default class App extends Component<IAppProps, IAppState> {
                         <b>Repeat Number:</b>{ `${this.state.song.getCurrentIteration() + 1} of ${this.state.song.getTotalIterations()}` }
                     </div>
                 </div>
+                <LeadSheet song={ this.state.song }></LeadSheet>
             </>
         )
     }
@@ -184,7 +185,6 @@ export default class App extends Component<IAppProps, IAppState> {
             const band: BandService = state.band;
             band.setSong(songToPlay);
             band.tempo = songToPlay.songTempo;
-            this.props.onSongChangeCallback(songToPlay);
             return {
                 song: songToPlay,
                 band: band
@@ -193,8 +193,13 @@ export default class App extends Component<IAppProps, IAppState> {
     }
 
     transpose(key: string) {
-        this.props.transposeLeadSheet(this.state.song, key);
-        this.setState({transposingKey: key});
+        this.setState((state: IAppState) => {
+            state.song.transposeDisplayedChords(key);
+            return {
+                song: state.song,
+                transposingKey: key
+            };
+        });
     }
 
     toggleSongsList() {

@@ -2,14 +2,14 @@ import { Transport, Loop } from 'tone';
 import { Metronome } from '../musicians/metronome/metronome';
 import { Musician } from '../musicians/musician';
 import { Measure } from '../song/measure';
+import { Section } from '../song/section';
 import { Song } from '../song/song';
 
 export class BandService {
 
     private style: string = 'fourFourTime';
     private initialized: boolean = false;
-    private newMeasureCallback: (measure: Measure) => void;
-    private newChorusCallback: () => void;
+    private newMeasureCallback: () => void;
     public styleOverride: boolean = false;
 
     constructor(private song: Song, private musicians: Musician[], private metronome: Metronome) { }
@@ -18,12 +18,8 @@ export class BandService {
         this.style = style;
     }
 
-    public setNewMeasureCallback(fn: (measure: Measure) => void): void {
+    public setNewMeasureCallback(fn: () => void): void {
         this.newMeasureCallback = fn;
-    }
-
-    public setNewChorusCallback(fn: () => void): void {
-        this.newChorusCallback = fn;
     }
 
     public pause(): void {
@@ -53,6 +49,16 @@ export class BandService {
             const musician: Musician = entry[1];
             musician.clearCache();
         }
+        this.song.sections.forEach((s: Section) => {
+            s.allMeasures.forEach((m: Measure) => {
+                m.currentlyPlayingMeasure = false;
+            });
+            s.allEndings.forEach((e: Measure[]) => {
+                e.forEach((m: Measure) => {
+                    m.currentlyPlayingMeasure = false;
+                })
+            });
+        });
     }
 
     public async play(): Promise<void> {
@@ -108,12 +114,18 @@ export class BandService {
 
     private createScheduleLoop(): void {
         const self = this;
-        let previousMeasure: Measure = null;
+        let prevMeasure: Measure = null;
+        let prevPrevMeasure: Measure = null;
         new Loop(() => {
-            this.setTransportBasedOnPreviousMeasure(previousMeasure);
+            this.setTransportBasedOnPreviousMeasure(prevMeasure);
             const currentMeasure: Measure = this.song.nextMeasure();
-            this.newMeasureCallback ? this.newMeasureCallback(previousMeasure) : null;
-            this.newChorusCallback && this.song.runNewChorusCallback ? this.newChorusCallback() : null;
+            if (prevMeasure && currentMeasure) {
+                prevMeasure.currentlyPlayingMeasure = true;
+            }
+            if (prevPrevMeasure) {
+                prevPrevMeasure.currentlyPlayingMeasure = false;
+            }
+            this.newMeasureCallback ? this.newMeasureCallback() : null;
             if (!currentMeasure) {
                 self.pause();
                 return;
@@ -124,7 +136,8 @@ export class BandService {
                 currentMeasure.style = currentMeasure.originalStyle;
             }
             self.musicians.forEach(musician => musician.play(currentMeasure));
-            previousMeasure = currentMeasure;
+            prevPrevMeasure = prevMeasure;
+            prevMeasure = currentMeasure;
         }, '1m').start(0);
     }
 }
