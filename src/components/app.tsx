@@ -31,14 +31,15 @@ export default class App extends Component<IAppProps, IAppState> {
             isLoading: false,
             showSongsList: false
         };
-        this.state.band.setNewChorusCallback(() => {
+
+        this.state.band.setNewMeasureCallback(() => {
             this.setState((state: IAppState) => {
                 return {
                     song: state.song,
                     band: state.band
                 };
             })
-        })
+        });
     }
 
     render() {
@@ -80,7 +81,7 @@ export default class App extends Component<IAppProps, IAppState> {
                         <b>Repeat Number:</b>{ `${this.state.song.getCurrentIteration() + 1} of ${this.state.song.getTotalIterations()}` }
                     </div>
                 </div>
-                <LeadSheet song={this.state.song}></LeadSheet>
+                <LeadSheet song={ this.state.song }></LeadSheet>
             </>
         )
     }

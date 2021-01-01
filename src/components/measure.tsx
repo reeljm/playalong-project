@@ -28,7 +28,7 @@ export default class Measure extends Component<IMeasureProps> {
                     </div>
                     : null
                 }
-                <div className="measure"> { toRender } </div>
+                <div className={ this.props.measure.currentlyPlayingMeasure ? "highlighted-measure measure" : "measure"}> { toRender } </div>
             </>
         );
     }
