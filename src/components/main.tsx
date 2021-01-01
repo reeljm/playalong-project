@@ -13,22 +13,19 @@ import { Metronome } from "../playbackService/musicians/metronome/metronome";
 import { MetronomeInstrument } from "../playbackService/musicians/metronome/metronomeInstrument";
 import { Musician } from "../playbackService/musicians/musician";
 import { Song } from "../playbackService/song/song";
-import { Section } from "../playbackService/song/section";
-import { Measure } from "../playbackService/song/measure";
-import { Chord } from "../playbackService/theory/chord";
-import $ from "jquery";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from "./app";
 
-// require instrument samples:
-function requireAll(r: any) { r.keys().forEach(r); }
-requireAll(require.context('../playbackService/staticFiles/samples/upright-bass', true, /\.mp3$/));
-requireAll(require.context('../playbackService/staticFiles/samples/piano', true, /\.mp3$/));
-requireAll(require.context('../playbackService/staticFiles/samples/drums', true, /\.mp3$/));
-requireAll(require.context('../playbackService/staticFiles/svgs', true, /\.svg$/));
 
-$(async () => {
+(async ()=>{
+    // require instrument samples:
+    function requireAll(r: any) { r.keys().forEach(r); }
+    requireAll(require.context('../playbackService/staticFiles/samples/upright-bass', true, /\.mp3$/));
+    requireAll(require.context('../playbackService/staticFiles/samples/piano', true, /\.mp3$/));
+    requireAll(require.context('../playbackService/staticFiles/samples/drums', true, /\.mp3$/));
+    requireAll(require.context('../playbackService/staticFiles/svgs', true, /\.svg$/));
+
     // initialize band
     let band: BandService = null;
     const bass: UprightBass = new UprightBass();
@@ -67,7 +64,6 @@ $(async () => {
     band = new Band(songToPlay, musicians, countIn);
     band.tempo = songToPlay.songTempo;
 
-
     ReactDOM.render(
         <App
             theory={theory}
@@ -77,4 +73,4 @@ $(async () => {
         />,
         document.getElementById('app')
     );
-});
+})();

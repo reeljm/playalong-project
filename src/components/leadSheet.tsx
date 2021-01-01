@@ -17,6 +17,7 @@ export default class LeadSheet extends Component<ILeadSheetProps> {
         this.numMeasuresOnLine = 0;
         let toRender: JSX.Element[] = [];
         this.props.song.sections.forEach((section: Section) => {
+            toRender.push(<h2 className="section-header">{section.sectionName}</h2>);
             if (section.isRepeated) {
                 toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/startRepeat.svg`}/>);
             } else {
