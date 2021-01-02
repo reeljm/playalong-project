@@ -1,4 +1,7 @@
 import React, { ChangeEvent, Component } from 'react'
+import Repeat from './repeat';
+import Tempo from './tempo';
+import Transpose from './transpose';
 
 interface IToolbarProps {
     songsMetadata?: any[];
@@ -54,16 +57,6 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
             <>
                 <div id="header">
                     <div className="playback-container">
-                        <span title="Videos" id="videos" className="control-button" onClick={(e)=>this.onClickVideos()}>
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-info" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z"/>
-                                <circle cx="8" cy="4.5" r="1"/>
-                            </svg>
-                            <div id="info-dropdown-message" className={ this.state.showVideoSuggestion ? "info-content" : "hide" }>
-                                <span className="info-dropdown-arrow"></span>
-                                <span className="info-dropdown-inner-content">First time here? Click above to learn more about the playalong project!</span>
-                            </div>
-                        </span>
                         <span title="List of Songs" id="songs" className="control-button" onClick={(e) => {this.onClickSongsList()}}>
                             <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fillRule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
@@ -99,47 +92,9 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
                         </span>
                     </div>
                     <div className="vl"></div>
-                    <div id="tempo-dropdown-container" className="dropdown">
-                        <span title="Tempo" id="tempo-icon" className="control-icon control-button" unselectable="on" onClick={(e)=>this.onClickTempoIcon()}>
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-stopwatch" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fillRule="evenodd" d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07A7.001 7.001 0 0 1 8 16 7 7 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3zm0 2.1a.5.5 0 0 1 .5.5V9a.5.5 0 0 1-.5.5H4.5a.5.5 0 0 1 0-1h3V5.6a.5.5 0 0 1 .5-.5z"/>
-                            </svg>
-                        </span>
-                        <div id="tempo-dropdown" className={ this.state.showTempo ? "dropdown-content" : "hide" }>
-                            <div className="tempo-container">
-                                <div id="tempo-decrease" className="button-control decrease" onClick={ (e)=>this.onTempoButtonClick(-1) }>-</div>
-                                <input id="tempo" className="number-input" type="number" value={ this.props.tempo } onChange={ (e)=>this.onTempoInputChange(e) } pattern="\d*"/>
-                                <div id="tempo-increase" className="button-control increase" onClick={ (e)=>this.onTempoButtonClick(1) }>+</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="repeat-dropdown-container" className="dropdown">
-                        <span title="Number of Repeats" id="repeat-icon" className="control-icon control-button" onClick={(e)=>this.onClickRepeatIcon()}>
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-arrow-repeat" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-                                <path fillRule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
-                            </svg>
-                        </span>
-                        <div id="repeat-dropdown" className={this.state.showRepeats ? "dropdown-content" : "hide"}>
-                            <div className="tempo-container">
-                                <div id="repeats-decrease" className="button-control decrease" onClick={ (e)=>this.onRepeatButtonClick(-1) }>-</div>
-                                <input id="repeats" className="number-input" type="number" value={ this.props.repeats } onChange={ (e)=>this.onRepeatInputChange(e) } min="0" max="400" pattern="\d*" required/>
-                                <div id="repeats-increase" className="button-control increase" onClick={ (e)=>this.onRepeatButtonClick(1) }>+</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="transpose-dropdown-container" className="dropdown">
-                        <span title="Transpose" id="transpose-icon" className="control-icon control-button" onClick={(e)=>this.onClickTransposition()}>
-                            <img className="transpose-icon" src="./assets/svgs/transpose.svg"/>
-                        </span>
-                        <div id="transpose-dropdown" className={this.state.showTransposition ? "dropdown-content" : "hide"}>
-                            <div className="transpose-container">
-                                <div id="transpose-Bb" className={this.props.transposingKey==="Bb" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("Bb")}>Bb</div>
-                                <div id="transpose-C" className={this.props.transposingKey==="C" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("C")}>C</div>
-                                <div id="transpose-Eb" className={this.props.transposingKey==="Eb" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("Eb")}>Eb</div>
-                            </div>
-                        </div>
-                    </div>
+                    <Tempo tempo={ this.props.tempo } onTempoChange={ this.props.onTempoChange }></Tempo>
+                    <Repeat repeat={ this.props.repeats } onRepeatChange={ this.props.onRepeatChange }></Repeat>
+                    <Transpose transposingKey={'C'} onChangeTransposition={ this.props.onChangeTransposition } ></Transpose>
                     <div title="Style" className="style-container">
                         <div>
                             <span>Style Override</span>
@@ -157,71 +112,6 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
                 </div>
             </>
         )
-    }
-
-    // Repeat handlers:
-    onClickRepeatIcon() {
-        this.setState((state:IToolbarState) => {
-            return {
-                showRepeats: !state.showRepeats
-            }
-        });
-    }
-
-    onRepeatButtonClick(delta: number) {
-            let updatedRepeat: number = this.props.repeats;
-            updatedRepeat += delta;
-            this.props.onRepeatChange(updatedRepeat);
-    }
-
-    onRepeatInputChange(e: ChangeEvent<HTMLInputElement>) {
-        let updatedRepeat: number = e.target.valueAsNumber ? e.target.valueAsNumber : 0;
-        this.props.onRepeatChange(updatedRepeat);
-    }
-
-
-    // Transposition handlers:
-    onClickTransposition() {
-        this.setState((state:IToolbarState) => {
-            return {
-                showTransposition: !state.showTransposition
-            }
-        });
-    }
-
-    onClickTranspositionValue(key: string) {
-        this.props.onChangeTransposition(key);
-    }
-
-    // Video handlers:
-    onClickVideos() {
-        this.setState((state:IToolbarState) => {
-            localStorage.setItem("viewedVideos", "true");
-            return {
-                showVideo: !state.showVideo,
-                showVideoSuggestion: false
-            }
-        });
-    }
-
-    // Tempo handlers:
-    onClickTempoIcon() {
-        this.setState((state:IToolbarState) => {
-            return {
-                showTempo: !state.showTempo
-            }
-        });
-    }
-
-    onTempoInputChange(e: ChangeEvent<HTMLInputElement>) {
-        let updatedTempo: number = e.target.valueAsNumber
-        this.props.onTempoChange(updatedTempo);
-    }
-
-    onTempoButtonClick(delta: number) {
-        let updatedTempo: number = this.props.tempo;
-        updatedTempo+=delta;
-        this.props.onTempoChange(updatedTempo);
     }
 
     // Style override handlers:
