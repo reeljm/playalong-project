@@ -38,17 +38,17 @@ export default class Transpose extends Component<ITransposeProps, ITransposeStat
     render() {
         return (<>
             <div id="transpose-dropdown-container" className="dropdown">
-                        <span title="Transpose" id="transpose-icon" className="control-icon control-button" onClick={(e)=>this.onClickTransposition()}>
-                            <img className="transpose-icon" src="./assets/svgs/transpose.svg"/>
-                        </span>
-                        <div id="transpose-dropdown" className={this.state.showTransposition ? "dropdown-content" : "hide"}>
-                            <div className="transpose-container">
-                                <div id="transpose-Bb" className={this.props.transposingKey==="Bb" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("Bb")}>Bb</div>
-                                <div id="transpose-C" className={this.props.transposingKey==="C" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("C")}>C</div>
-                                <div id="transpose-Eb" className={this.props.transposingKey==="Eb" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("Eb")}>Eb</div>
-                            </div>
-                        </div>
+                <span title="Transpose" id="transpose-icon" className="control-icon control-button" onClick={(e)=>this.onClickTransposition()}>
+                    <img className="transpose-icon" src="./assets/svgs/transpose.svg"/>
+                </span>
+                <div id="transpose-dropdown" className={this.state.showTransposition ? "dropdown-content" : "hide"}>
+                    <div className="transpose-container">
+                        <div id="transpose-Bb" className={this.props.transposingKey==="Bb" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("Bb")}>Bb</div>
+                        <div id="transpose-C" className={this.props.transposingKey==="C" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("C")}>C</div>
+                        <div id="transpose-Eb" className={this.props.transposingKey==="Eb" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("Eb")}>Eb</div>
                     </div>
+                </div>
+            </div>
         </>);
     }
 

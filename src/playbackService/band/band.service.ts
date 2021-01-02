@@ -62,7 +62,6 @@ export class BandService {
     }
 
     public async play(): Promise<void> {
-        Transport.bpm.value = this.tempo;
         Transport.context.resume();
         if (!this.initialized) {
             this.createScheduleLoop();

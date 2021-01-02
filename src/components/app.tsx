@@ -42,6 +42,24 @@ export default class App extends Component<IAppProps, IAppState> {
         });
     }
 
+
+    componentDidMount() {
+        document.addEventListener("keydown", (e: KeyboardEvent) => e.preventDefault());
+        document.addEventListener("keyup", (e: KeyboardEvent) => this.handleSpace(e));
+    }
+
+    handleSpace(event: KeyboardEvent) {
+        if (event.key !== ' ') {
+            return;
+        }
+        if (this.state.band.isPlaying) {
+            this.pause();
+        } else {
+            this.play();
+        }
+    }
+
+
     render() {
         return (
             <>
@@ -87,6 +105,7 @@ export default class App extends Component<IAppProps, IAppState> {
     }
 
     async play(){
+        if (this.state.isLoading) {return}
         this.setState({ isLoading: true });
         await this.state.band.play();
         this.setState((state: IAppState) => {
