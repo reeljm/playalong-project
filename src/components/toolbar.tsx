@@ -107,9 +107,6 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
                         </select>
                     </div>
                 </div>
-                <div className={ this.state.showVideo ? "video-container" : "hide" }  >
-                    <iframe id="how-to" width="560" height="315" src={ process.env.HOW_TO_VIDEO_URL + "?origin=" + process.env.PLAYALONG_URL } allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-                </div>
             </>
         )
     }

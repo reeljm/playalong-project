@@ -12,9 +12,6 @@ module.exports = {
               { from: 'src/style.css' },
               { from: 'src/favicon.ico' },
             ],
-        }),
-        new webpack.DefinePlugin({
-            "process.env.HOW_TO_VIDEO_URL": JSON.stringify("https://www.youtube.com/embed/NDnc1qKgGvo"),
         })
     ],
     entry: './src/components/main.tsx',
