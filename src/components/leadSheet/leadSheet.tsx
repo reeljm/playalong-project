@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Measure as MeasureData } from '../../src/playbackService/song/measure';
-import { Section } from '../../src/playbackService/song/section';
-import { Song } from '../../src/playbackService/song/song';
+import { Measure as MeasureData } from '../../playbackService/song/measure';
+import { Section } from '../../playbackService/song/section';
+import { Song } from '../../playbackService/song/song';
 import Measure from './measure';
 
 interface ILeadSheetProps {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Chord as ChordData } from '../../src/playbackService/theory/chord'
+import { Chord as ChordData } from '../../playbackService/theory/chord'
 
 interface IChordProps {
     chord: ChordData;

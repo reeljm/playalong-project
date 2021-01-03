@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Icon from './icons/icon';
+import Icon from './icon';
 
 interface IToolbarProps {
     songsMetadata?: any[];

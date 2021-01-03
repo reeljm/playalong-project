@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Chord as ChordData } from '../../src/playbackService/theory/chord';
-import { Measure as MeasureData } from '../../src/playbackService/song/measure'
+import { Chord as ChordData } from '../../playbackService/theory/chord';
+import { Measure as MeasureData } from '../../playbackService/song/measure'
 import Chord from './chord';
 
 interface IMeasureProps {

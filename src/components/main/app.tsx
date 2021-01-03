@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { BandService } from '../playbackService/band/band.service';
-import { Song } from '../playbackService/song/song';
-import { Theory } from '../playbackService/theory/theory';
-import LeadSheet from './leadSheet';
-import Settings from './settings';
-import SongsList from './songsList';
-import Toolbar from "./toolbar";
+import { BandService } from '../../playbackService/band/band.service';
+import { Song } from '../../playbackService/song/song';
+import { Theory } from '../../playbackService/theory/theory';
+import LeadSheet from '../leadSheet/leadSheet';
+import Settings from '../sidebar/settings/settings';
+import SongsList from '../sidebar/songsList';
+import Toolbar from "../toolbar/toolbar";
 
 interface IAppProps {
     band?: BandService;

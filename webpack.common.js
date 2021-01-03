@@ -14,7 +14,7 @@ module.exports = {
             ],
         })
     ],
-    entry: './src/components/main.tsx',
+    entry: './src/components/main/main.tsx',
     module: {
         rules: [
         {

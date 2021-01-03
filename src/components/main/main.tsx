@@ -1,18 +1,18 @@
-import { BandService as Band, BandService } from "../playbackService/band/band.service";
-import { Drummer } from "../playbackService/musicians/drummer/drummer";
-import { DrumSet } from "../playbackService/musicians/drummer/drumset";
-import { UprightBass } from "../playbackService/musicians/bassist/uprightBass";
-import { Bassist } from "../playbackService/musicians/bassist/bassist";
-import { WalkingBasslineGenerator } from "../playbackService/musicians/bassist/walkingBasslineGenerator";
-import { Theory } from "../playbackService/theory/theory";
-import { BossaBasslineGenerator } from "../playbackService/musicians/bassist/bossaBasslineGenerator";
-import { BasslineGenerator } from "../playbackService/musicians/bassist/basslineGenerator";
-import { Piano } from "../playbackService/musicians/pianist/piano";
-import { Pianist } from "../playbackService/musicians/pianist/pianist";
-import { Metronome } from "../playbackService/musicians/metronome/metronome";
-import { MetronomeInstrument } from "../playbackService/musicians/metronome/metronomeInstrument";
-import { Musician } from "../playbackService/musicians/musician";
-import { Song } from "../playbackService/song/song";
+import { BandService as Band, BandService } from "../../playbackService/band/band.service";
+import { Drummer } from "../../playbackService/musicians/drummer/drummer";
+import { DrumSet } from "../../playbackService/musicians/drummer/drumset";
+import { UprightBass } from "../../playbackService/musicians/bassist/uprightBass";
+import { Bassist } from "../../playbackService/musicians/bassist/bassist";
+import { WalkingBasslineGenerator } from "../../playbackService/musicians/bassist/walkingBasslineGenerator";
+import { Theory } from "../../playbackService/theory/theory";
+import { BossaBasslineGenerator } from "../../playbackService/musicians/bassist/bossaBasslineGenerator";
+import { BasslineGenerator } from "../../playbackService/musicians/bassist/basslineGenerator";
+import { Piano } from "../../playbackService/musicians/pianist/piano";
+import { Pianist } from "../../playbackService/musicians/pianist/pianist";
+import { Metronome } from "../../playbackService/musicians/metronome/metronome";
+import { MetronomeInstrument } from "../../playbackService/musicians/metronome/metronomeInstrument";
+import { Musician } from "../../playbackService/musicians/musician";
+import { Song } from "../../playbackService/song/song";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from "./app";
@@ -21,10 +21,10 @@ import App from "./app";
 (async ()=>{
     // require instrument samples:
     function requireAll(r: any) { r.keys().forEach(r); }
-    requireAll(require.context('../playbackService/staticFiles/samples/upright-bass', true, /\.mp3$/));
-    requireAll(require.context('../playbackService/staticFiles/samples/piano', true, /\.mp3$/));
-    requireAll(require.context('../playbackService/staticFiles/samples/drums', true, /\.mp3$/));
-    requireAll(require.context('../playbackService/staticFiles/svgs', true, /\.svg$/));
+    requireAll(require.context('../../playbackService/staticFiles/samples/upright-bass', true, /\.mp3$/));
+    requireAll(require.context('../../playbackService/staticFiles/samples/piano', true, /\.mp3$/));
+    requireAll(require.context('../../playbackService/staticFiles/samples/drums', true, /\.mp3$/));
+    requireAll(require.context('../../playbackService/staticFiles/svgs', true, /\.svg$/));
 
     // initialize band
     let band: BandService = null;
