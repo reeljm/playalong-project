@@ -3,30 +3,17 @@ import Icon from './icons/icon';
 
 interface IToolbarProps {
     songsMetadata?: any[];
-    tempo?: number;
-    repeats?: number;
-    currentRepeat?: number;
-    transposingKey?: string;
     isPaused?: boolean
     isStopped?: boolean
-    onTempoChange?: (tempo: number) => void;
-    onRepeatChange?: (repeat: number) => void;
     onPlay?: () => Promise<void>;
     onPause?: () => void;
     onStop?: () => void;
-    onToggleStyleOverride?: (performStyleOverride: boolean, style: string) => void;
-    onChangeStyleOverride?: (style: string) => void;
     onSkipSong?: (delta: number) => Promise<void>;
-    onChangeTransposition?: (key: string) => void;
     onClickSongsList?: () => void;
     onClickSettings?: () => void;
 }
 
 interface IToolbarState {
-    showTempo?: boolean;
-    showTransposition?: boolean;
-    showStyleOverrideDropdown?: boolean;
-    showRepeats?: boolean;
     isPaused?: boolean;
     isStopped?: boolean;
 }
@@ -36,10 +23,6 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
     constructor(props:any) {
         super(props);
         this.state = {
-            showTempo: false,
-            showTransposition: false,
-            showStyleOverrideDropdown: false,
-            showRepeats: false,
             isPaused: this.props.isPaused,
             isStopped: this.props.isStopped
         };
@@ -101,8 +84,6 @@ export default class Toolbar extends Component<IToolbarProps, IToolbarState> {
                                     </>
                                 }/>
                         </span>
-                    {/* <Tempo tempo={ this.props.tempo } onTempoChange={ this.props.onTempoChange }></Tempo>
-                    <Repeat repeat={ this.props.repeats } onRepeatChange={ this.props.onRepeatChange }></Repeat> */}
                     <Icon
                         title="Settings"
                         onClick={ this.props.onClickSettings }

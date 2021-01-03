@@ -21,34 +21,28 @@
     width: 80%;
 }
 
-.control-button {
+.icon {
     line-height: 0;
     font-size: 30px;
     color: white;
     display: inline-block;
 }
 
-.vl {
-    border-left: 2px;
-    border-right: 0;
-    border-top: 0;
-    border-bottom: 0;
-    border-style: solid;
-    height: 30px;
-    display: inline-block;
-    border-color: lightgray;
-}
-
 .style-select {
     display: inline-block;
     border-color: lightgrey;
     width: 75px;
-    height: 20px;
     border-radius: 3px;
+    vertical-align: top;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     -o-border-radius: 3px;
+}
+
+#style-override {
+    margin-right: 5px;
+    vertical-align: top;
 }
 
 .tempo-container {
@@ -82,10 +76,10 @@
     border-style: solid;
     border-width: 1px;
     height: 20px;
-    vertical-align: bottom;
+    vertical-align: top;
     border-color: lightgrey;
     background-color: white;
-    color: grey;
+    color: black;
     padding: 0 3px 0 3px;
     cursor: pointer;
 }
@@ -114,15 +108,6 @@ svg, .button-control, #transpose-dropdown-container {
     -moz-border-radius: 3px 0 0 3px;
     -ms-border-radius: 3px 0 0 3px;
     -o-border-radius: 3px 0 0 3px;
-}
-
-input[type=range][orient=vertical]
-{
-    writing-mode: bt-lr; /* IE */
-    -webkit-appearance: slider-vertical; /* WebKit */
-    width: 8px;
-    height: 175px;
-    padding: 0 5px;
 }
 
 
@@ -210,15 +195,6 @@ input[type=number] {
     height: 80px;
 }
 
-.video-container {
-    text-align: center;
-}
-
-.video-container iframe {
-    display: inline-block;
-    margin: 20px 40px 50px 40px;
-}
-
 /* spinner */
 .lds-ellipsis {
     position: relative;
@@ -278,7 +254,7 @@ input[type=number] {
 }
 
 .left-sidebar {
-    padding-top: 10px;
+    padding: 10px;
     grid-column: 1 / 2;
     overflow-y: scroll;
     background-color: #f7f7f7;
@@ -294,12 +270,6 @@ input[type=number] {
     max-width: 220px;
 }
 
-.songs-header {
-    padding-left: 10px;
-    color: #404040;
-    margin: 0;
-}
-
 #songs {
     grid-column: 1 / 2;
 }
@@ -309,8 +279,12 @@ input[type=number] {
     text-align: right;
 }
 
+.settings-label {
+    padding-right: 5px;
+}
+
 .right-sidebar {
-    padding-top: 10px;
+    padding: 10px;
     grid-column: 3 / 4;
     overflow-y: scroll;
     background-color: #f7f7f7;
@@ -319,8 +293,4 @@ input[type=number] {
 .band-controls {
     grid-column: 2 / 12;
     text-align: center;
-}
-
-.hide {
-    display: none;
 }

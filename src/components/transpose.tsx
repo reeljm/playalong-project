@@ -18,12 +18,11 @@ export default class Transpose extends Component<ITransposeProps, ITransposeStat
 
     render() {
         return (<>
-            <div id="transpose-dropdown" className="dropdown-content">
-                <div className="transpose-container">
-                    <div id="transpose-Bb" className={`button-control ${this.state.transposingKey==="Bb" && "selected-transposing-key"}`} onClick={(e)=>this.onClickTranspositionValue("Bb")}>Bb</div>
-                    <div id="transpose-C" className={`button-control ${this.state.transposingKey==="C" && "selected-transposing-key"}`} onClick={(e)=>this.onClickTranspositionValue("C")}>C</div>
-                    <div id="transpose-Eb" className={`button-control ${this.state.transposingKey==="Eb" && "selected-transposing-key"}`} onClick={(e)=>this.onClickTranspositionValue("Eb")}>Eb</div>
-                </div>
+            <div>
+                <label className="settings-label">Transposing Key</label>
+                <div id="transpose-Bb" className={`button-control ${this.state.transposingKey==="Bb" && "selected-transposing-key"}`} onClick={(e)=>this.onClickTranspositionValue("Bb")}>Bb</div>
+                <div id="transpose-C" className={`button-control ${this.state.transposingKey==="C" && "selected-transposing-key"}`} onClick={(e)=>this.onClickTranspositionValue("C")}>C</div>
+                <div id="transpose-Eb" className={`button-control ${this.state.transposingKey==="Eb" && "selected-transposing-key"}`} onClick={(e)=>this.onClickTranspositionValue("Eb")}>Eb</div>
             </div>
         </>);
     }

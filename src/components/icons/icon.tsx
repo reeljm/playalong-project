@@ -16,7 +16,7 @@ export default class Icon extends Component<IIconProps> {
 
     render() {
         return (<>
-            <span title={this.props.title} id={this.props.id} className="control-button" onClick={(e) => {this.props.onClick(e)}}>
+            <span title={this.props.title} id={this.props.id} className="icon" onClick={(e) => {this.props.onClick(e)}}>
                 <svg width="1em" height="1em" viewBox="0 0 16 16" className={ this.props.visible !== false ? "" : "hidden" } fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     {this.props.paths}
                 </svg>

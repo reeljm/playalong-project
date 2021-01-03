@@ -9,7 +9,7 @@ import Toolbar from "./toolbar";
 
 interface IAppProps {
     band?: BandService;
-    songsMetadata?: any[]
+    songsMetadata?: any[];
     theory?: Theory;
     song?: Song;
 }
@@ -21,6 +21,8 @@ interface IAppState {
     isLoading?: boolean;
     showSongsList?: boolean;
     showSettings?: boolean;
+    styleOverrideValue?: string;
+    showStyleOverride?: boolean;
 }
 
 export default class App extends Component<IAppProps, IAppState> {
@@ -31,9 +33,11 @@ export default class App extends Component<IAppProps, IAppState> {
             band: this.props.band,
             song: this.props.song,
             transposingKey: "C",
+            styleOverrideValue: "fourFourTime",
             isLoading: false,
             showSongsList: false,
-            showSettings: false
+            showSettings: false,
+            showStyleOverride: false
         };
 
         this.state.band.setNewMeasureCallback(() => {
@@ -46,47 +50,32 @@ export default class App extends Component<IAppProps, IAppState> {
         });
     }
 
-
     componentDidMount() {
         document.addEventListener("keydown", (e: KeyboardEvent) => e.preventDefault());
-        document.addEventListener("keyup", (e: KeyboardEvent) => this.handleSpace(e));
+        document.addEventListener("keyup", (e: KeyboardEvent) => {
+            if (e.key !== ' ') {
+                return;
+            }
+            if (this.state.band.isPlaying) {
+                this.pause();
+            } else {
+                this.play();
+            }
+        });
     }
-
-    handleSpace(event: KeyboardEvent) {
-        if (event.key !== ' ') {
-            return;
-        }
-        if (this.state.band.isPlaying) {
-            this.pause();
-        } else {
-            this.play();
-        }
-    }
-
 
     render() {
         return (
             <div className="parent">
                 <Toolbar
                     songsMetadata={ this.props.songsMetadata }
-                    tempo={ this.state.band.tempo }
-                    repeats={ this.state.band.repeats }
-                    currentRepeat={ this.state.band.currentRepeat }
-                    transposingKey={ this.state.transposingKey }
                     isPaused={ this.state.band.isPaused }
                     isStopped={ this.state.band.isStopped }
-                    onTempoChange={ (tempo: number) => this.updateTempo(tempo) }
                     onClickSongsList={ () => this.toggleSongsList() }
                     onPlay={ () => this.play() }
                     onPause={ () => this.pause() }
                     onStop={ () => this.stop() }
-                    onRepeatChange={ (repeat: number) => this.updateRepeat(repeat) }
-                    onToggleStyleOverride={
-                        (performStyleOverride: boolean, style: string) => this.toggleStyleOverride(performStyleOverride, style)
-                    }
-                    onChangeStyleOverride={ (style: string) => this.changeStyle(style) }
                     onSkipSong={ async (delta: number) => this.skipSong(delta) }
-                    onChangeTransposition={ (key: string) => this.transpose(key) }
                     onClickSettings={ () => { this.toggleSettings() } }
                     />
                 { this.state.showSongsList &&
@@ -98,17 +87,24 @@ export default class App extends Component<IAppProps, IAppState> {
                 <LeadSheet song={ this.state.song }/>
                 { this.state.showSettings &&
                     <Settings
-                        styleOverrideValue="fourFourTime"
-                        transposingKey="C"
-                        onToggleStyleOverride={ (performStyleOverride: boolean, style: string) => this.toggleStyleOverride(performStyleOverride, style) }
+                        styleOverrideValue={ this.state.styleOverrideValue }
+                        showStyleOverride={ this.state.showStyleOverride }
+                        transposingKey={ this.state.transposingKey }
+                        repeats={ this.state.band.repeats }
+                        currentRepeat={ this.state.band.currentRepeat }
+                        tempo={ this.state.band.tempo }
+                        onToggleStyleOverride={ (performStyleOverride: boolean) => this.toggleStyleOverride(performStyleOverride) }
                         onChangeStyleOverride={ (style: string) => this.changeStyle(style) }
                         onChangeTransposition={ (key: string) => this.transpose(key) }
-                    />}
-
+                        onTempoChange={ (tempo: number) => this.updateTempo(tempo) }
+                        onRepeatChange={ (repeat: number) => this.updateRepeat(repeat) }
+                    />
+                }
             </div>
         )
     }
 
+    // Event handlers:
     async play(){
         if (this.state.isLoading) {return}
         this.setState({ isLoading: true });
@@ -137,8 +133,8 @@ export default class App extends Component<IAppProps, IAppState> {
 
     updateTempo(tempo: number) {
         this.setState((state: IAppState) => {
-            if (!tempo || tempo < 0) {
-                tempo = 0;
+            if (!tempo || tempo < 40) {
+                tempo = 40;
             } else if (tempo > 400) {
                 tempo = 400;
             }
@@ -156,17 +152,18 @@ export default class App extends Component<IAppProps, IAppState> {
         });
     }
 
-    toggleStyleOverride(performStyleOverride: boolean, style: string) {
+    toggleStyleOverride(performStyleOverride: boolean) {
         this.setState((state: IAppState) => {
             const band: BandService = state.band;
             band.styleOverride = performStyleOverride;
             if (performStyleOverride) {
-                band.setStyle(style);
+                band.setStyle(state.styleOverrideValue);
             } else {
                 band.styleOverride = false
             }
             return {
-                band: band
+                band: band,
+                showStyleOverride: performStyleOverride
             };
         });
     }
@@ -174,7 +171,10 @@ export default class App extends Component<IAppProps, IAppState> {
     changeStyle(style: string) {
         this.setState((state: IAppState) => {
             state.band.setStyle(style);
-            return { band: state.band };
+            return {
+                band: state.band,
+                styleOverrideValue: style
+            };
         });
     }
 
@@ -237,5 +237,4 @@ export default class App extends Component<IAppProps, IAppState> {
             return { showSettings: !state.showSettings }
         });
     }
-
 }

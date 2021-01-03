@@ -1,61 +1,63 @@
 import React, { ChangeEvent, Component } from 'react'
+import Repeat from './repeat';
+import Tempo from './tempo';
 import Transpose from './transpose';
 
 interface ISettingsProps {
     styleOverrideValue: string;
+    showStyleOverride: boolean;
     transposingKey: string;
-    onToggleStyleOverride: (performStyleOverride: boolean, style: string) => void;
+    tempo: number;
+    repeats?: number;
+    currentRepeat?: number;
+    onTempoChange: (tempo: number) => void;
+    onToggleStyleOverride: (performStyleOverride: boolean) => void;
     onChangeStyleOverride: (style: string) => void;
     onChangeTransposition: (newKey: string) => void;
+    onRepeatChange?: (repeat: number) => void;
 }
 
-interface ISettingsState {
-    showStyleOverrideDropdown?: boolean;
-    styleOverrideValue?: string;
-}
 
-export default class Settings extends Component<ISettingsProps, ISettingsState> {
+export default class Settings extends Component<ISettingsProps> {
 
     constructor(props: ISettingsProps) {
         super(props)
-
-        this.state = {
-            styleOverrideValue: this.props.styleOverrideValue
-        }
     }
 
     render() {
         return (<>
-            <div id="settings">
-                <div id="settings-dropdown">
-                    <Transpose transposingKey={this.props.transposingKey} onChangeTransposition={ this.props.onChangeTransposition } ></Transpose>
-                    <div>
-                        <span>Style Override</span>
-                        <input type="checkbox" id="style-override" onChange={ (e) => this.onToggleStyleOverride(e) }/>
-                    </div>
-                    <select id="style" className={this.state.showStyleOverrideDropdown ? "style-select": "hide"} onChange={ (e) => this.onChangeStyleOverride(e) } value={this.state.styleOverrideValue}>
+            <div className="right-sidebar">
+                <h4>Settings</h4>
+                <Transpose
+                    transposingKey={this.props.transposingKey}
+                    onChangeTransposition={ this.props.onChangeTransposition }
+                />
+                <label className="settings-label">Style Override</label>
+                <input
+                    type="checkbox"
+                    checked={this.props.showStyleOverride}
+                    id="style-override"
+                    onChange={ (e) => this.props.onToggleStyleOverride(!this.props.showStyleOverride) }
+                />
+                {
+                    this.props.showStyleOverride &&
+                    <select
+                        className="style-select"
+                        onChange={ (e) => this.onChangeStyleOverride(e) }
+                        value={this.props.styleOverrideValue}
+                    >
                         <option value="fourFourTime">Swing</option>
                         <option value="bossa">Latin</option>
                         <option value="mambo">Mambo</option>
                     </select>
-                </div>
+                }
+                <Tempo tempo={this.props.tempo} onTempoChange={ this.props.onTempoChange }/>
+                <Repeat repeat={this.props.repeats} onRepeatChange={ this.props.onRepeatChange }  />
             </div>
         </>);
     }
 
-    onToggleStyleOverride(e: ChangeEvent<HTMLInputElement>) {
-        this.setState((state:ISettingsState) => {
-            const show: boolean = !state.showStyleOverrideDropdown;
-            this.props.onToggleStyleOverride(show, state.styleOverrideValue);
-            return { showStyleOverrideDropdown: show };
-        });
-    }
-
     onChangeStyleOverride(e: ChangeEvent<HTMLSelectElement>) {
-        if (this.state.showStyleOverrideDropdown) {
-            this.setState({ styleOverrideValue: e.target.value });
-            this.props.onChangeStyleOverride(e.target.value);
-        }
+        this.props.onChangeStyleOverride(e.target.value);
     }
-
 }
