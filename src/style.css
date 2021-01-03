@@ -26,6 +26,7 @@
     font-size: 30px;
     color: white;
     display: inline-block;
+    cursor: pointer;
 }
 
 .style-select {
@@ -170,11 +171,6 @@ input[type=number] {
 
 .selected-transposing-key {
     background: #9bc1ff;
-}
-
-.transpose-icon {
-    height: 44px;
-    margin-top: -10px;
 }
 
 .transpose-container {
