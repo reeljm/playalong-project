@@ -195,7 +195,7 @@ input[type=number] {
 .lds-ellipsis {
     position: relative;
     text-align: center;
-    top: 37px;
+    top: -10px;
     left: 47%;
     width: 0;
 }

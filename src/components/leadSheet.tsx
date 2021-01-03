@@ -6,6 +6,7 @@ import Measure from './measure';
 
 interface ILeadSheetProps {
     song: Song;
+    loading: boolean;
 }
 
 export default class LeadSheet extends Component<ILeadSheetProps> {
@@ -115,6 +116,7 @@ export default class LeadSheet extends Component<ILeadSheetProps> {
                         <b>Repeat Number:</b>{ `${this.props.song.getCurrentIteration() + 1} of ${this.props.song.getTotalIterations()}` }
                     </div>
                 </div>
+                {this.props.loading && <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>}
                 <div className="lead-sheet">
                     {toRender}
                 </div>

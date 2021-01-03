@@ -18,7 +18,7 @@ interface IAppState {
     band?: BandService;
     song?: Song;
     transposingKey?: string;
-    isLoading?: boolean;
+    loading?: boolean;
     showSongsList?: boolean;
     showSettings?: boolean;
     styleOverrideValue?: string;
@@ -34,10 +34,10 @@ export default class App extends Component<IAppProps, IAppState> {
             song: this.props.song,
             transposingKey: "C",
             styleOverrideValue: "fourFourTime",
-            isLoading: false,
+            loading: false,
             showSongsList: false,
             showSettings: false,
-            showStyleOverride: false
+            showStyleOverride: false,
         };
 
         this.state.band.setNewMeasureCallback(() => {
@@ -84,7 +84,7 @@ export default class App extends Component<IAppProps, IAppState> {
                         showSongsList={ this.state.showSongsList }
                         onSongClick={ (songID: string) => this.changeSong(songID) }
                     />}
-                <LeadSheet song={ this.state.song }/>
+                <LeadSheet song={ this.state.song } loading={ this.state.loading }/>
                 { this.state.showSettings &&
                     <Settings
                         styleOverrideValue={ this.state.styleOverrideValue }
@@ -106,13 +106,13 @@ export default class App extends Component<IAppProps, IAppState> {
 
     // Event handlers:
     async play(){
-        if (this.state.isLoading) {return}
-        this.setState({ isLoading: true });
+        if (this.state.loading) {return}
+        this.setState({ loading: true });
         await this.state.band.play();
         this.setState((state: IAppState) => {
             return {
                 band: state.band,
-                isLoading: false
+                loading: false
             };
         });
     }
