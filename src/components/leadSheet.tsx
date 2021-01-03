@@ -107,6 +107,18 @@ export default class LeadSheet extends Component<ILeadSheetProps> {
                 endingIndex++;
             });
         });
-        return <div className="lead-sheet"> { toRender } </div>;
+        return (
+            <div className="main-section">
+                <h1 className="song-name">{ this.props.song.songName }</h1>
+                <div className="playback-info">
+                    <div className="repeat-number">
+                        <b>Repeat Number:</b>{ `${this.props.song.getCurrentIteration() + 1} of ${this.props.song.getTotalIterations()}` }
+                    </div>
+                </div>
+                <div className="lead-sheet">
+                    {toRender}
+                </div>
+            </div>
+        );
     }
 }

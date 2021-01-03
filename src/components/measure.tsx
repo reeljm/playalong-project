@@ -21,14 +21,13 @@ export default class Measure extends Component<IMeasureProps> {
         return (
             <>
                 {
-                    this.props.endingMarkerNumber ?
+                    this.props.endingMarkerNumber &&
                     <div className="ending-marker-container">
                             <img className="ending-marker" src="./assets/svgs/repeatBracket.svg"/>
                             <img className="ending-marker" src={`./assets/svgs/repeat${this.props.endingMarkerNumber}.svg`}/>
                     </div>
-                    : null
                 }
-                <div className={ this.props.measure.currentlyPlayingMeasure ? "highlighted-measure measure" : "measure"}> { toRender } </div>
+                <div className={ `measure ${this.props.measure.currentlyPlayingMeasure && "highlighted-measure"}`}> { toRender } </div>
             </>
         );
     }

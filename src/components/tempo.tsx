@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Component, createRef, RefObject } from 'react'
+import React, { ChangeEvent, Component } from 'react'
 import ReactDOM from 'react-dom';
 
 interface TempoProps {

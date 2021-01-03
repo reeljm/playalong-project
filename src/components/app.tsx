@@ -3,6 +3,8 @@ import { BandService } from '../playbackService/band/band.service';
 import { Song } from '../playbackService/song/song';
 import { Theory } from '../playbackService/theory/theory';
 import LeadSheet from './leadSheet';
+import Settings from './settings';
+import SongsList from './songsList';
 import Toolbar from "./toolbar";
 
 interface IAppProps {
@@ -18,6 +20,7 @@ interface IAppState {
     transposingKey?: string;
     isLoading?: boolean;
     showSongsList?: boolean;
+    showSettings?: boolean;
 }
 
 export default class App extends Component<IAppProps, IAppState> {
@@ -29,7 +32,8 @@ export default class App extends Component<IAppProps, IAppState> {
             song: this.props.song,
             transposingKey: "C",
             isLoading: false,
-            showSongsList: false
+            showSongsList: false,
+            showSettings: false
         };
 
         this.state.band.setNewMeasureCallback(() => {
@@ -62,15 +66,7 @@ export default class App extends Component<IAppProps, IAppState> {
 
     render() {
         return (
-            <>
-                { this.state.showSongsList ?
-                    <div className="songs-list">
-                        <h2 className="songs-header">Songs</h2>
-                        { this.props.songsMetadata.map((data: any) =>
-                            <span key={data._id} onClick={() => this.changeSong(data._id) }>{data.name}</span>)
-                        }
-                    </div>
-                    : "" }
+            <div className="parent">
                 <Toolbar
                     songsMetadata={ this.props.songsMetadata }
                     tempo={ this.state.band.tempo }
@@ -91,16 +87,25 @@ export default class App extends Component<IAppProps, IAppState> {
                     onChangeStyleOverride={ (style: string) => this.changeStyle(style) }
                     onSkipSong={ async (delta: number) => this.skipSong(delta) }
                     onChangeTransposition={ (key: string) => this.transpose(key) }
-                />
-                { this.state.isLoading ? <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div> : null }
-                <h1 className="song-name">{ this.state.song.songName }</h1>
-                <div className="playback-info">
-                    <div className="repeat-number">
-                        <b>Repeat Number:</b>{ `${this.state.song.getCurrentIteration() + 1} of ${this.state.song.getTotalIterations()}` }
-                    </div>
-                </div>
-                <LeadSheet song={ this.state.song }></LeadSheet>
-            </>
+                    onClickSettings={ () => { this.toggleSettings() } }
+                    />
+                { this.state.showSongsList &&
+                    <SongsList
+                        songsMetadata={this.props.songsMetadata}
+                        showSongsList={ this.state.showSongsList }
+                        onSongClick={ (songID: string) => this.changeSong(songID) }
+                    />}
+                <LeadSheet song={ this.state.song }/>
+                { this.state.showSettings &&
+                    <Settings
+                        styleOverrideValue="fourFourTime"
+                        transposingKey="C"
+                        onToggleStyleOverride={ (performStyleOverride: boolean, style: string) => this.toggleStyleOverride(performStyleOverride, style) }
+                        onChangeStyleOverride={ (style: string) => this.changeStyle(style) }
+                        onChangeTransposition={ (key: string) => this.transpose(key) }
+                    />}
+
+            </div>
         )
     }
 
@@ -224,6 +229,12 @@ export default class App extends Component<IAppProps, IAppState> {
     toggleSongsList() {
         this.setState((state: IAppState) => {
             return { showSongsList: !state.showSongsList }
+        });
+    }
+
+    toggleSettings() {
+        this.setState((state: IAppState) => {
+            return { showSettings: !state.showSettings }
         });
     }
 

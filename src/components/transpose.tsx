@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom';
 
 interface ITransposeProps {
     transposingKey: string,
@@ -7,62 +6,31 @@ interface ITransposeProps {
 }
 
 interface ITransposeState {
-    showTransposition?: boolean
+    transposingKey: string
 }
 
 export default class Transpose extends Component<ITransposeProps, ITransposeState> {
 
     constructor(props: ITransposeProps) {
-        super(props)
-
-        this.state = {
-            showTransposition: false
-        }
-    }
-
-    componentDidMount() {
-        document.addEventListener('click', this.handleClickOutside, true);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener('click', this.handleClickOutside, true);
-    }
-
-    handleClickOutside = (event: any) => {
-        const currentNode: Node = ReactDOM.findDOMNode(this);
-        if (!currentNode || !currentNode.contains(event.target)) {
-            this.setState({showTransposition: false});
-        }
+        super(props);
+        this.state = { transposingKey: this.props.transposingKey };
     }
 
     render() {
         return (<>
-            <div id="transpose-dropdown-container" className="dropdown">
-                <span title="Transpose" id="transpose-icon" className="control-icon control-button" onClick={(e)=>this.onClickTransposition()}>
-                    <img className="transpose-icon" src="./assets/svgs/transpose.svg"/>
-                </span>
-                <div id="transpose-dropdown" className={this.state.showTransposition ? "dropdown-content" : "hide"}>
-                    <div className="transpose-container">
-                        <div id="transpose-Bb" className={this.props.transposingKey==="Bb" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("Bb")}>Bb</div>
-                        <div id="transpose-C" className={this.props.transposingKey==="C" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("C")}>C</div>
-                        <div id="transpose-Eb" className={this.props.transposingKey==="Eb" ? "button-control selected-transposing-key" : "button-control"} onClick={(e)=>this.onClickTranspositionValue("Eb")}>Eb</div>
-                    </div>
+            <div id="transpose-dropdown" className="dropdown-content">
+                <div className="transpose-container">
+                    <div id="transpose-Bb" className={`button-control ${this.state.transposingKey==="Bb" && "selected-transposing-key"}`} onClick={(e)=>this.onClickTranspositionValue("Bb")}>Bb</div>
+                    <div id="transpose-C" className={`button-control ${this.state.transposingKey==="C" && "selected-transposing-key"}`} onClick={(e)=>this.onClickTranspositionValue("C")}>C</div>
+                    <div id="transpose-Eb" className={`button-control ${this.state.transposingKey==="Eb" && "selected-transposing-key"}`} onClick={(e)=>this.onClickTranspositionValue("Eb")}>Eb</div>
                 </div>
             </div>
         </>);
     }
 
-        // Transposition handlers:
-        onClickTransposition() {
-            this.setState((state:ITransposeState) => {
-                return {
-                    showTransposition: !state.showTransposition
-                }
-            });
-        }
-
-        onClickTranspositionValue(key: string) {
-            this.props.onChangeTransposition(key);
-        }
+    onClickTranspositionValue(key: string) {
+        this.props.onChangeTransposition(key);
+        this.setState({transposingKey: key});
+    }
 
 }
