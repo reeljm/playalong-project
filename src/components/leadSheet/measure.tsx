@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Chord as ChordData } from '../../playbackService/theory/chord';
 import { Measure as MeasureData } from '../../playbackService/song/measure'
 import Chord from './chord';
+import RepeatBracket from './repeatBracket';
 
 interface IMeasureProps {
     measure: MeasureData;
@@ -22,10 +23,7 @@ export default class Measure extends Component<IMeasureProps> {
             <>
                 {
                     this.props.endingMarkerNumber &&
-                    <div className="ending-marker-container">
-                            <img className="ending-marker" src="./assets/svgs/repeatBracket.svg"/>
-                            <img className="ending-marker" src={`./assets/svgs/repeat${this.props.endingMarkerNumber}.svg`}/>
-                    </div>
+                    <RepeatBracket repeatNumber={this.props.endingMarkerNumber}/>
                 }
                 <div className={ `measure ${this.props.measure.currentlyPlayingMeasure && "highlighted-measure"}`}> { toRender } </div>
             </>

@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { Measure as MeasureData } from '../../playbackService/song/measure';
 import { Section } from '../../playbackService/song/section';
 import { Song } from '../../playbackService/song/song';
+import BarLine from './barLine';
+import DoubleBarLine from './doubleBarLine';
+import EndRepeat from './endRepeat';
 import Measure from './measure';
+import StartRepeat from './startRepeat';
 
 interface ILeadSheetProps {
     song: Song;
@@ -20,9 +24,9 @@ export default class LeadSheet extends Component<ILeadSheetProps> {
         this.props.song.sections.forEach((section: Section) => {
             toRender.push(<h2 className="section-header">{section.sectionName}</h2>);
             if (section.isRepeated) {
-                toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/startRepeat.svg`}/>);
+                toRender.push( <StartRepeat/> );
             } else {
-                toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/doubleBarLine.svg`}/>);
+                toRender.push( <DoubleBarLine/> );
             }
             let measureIndex: number = 0;
             section.allMeasures.forEach((measure: MeasureData) => {
@@ -35,27 +39,27 @@ export default class LeadSheet extends Component<ILeadSheetProps> {
 
                 // bar line:
                 if (!lastMeasure || sectionHasEndings) {
-                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
+                    toRender.push( <BarLine/> );
                 }
 
                 // bar line:
                 if (lastMeasure && sectionHasEndings && fullLine) {
                     toRender.push(<br/>);
-                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
+                    toRender.push( <BarLine/> );
                     this.numMeasuresOnLine = 0;
                 }
 
                 // new line:
                 if (!lastMeasure && fullLine) {
                     toRender.push(<br/>);
-                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
+                    toRender.push( <BarLine/> );
                     this.numMeasuresOnLine = 0;
                 }
 
                 measureIndex++;
             });
             if (!section.isRepeated) {
-                toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/doubleBarLine.svg`}/>);
+                toRender.push( <DoubleBarLine/> );
                 toRender.push(<br/>);
                 this.numMeasuresOnLine = 0;
             }
@@ -75,13 +79,13 @@ export default class LeadSheet extends Component<ILeadSheetProps> {
 
                     // bar line:
                     if (!lastMeasure) {
-                        toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
+                        toRender.push( <BarLine/> );
                     }
 
                     // new line:
                     if (!lastMeasure && fullLine) {
                         toRender.push(<br/>);
-                        toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
+                        toRender.push( <BarLine/> );
                         this.numMeasuresOnLine = 0;
                     }
 
@@ -90,18 +94,18 @@ export default class LeadSheet extends Component<ILeadSheetProps> {
                 });
 
                 if (!section.isRepeated) {
-                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/doubleBarLine.svg`}/>);
+                    toRender.push( <DoubleBarLine/> );
                     toRender.push(<br/>);
                     this.numMeasuresOnLine = 0;
                 }
 
                 if (endingIndex + 1 >= section.allEndings.length) {
-                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/doubleBarLine.svg`}/>);
+                    toRender.push( <DoubleBarLine/> );
                     toRender.push(<br/>);
                 } else {
-                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/endRepeat.svg`}/>);
+                    toRender.push( <EndRepeat/> );
                     toRender.push(<br/>);
-                    toRender.push( <img className="bar-line" src={`${LeadSheet.SVG_LOCATION}/barLine.svg`}/>);
+                    toRender.push( <BarLine/> );
                 }
                 this.numMeasuresOnLine = 0;
 

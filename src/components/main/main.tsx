@@ -24,7 +24,6 @@ import App from "./app";
     requireAll(require.context('../../playbackService/staticFiles/samples/upright-bass', true, /\.mp3$/));
     requireAll(require.context('../../playbackService/staticFiles/samples/piano', true, /\.mp3$/));
     requireAll(require.context('../../playbackService/staticFiles/samples/drums', true, /\.mp3$/));
-    requireAll(require.context('../../playbackService/staticFiles/svgs', true, /\.svg$/));
 
     // initialize band
     let band: BandService = null;

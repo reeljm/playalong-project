@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Chord as ChordData } from '../../playbackService/theory/chord'
+import Root from './root';
+import TypeSmall from './typeSmall';
 
 interface IChordProps {
     chord: ChordData;
@@ -8,25 +10,25 @@ interface IChordProps {
 export default class Chord extends Component<IChordProps> {
 
     private static SVG_MAP: Map<string, string> = new Map([
-        ["A", "A.svg"],
-        ["B", "B.svg"],
-        ["C", "C.svg"],
-        ["D", "D.svg"],
-        ["E", "E.svg"],
-        ["F", "F.svg"],
-        ["G", "G.svg"],
-        ["#", "sharp.svg"],
-        ["b", "flat.svg"],
-        ["1", "1.svg"],
-        ["5" ,"5.svg"],
-        ["7" ,"7.svg"],
-        ["9" ,"9.svg"],
-        ["dim" ,"dim.svg"],
-        ["alt" ,"alt.svg"],
-        ["maj" ,"maj.svg"],
-        ["Maj" ,"maj.svg"],
-        ["min" ,"min.svg"],
-        ["relative min" ,"min.svg"]
+        ["A", "A"],
+        ["B", "B"],
+        ["C", "C"],
+        ["D", "D"],
+        ["E", "E"],
+        ["F", "F"],
+        ["G", "G"],
+        ["#", "#"],
+        ["b", "b"],
+        ["1", "1"],
+        ["5" ,"5"],
+        ["7" ,"7"],
+        ["9" ,"9"],
+        ["dim" ,"○"],
+        ["alt" ,"alt"],
+        ["maj" ,"△"],
+        ["Maj" ,"△"],
+        ["min" ,"-"],
+        ["relative min" ,"-"]
     ]);
 
     private static SVG_LOCATION: string = "./assets/svgs/";
@@ -38,10 +40,11 @@ export default class Chord extends Component<IChordProps> {
             let className: string = "";
             if (e === "b" || e === "#") {
                 className="chord-symbol";
+                return <TypeSmall symbol={ e }/>
             } else {
                 className="chord-root"
+                return <Root note={ e }/>;
             }
-            return <img className={className} src={`${Chord.SVG_LOCATION}/${Chord.SVG_MAP.get(e)}`}/>;
         });
 
         // Render the type:
@@ -53,7 +56,7 @@ export default class Chord extends Component<IChordProps> {
                 const value: string = entry[1];
 
                 if (type.startsWith(key)) {
-                    toRender.push(<img className="chord-symbol" src={`${Chord.SVG_LOCATION}/${value}`}/>);
+                    toRender.push(<TypeSmall symbol={ value }/>);
                     type = type.replace(key, "");
                     replaced = true;
                 }
