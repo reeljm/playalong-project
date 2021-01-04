@@ -28,7 +28,7 @@ module.exports = {
             exclude: /node_modules/,
         },
         {
-            test: /\.(svg|mp3)$/,
+            test: /\.(mp3)$/,
             loader: 'file-loader',
             options: {
                 name: 'assets/[folder]/[name].[ext]',
