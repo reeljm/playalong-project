@@ -12,13 +12,13 @@ export default class TypeSmall extends Component<ITypeProps> {
                 <g>
                     <text
                         xmlSpace="preserve"
-                        text-anchor="start"
-                        font-family="Helvetica, Arial, sans-serif"
-                        font-size="18.181818"
+                        textAnchor="start"
+                        fontFamily="Helvetica, Arial, sans-serif"
+                        fontSize="18.181818"
                         id="svg_1"
                         y="20"
                         x="0.272727"
-                        stroke-width="0"
+                        strokeWidth="0"
                         stroke="#000"
                         fill="#000000">
                             {this.props.symbol}

@@ -12,13 +12,13 @@ export default class Root extends Component<IRootProps> {
                 <g>
                     <text
                         xmlSpace="preserve"
-                        text-anchor="start"
-                        font-family="Helvetica, Arial, sans-serif"
-                        font-size="43.636363"
+                        textAnchor="start"
+                        fontFamily="Helvetica, Arial, sans-serif"
+                        fontSize="43.636363"
                         id="svg_1"
                         y="39.272727"
                         x="5"
-                        stroke-width="0"
+                        strokeWidth="0"
                         stroke="#000"
                         fill="#000000">
                             {this.props.note}
