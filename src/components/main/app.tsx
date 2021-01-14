@@ -131,6 +131,7 @@ export default class App extends Component<IAppProps, IAppState> {
 
     updateRepeat(repeat: number) {
         this.setState((state: IAppState) => {
+            repeat = Number.isNaN(repeat) ? 0: repeat;
             repeat = Math.max(1, repeat, this.state.band.currentRepeat + 1);
             repeat = Math.min(repeat, 400);
             state.band.repeats = repeat;
