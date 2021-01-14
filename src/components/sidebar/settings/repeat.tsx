@@ -21,7 +21,7 @@ export default class Repeat extends Component<IRepeatProps> {
                     className="number-input"
                     type="number"
                     value={ this.props.repeat }
-                    onChange={(e) => this.props.onRepeatChange(e.target.valueAsNumber)}
+                    onChange={(e) => this.props.onRepeatChange(e.target.valueAsNumber - e.target.valueAsNumber % 1)}
                     pattern="\d*"
                 />
                 <div className="button-control increase" onClick={(e)=>this.props.onRepeatChange(this.props.repeat + 1)}>+</div>
