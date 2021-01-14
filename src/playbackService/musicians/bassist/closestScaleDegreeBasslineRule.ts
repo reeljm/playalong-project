@@ -19,7 +19,7 @@ export class ClosestScaleDegreeBasslineRule implements BasslineRule {
         const lastNote: Note = params.previousNoteScheduled;
 
         let possibleIntervals: number[] = null
-        if (params.requireRoot) {
+        if (params.requireRootOrFifth) {
             possibleIntervals = [0,4];
         } else {
             possibleIntervals = Array.from(Array(scale.pitches.length).keys());

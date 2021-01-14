@@ -40,7 +40,7 @@ export class WalkingBasslineGenerator extends BasslineGenerator {
         const down: BasslineRequestParams.Dir = BasslineRequestParams.Dir.Down;
         if (currentBeat === 1) {
             // randomly choose to change direction:
-            const dirSwitch: boolean = Math.random() >= 0.9;
+            const dirSwitch: boolean = Math.random() >= 0.7;
             if (dirSwitch) {
                 basslineCurrentState.direction = basslineCurrentState.direction === up ? down : up;
             }
@@ -62,10 +62,10 @@ export class WalkingBasslineGenerator extends BasslineGenerator {
         params.beatsAlreadySpentOnCurrentChord = basslineCurrentState.beatsAlreadySpentOnCurrentChord;
         params.nextBeatIsStrongBeat = currentBeat === currentMeasure.numberOfBeats - 1;
         params.isLastBeatOfCurrentChord = !currentChord.equals(nextChord);
-        params.requireRoot = false;
+        params.requireRootOrFifth = false;
 
         // see if this is a special case:
-        if (!basslineCurrentState.previousNoteScheduled || !nextChord) {
+        if (!basslineCurrentState.previousNoteScheduled || !currentMeasure.nextMeasure) {
             // if we are starting or ending, schedule the root:
             params.desiredScaleDegree = 0;
             params.desiredOctave = basslineCurrentState.currentOctave;
@@ -75,7 +75,7 @@ export class WalkingBasslineGenerator extends BasslineGenerator {
             params.desiredOctave = basslineCurrentState.currentOctave;
         } else if (currentBeat % currentMeasure.numberOfBeats === 0) {
             // this is a downbeat, schedule the root:
-            params.requireRoot = true;
+            params.requireRootOrFifth = true;
         }
     }
 }

@@ -96,7 +96,7 @@ export class BossaBasslineGenerator extends BasslineGenerator {
         params.beatsAlreadySpentOnCurrentChord = basslineCurrentState.beatsAlreadySpentOnCurrentChord;
         params.nextBeatIsStrongBeat = currentBeat === currentMeasure.numberOfBeats - 1;
         params.isLastBeatOfCurrentChord = !currentChord.equals(nextChord);
-        params.requireRoot = false;
+        params.requireRootOrFifth = false;
 
         // see if this is a special case:
         if (!basslineCurrentState.previousNoteScheduled || !nextChord) {
