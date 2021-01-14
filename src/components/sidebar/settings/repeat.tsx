@@ -15,30 +15,19 @@ export default class Repeat extends Component<IRepeatProps> {
         return (<>
             <div>
                 <label className="settings-label">Repeat</label>
-                <div className="button-control decrease" onClick={ (e)=>this.onRepeatInputChange(this.props.repeat-1) }>-</div>
+                <div className="button-control decrease" onClick={(e)=>this.props.onRepeatChange(this.props.repeat - 1)}>-</div>
                 <input
                     id="repeats"
                     className="number-input"
                     type="number"
                     value={ this.props.repeat }
-                    onKeyDown={ (e)=>this.onKeyDown(e) }
+                    onChange={(e) => this.props.onRepeatChange(e.target.valueAsNumber)}
                     pattern="\d*"
                 />
-                <div className="button-control increase" onClick={ (e)=>this.onRepeatInputChange(this.props.repeat+1) }>+</div>
+                <div className="button-control increase" onClick={(e)=>this.props.onRepeatChange(this.props.repeat + 1)}>+</div>
             </div>
         </>);
     }
 
-    onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-        if (e.key === "ArrowUp") {
-            this.onRepeatInputChange(this.props.repeat+1);
-        } else if (e.key === "ArrowDown") {
-            this.onRepeatInputChange(this.props.repeat-1);
-        }
-    }
-
-    onRepeatInputChange(tempo: number) {
-        this.props.onRepeatChange(tempo);
-    }
 
 }

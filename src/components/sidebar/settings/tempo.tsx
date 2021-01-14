@@ -15,30 +15,17 @@ export default class Tempo extends Component<TempoProps> {
         return (
             <div>
                 <label className="settings-label">Tempo (BPM)</label>
-                <div className="button-control decrease" onClick={ (e)=>this.onTempoInputChange(this.props.tempo-1) }>-</div>
+                <div className="button-control decrease" onClick={() => this.props.onTempoChange(this.props.tempo - 1)}>-</div>
                     <input
                         id="tempo"
                         className="number-input"
                         type="number"
                         value={ this.props.tempo }
-                        onKeyDown={ (e)=>this.onKeyDown(e) }
+                        onChange={(e) => this.props.onTempoChange(e.target.valueAsNumber)}
                         pattern="\d*"
                     />
-                <div className="button-control increase" onClick={ (e)=>this.onTempoInputChange(this.props.tempo+1) }>+</div>
+                <div className="button-control increase" onClick={() => this.props.onTempoChange(this.props.tempo + 1)}>+</div>
             </div>
         );
     }
-
-    onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-        if (e.key === "ArrowUp") {
-            this.onTempoInputChange(this.props.tempo+1);
-        } else if (e.key === "ArrowDown") {
-            this.onTempoInputChange(this.props.tempo-1);
-        }
-    }
-
-    onTempoInputChange(tempo: number) {
-        this.props.onTempoChange(tempo);
-    }
-
 }

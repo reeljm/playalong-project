@@ -50,20 +50,6 @@ export default class App extends Component<IAppProps, IAppState> {
         });
     }
 
-    componentDidMount() {
-        document.addEventListener("keydown", (e: KeyboardEvent) => e.preventDefault());
-        document.addEventListener("keyup", (e: KeyboardEvent) => {
-            if (e.key !== ' ') {
-                return;
-            }
-            if (this.state.band.isPlaying) {
-                this.pause();
-            } else {
-                this.play();
-            }
-        });
-    }
-
     render() {
         return (
             <div className="parent">
