@@ -149,6 +149,11 @@ input[type=number] {
     margin-top: -5px;
 }
 
+.lead-sheet {
+    margin-left: 10%;
+    margin-right: auto;
+}
+
 .measure {
     min-width: 18%;
     display: inline-flex;

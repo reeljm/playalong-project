@@ -119,10 +119,10 @@ export default class App extends Component<IAppProps, IAppState> {
 
     updateTempo(tempo: number) {
         this.setState((state: IAppState) => {
-            if (!tempo || tempo < 40) {
-                tempo = 40;
-            } else if (tempo > 400) {
-                tempo = 400;
+            if (!tempo || tempo < 0) {
+                tempo = 0;
+            } else if (tempo > 1000) {
+                tempo = 1000;
             }
             state.band.tempo = tempo;
             return {band: state.band};
