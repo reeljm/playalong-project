@@ -51,25 +51,6 @@
             }
         ]
     },
-    {
-        "durationInBeats": 4,
-        "events": [
-            {
-                "start": "0:0",
-                "velocity": 0.75,
-                "duration": "2n.",
-                "velocityOffset":  0.1,
-                "probability": 1
-            },
-            {
-                "start": "3:0",
-                "velocity": 0.8,
-                "duration": "4n",
-                "velocityOffset":  0.05,
-                "probability": 1
-            }
-        ]
-    },
 
 
 
