@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { symbolName } from 'typescript'
 
 interface ITypeProps {
     symbol: string;
@@ -8,7 +9,7 @@ export default class TypeSmall extends Component<ITypeProps> {
 
     render() {
         return (
-            <svg className="chord-symbol" width="14.545454" height="40" xmlns="http://www.w3.org/2000/svg">
+            <svg className="chord-symbol" width={Math.max(7*this.props.symbol.length, 14.55)} height="40" xmlns="http://www.w3.org/2000/svg">
                 <g>
                     <text
                         xmlSpace="preserve"
