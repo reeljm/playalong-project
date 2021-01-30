@@ -12,6 +12,22 @@
         ]
     },
     {
+        "durationInBeats": 1,
+        "events": [
+            {
+                "start": "0:0",
+                "velocity": 0.9,
+                "duration": "8n.",
+                "velocityOffset":  0.1,
+                "probability": 1
+            }
+        ]
+    },
+
+
+
+
+    {
         "durationInBeats": 4,
         "events": [
             {
@@ -24,6 +40,41 @@
         ]
     },
     {
+        "durationInBeats": 4,
+        "events": [
+            {
+                "start": "0:0",
+                "velocity": 0.9,
+                "duration": "2m.",
+                "velocityOffset":  0.1,
+                "probability": 1
+            }
+        ]
+    },
+    {
+        "durationInBeats": 4,
+        "events": [
+            {
+                "start": "0:0",
+                "velocity": 0.75,
+                "duration": "2n.",
+                "velocityOffset":  0.1,
+                "probability": 1
+            },
+            {
+                "start": "3:0",
+                "velocity": 0.8,
+                "duration": "4n",
+                "velocityOffset":  0.05,
+                "probability": 1
+            }
+        ]
+    },
+
+
+
+
+    {
         "durationInBeats": 3,
         "events": [
             {
@@ -35,6 +86,11 @@
             }
         ]
     },
+
+
+
+
+
     {
         "durationInBeats": 2,
         "events": [
@@ -52,15 +108,39 @@
         "events": [
             {
                 "start": "0:0",
-                "velocity": 0.7,
-                "duration": "4n",
+                "velocity": 0.9,
+                "duration": "8n",
+                "velocityOffset":  0.1,
+                "probability": 1
+            }
+        ]
+    },
+    {
+        "durationInBeats": 2,
+        "events": [
+            {
+                "start": "0:2",
+                "velocity": 0.9,
+                "duration": "8n",
+                "velocityOffset":  0.1,
+                "probability": 1
+            }
+        ]
+    },
+    {
+        "durationInBeats": 2,
+        "events": [
+            {
+                "start": "0:0",
+                "velocity": 0.85,
+                "duration": "8n.",
                 "velocityOffset":  0.1,
                 "probability": 1
             },
             {
                 "start": "0:2",
-                "velocity": 0.65,
-                "duration": "4n.",
+                "velocity": 0.95,
+                "duration": "8n.",
                 "velocityOffset":  0.1,
                 "probability": 1
             }

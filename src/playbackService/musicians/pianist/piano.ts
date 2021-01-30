@@ -16,6 +16,7 @@ export class Piano extends Instrument {
             try {
                 self.sampler = new Sampler(fileConfig, () => {
                     self.sampler.volume.value = -4;
+                    self.sampler.release = 0.75;
                     const panner: Panner = new Panner().toDestination();
                     panner.pan.value = 0;
                     self.sampler.connect(panner);
