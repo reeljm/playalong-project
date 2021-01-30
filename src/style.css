@@ -1,3 +1,9 @@
+body {
+    display: block;
+    margin: 0;
+    font-family: Verdana, sans-serif;
+}
+
 .header {
     color: #515151;
     font-family: Verdana, Geneva, sans-serif;
@@ -61,13 +67,14 @@
 
 .number-input {
     width: 40px;
-    height: 20px;
+    height: 18px;
     text-align: center;
     border-radius: 0;
     border: 1px;
     border-color: lightgrey;
     border-style: solid;
     margin-left: -5px;
+    vertical-align: top;
 }
 
 .button-control {
@@ -83,6 +90,12 @@
     color: black;
     padding: 0 3px 0 3px;
     cursor: pointer;
+    text-align: center;
+    font-size: 12px;
+}
+
+.button-text {
+    vertical-align: middle;
 }
 
 svg, .button-control, #transpose-dropdown-container {
@@ -262,6 +275,7 @@ input[type=number] {
     cursor: pointer;
     word-wrap: normal;
     max-width: 220px;
+    font-weight: normal;
 }
 
 #songs {
@@ -275,6 +289,7 @@ input[type=number] {
 
 .settings-label {
     padding-right: 5px;
+    font-size: 12px;
 }
 
 .right-sidebar {
@@ -284,7 +299,15 @@ input[type=number] {
     background-color: #f7f7f7;
 }
 
+.right-sidebar > div {
+    margin-top: 10px;
+}
+
 .band-controls {
     grid-column: 2 / 12;
     text-align: center;
+}
+
+.hidden {
+    display: none;
 }

@@ -32,25 +32,27 @@ export default class Settings extends Component<ISettingsProps> {
                     transposingKey={this.props.transposingKey}
                     onChangeTransposition={ this.props.onChangeTransposition }
                 />
-                <label className="settings-label">Style Override</label>
-                <input
-                    type="checkbox"
-                    checked={this.props.showStyleOverride}
-                    id="style-override"
-                    onChange={ (e) => this.props.onToggleStyleOverride(!this.props.showStyleOverride) }
-                />
-                {
-                    this.props.showStyleOverride &&
-                    <select
-                        className="style-select"
-                        onChange={ (e) => this.onChangeStyleOverride(e) }
-                        value={this.props.styleOverrideValue}
-                    >
-                        <option value="fourFourTime">Swing</option>
-                        <option value="bossa">Latin</option>
-                        <option value="mambo">Mambo</option>
-                    </select>
-                }
+                <div>
+                    <label className="settings-label">Style Override</label>
+                    <input
+                        type="checkbox"
+                        checked={this.props.showStyleOverride}
+                        id="style-override"
+                        onChange={ (e) => this.props.onToggleStyleOverride(!this.props.showStyleOverride) }
+                    />
+                    {
+                        this.props.showStyleOverride &&
+                        <select
+                            className="style-select"
+                            onChange={ (e) => this.onChangeStyleOverride(e) }
+                            value={this.props.styleOverrideValue}
+                        >
+                            <option value="fourFourTime">Swing</option>
+                            <option value="bossa">Latin</option>
+                            <option value="mambo">Mambo</option>
+                        </select>
+                    }
+                </div>
                 <Tempo tempo={this.props.tempo} onTempoChange={ this.props.onTempoChange }/>
                 <Repeat repeat={this.props.repeats} onRepeatChange={ this.props.onRepeatChange }  />
             </div>
