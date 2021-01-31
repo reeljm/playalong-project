@@ -49,7 +49,7 @@ body {
 
 #style-override {
     margin-right: 5px;
-    vertical-align: top;
+    vertical-align: middle;
 }
 
 .tempo-container {
@@ -306,6 +306,14 @@ input[type=number] {
 .band-controls {
     grid-column: 2 / 12;
     text-align: center;
+}
+
+.slider {
+    vertical-align: middle;
+}
+
+.mixer-line {
+    text-align: end;
 }
 
 .hidden {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Instrument } from '../../playbackService/musicians/instrument';
 import { BandService } from '../../playbackService/band/band.service';
 import { Song } from '../../playbackService/song/song';
 import { Theory } from '../../playbackService/theory/theory';
@@ -12,6 +13,7 @@ interface IAppProps {
     songsMetadata?: any[];
     theory?: Theory;
     song?: Song;
+    instruments: Instrument[];
 }
 
 interface IAppState {
@@ -84,6 +86,7 @@ export default class App extends Component<IAppProps, IAppState> {
                         onChangeTransposition={ (key: string) => this.transpose(key) }
                         onTempoChange={ (tempo: number) => this.updateTempo(tempo) }
                         onRepeatChange={ (repeat: number) => this.updateRepeat(repeat) }
+                        instruments={ this.props.instruments }
                     />
                 }
             </div>

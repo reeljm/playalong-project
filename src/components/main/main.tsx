@@ -16,6 +16,7 @@ import { Song } from "../../playbackService/song/song";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from "./app";
+import { Instrument } from "../../playbackService/musicians/instrument";
 
 
 (async ()=>{
@@ -32,6 +33,7 @@ import App from "./app";
     const piano: Piano = new Piano();
     const metronomeInstrument: MetronomeInstrument = new MetronomeInstrument();
     const theory: Theory = new Theory();
+    const instruments: Instrument[] = [bass, drumset, piano, metronomeInstrument];
 
     // configure bassist
     const basslineGeneratorMap: Map<string, BasslineGenerator> = new Map<string, BasslineGenerator>();
@@ -69,6 +71,7 @@ import App from "./app";
             band={band}
             song={songToPlay}
             songsMetadata={songsMetadata}
+            instruments={instruments}
         />,
         document.getElementById('app')
     );

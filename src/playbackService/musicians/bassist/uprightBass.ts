@@ -8,17 +8,20 @@ export class UprightBass extends Instrument {
     static LOWEST_NOTE = Note.getNote("E", 1);
     static HIGHEST_NOTE = Note.getNote("B", 3);
 
-    sampler: Sampler;
+    protected sampler: Sampler;
+    private panner: Panner;
+    protected volumeVal = 5;
+    public instrumentName = "Bass";
 
     loadInstrument(): Promise<void> {
         const self = this;
         return new Promise((resolve, reject) => {
             try {
                 self.sampler = new Sampler(fileConfig, () => {
-                    self.sampler.volume.value = 6;
-                    const panner: Panner = new Panner().toDestination();
-                    panner.pan.value = 0.75;
-                    self.sampler.connect(panner);
+                    self.sampler.volume.value = self.volumeVal;
+                    self.panner = new Panner().toDestination();
+                    self.panner.pan.value = 0.75;
+                    self.sampler.connect(self.panner);
                     resolve();
                 });
             } catch (error) {
@@ -32,4 +35,15 @@ export class UprightBass extends Instrument {
         this.sampler.triggerAttackRelease(soundName, duration, startTime, velocity);
     }
 
+    mute(): void {
+        if (this.panner) {
+            this.panner.disconnect();
+        }
+    }
+
+    unmute(): void {
+        if (this.panner) {
+            this.panner.toDestination();
+        }
+    }
 }

@@ -15,8 +15,11 @@ export enum KitPiece {
 
 export class DrumSet extends Instrument {
 
-    sampler: Sampler;
     kitPiecesToNoteNames: Map<string, string[]> = new Map<string, string[]>();
+    protected sampler: Sampler;
+    private panner: Panner;
+    protected volumeVal = -7;
+    public instrumentName = "Drumset";
 
     loadInstrument(): Promise<void> {
         const self = this;
@@ -55,10 +58,10 @@ export class DrumSet extends Instrument {
                 });
 
                 self.sampler = new Sampler(fileConfig, () => {
-                    self.sampler.volume.value = -7;
-                    const panner: Panner = new Panner().toDestination();
-                    panner.pan.value = -0.75;
-                    self.sampler.connect(panner);
+                    self.sampler.volume.value = self.volumeVal;
+                    self.panner = new Panner().toDestination();
+                    self.panner.pan.value = -0.75;
+                    self.sampler.connect(self.panner);
                     resolve();
                 });
             } catch (error) {
@@ -72,6 +75,18 @@ export class DrumSet extends Instrument {
         const noteNames = this.kitPiecesToNoteNames.get(soundName);
         const item = noteNames[Math.floor(Math.random() * noteNames.length)];
         this.sampler.triggerAttack('' + item, startTime, velocity);
+    }
+
+    mute(): void {
+        if (this.panner) {
+            this.panner.disconnect();
+        }
+    }
+
+    unmute(): void {
+        if (this.panner) {
+            this.panner.toDestination();
+        }
     }
 
 }

@@ -6,16 +6,16 @@ const fileConfig = (rawData as any);
 export class MetronomeInstrument extends Instrument {
 
     sampler: Sampler;
+    instrumentName = "Metronome";
+    volumeVal = 5;
 
     loadInstrument(): Promise<void> {
         const self = this;
         return new Promise((resolve, reject) => {
             try {
                 self.sampler = new Sampler(fileConfig, () => {
-                    self.sampler.volume.value = 6;
-                    const panner: Panner = new Panner().toDestination();
-                    panner.pan.value = 0;
-                    self.sampler.connect(panner);
+                    self.sampler.volume.value = self.volumeVal;
+                    self.sampler.toDestination();
                     resolve();
                 });
             } catch (error) {
@@ -26,7 +26,19 @@ export class MetronomeInstrument extends Instrument {
     }
 
     play(soundName: string, startTime: number, duration?: string, velocity?: number): void {
+        console.log(this.volume, this.volumeVal, this.sampler.volume.value);
         this.sampler.triggerAttackRelease(soundName, duration, startTime);
     }
 
+    mute(): void {
+        if (this.sampler) {
+            this.sampler.disconnect();
+        }
+    }
+
+    unmute(): void {
+        if (this.sampler) {
+            this.sampler.toDestination();
+        }
+    }
 }
